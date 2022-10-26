@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "487626147857",
+    "project_id": "foodorg-d7e52",
+    "storage_bucket": "foodorg-d7e52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487626147857:android:47518128aee286fb28c9b0",
+        "android_client_info": {
+          "package_name": "com.example.foodorg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "487626147857-5v5u758i7vjobeaeqc62a5793ubpm2u9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGNeGncUy0KmQM7vUNpfg2eLh8Ve-AQAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "487626147857-5v5u758i7vjobeaeqc62a5793ubpm2u9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
