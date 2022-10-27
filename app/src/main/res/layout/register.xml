@@ -4,16 +4,178 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationActivity">
+    android:id="@+id/parentLayout"
+    android:background="#DBDBDB">
 
-    <Button
-        android:id="@+id/returnButton"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/titlelayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/enterDatalayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/parentLayout">
+
+
+        <TextView
+            android:id="@+id/Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:fontFamily="@font/comfortaabold"
+            android:text="FoodOrg"
+            android:textColor="@color/black"
+
+            android:textAlignment="center"
+            android:textSize="55sp"
+
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/SubTittle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:fontFamily="@font/comfortaabold"
+            android:textColor="@color/black"
+            android:text="Organize your Ingredients, Recipes, Meal Plans and Shopping Lists!"
+
+            android:textAlignment="center"
+            android:textSize="20sp"
+
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/enterDatalayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+
+        app:layout_constraintBottom_toTopOf="@+id/butonsLayout"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titlelayout">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+
+            android:id="@+id/emailRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:background="@drawable/rounder_corner"
+            android:ems="10"
+
+            android:fontFamily="@font/robotomedium"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:textAlignment="center"
+
+            android:textColorHint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:background="@drawable/rounder_corner"
+            android:ems="10"
+
+            android:fontFamily="@font/robotomedium"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:textAlignment="center"
+
+            android:textColorHint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordSecondRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:background="@drawable/rounder_corner"
+            android:ems="10"
+
+            android:fontFamily="@font/robotomedium"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:textAlignment="center"
+
+            android:textColorHint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/butonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/enterDatalayout">
+
+        <Button
+            android:id="@+id/registerButtonConfirm"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#2C3163"
+            android:layout_margin="10dp"
+
+            android:fontFamily="@font/comfortaabold"
+            android:text="REGISTER"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/returnToMainFromRegister"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#018786"
+            android:layout_margin="20dp"
+
+            android:fontFamily="@font/comfortaabold"
+            android:text="ALREADY HAVE AN ACCOUNT? LOGIN"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintEnd_toEndOf="parent" />
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
