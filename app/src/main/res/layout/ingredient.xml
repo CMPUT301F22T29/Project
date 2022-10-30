@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/IngredientTitleLayout"
         android:layout_width="match_parent"
-        android:layout_height="114dp"
+        android:layout_height="135dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,15 +19,15 @@
         <TextView
             android:id="@+id/Title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
 
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="41dp"
+            android:layout_marginStart="36dp"
 
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="31dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="65dp"
 
             android:fontFamily="@font/comfortaabold"
             android:text="FoodOrg"
@@ -39,17 +39,17 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="165dp"
-            android:layout_height="42dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
 
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             android:layout_marginStart="33dp"
-            android:layout_marginTop="41dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginBottom="31dp"
+            android:layout_marginBottom="79dp"
             android:layout_toEndOf="@+id/Title"
             android:fontFamily="@font/comfortaabold"
             android:minHeight="20dp"
@@ -60,13 +60,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <EditText
+            android:id="@+id/searchbox"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="97dp"
+            android:layout_marginTop="77dp"
+
+            android:layout_marginEnd="74dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounder_corner"
+            android:drawableLeft="@drawable/search_box"
+            android:hint="Search your item here"
+            android:textSize="17dp"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
+
 
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/addAndSortIngredients"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="68dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,6 +103,7 @@
 
             android:backgroundTint="#04AF57"
             android:fontFamily="@font/comfortaabold"
+            android:layout_gravity="center_vertical"
 
             android:text="ADD" />
 
@@ -99,6 +120,7 @@
 
             android:backgroundTint="#1C1B64"
             android:fontFamily="@font/comfortaabold"
+            android:layout_gravity="center_vertical"
 
             android:text="SORT" />
     </LinearLayout>

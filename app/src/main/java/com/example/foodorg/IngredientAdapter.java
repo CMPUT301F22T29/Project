@@ -10,89 +10,71 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.MyViewHolder> {
+public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.MyViewHolder>  {
 
-
-    private ArrayList<Ingredient> Data_list;
     private Context context;
-    private OnEditListener onEditListener;
+    private List<IngredientModel> ingredientModelList;
+    private OnEditListner TheOnEditListener;
 
-    //Adapter constructor
-    public IngredientAdapter(ArrayList<Ingredient> data_list, Context context, OnEditListener onEditListener) {
-        this.Data_list = data_list;
+    public IngredientAdapter(Context context, List<IngredientModel> ingredientModelList, OnEditListner onEditListener) {
         this.context = context;
-        this.onEditListener = onEditListener;
+        this.ingredientModelList = ingredientModelList;
+        this.TheOnEditListener = onEditListener;
     }
 
-    //Recyclers view inflater
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View viewItem= LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview,parent,false);
-        return  new MyViewHolder(viewItem);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_item, parent, false);
+        return new MyViewHolder(v);
     }
 
-
-    //objects in the recycler view
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Ingredient classObj = Data_list.get(position);
-        holder.name.setText(classObj.getDescription());
-        holder.count.setText(classObj.getCount());
 
-        //to delete item from recycler view
-        holder.delbutt.setOnClickListener(v->{
+        holder.desc.setText(ingredientModelList.get(position).getDescription());
+        holder.category.setText(ingredientModelList.get(position).getCategory());
 
-            Data_list.remove(position);
-            notifyDataSetChanged();
-
-
+        holder.editbutt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TheOnEditListener.onEditClick(ingredientModelList.get(position), position);
+            }
         });
-        //run onEditClick method on edit click from main
-        holder.editbutt.setOnClickListener(v->{
-            onEditListener.onEditClick(Data_list.get(position),position);
-        });
+
     }
-
 
     @Override
     public int getItemCount() {
-        return Data_list.size();
+        return ingredientModelList.size();
     }
 
-    //Initializing from cardview.xml
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name,count;
+
+        TextView desc, category;
         Button editbutt;
-        Button delbutt;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            name=itemView.findViewById(R.id.name);
-            count=itemView.findViewById(R.id.count);
-            editbutt= itemView.findViewById(R.id.editbutt);
-            delbutt=itemView.findViewById(R.id.deletebutt);
 
+            desc = itemView.findViewById(R.id.name);
+            category = itemView.findViewById(R.id.category);
+            editbutt = itemView.findViewById(R.id.editIngredient);
 
         }
     }
 
-    //editing the data list
-    public void editDatalist(Ingredient dataClassObj, int curpos){
-        Data_list.get(curpos).setDescription(dataClassObj.getDescription());
-        Data_list.get(curpos).setCount(dataClassObj.getCount());
+    public interface OnEditListner {
+        void onEditClick(IngredientModel listData, int curPosition);
+
+    }
+    public void editDatalist(IngredientModel dataClassObj, int curpos){
+        ingredientModelList.get(curpos).setDescription(dataClassObj.getDescription());
+        ingredientModelList.get(curpos).setCategory(dataClassObj.getCategory());
 
         notifyDataSetChanged();
     }
-
-    //interface for on edit click
-    public interface OnEditListener{
-        void onEditClick(Ingredient listData, int curPosition);
-
-    }
-
-
 }
