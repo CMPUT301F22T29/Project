@@ -23,11 +23,11 @@
         android:inputType="textCapCharacters"
         android:minHeight="48dp" />
     <EditText
-        android:id="@+id/count_input"
+        android:id="@+id/category_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
-        android:hint="Count"
+        android:hint="Category"
         android:inputType="textCapCharacters"
         android:minHeight="48dp" />
 

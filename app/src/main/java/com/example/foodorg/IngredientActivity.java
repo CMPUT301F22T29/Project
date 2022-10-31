@@ -41,6 +41,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +51,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
     private Button returnHome;
     private Button add;
-    private Button edit;
+    private Button delete;
 
 
     private RecyclerView recyclerView;
@@ -92,6 +94,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
         });
 
 
+
         recyclerView = findViewById(R.id.ingredientListRecyclerView);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -104,6 +107,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
         ingredientAdapter = new IngredientAdapter(this, ingredientModelList,this::onEditClick);
 
         recyclerView.setAdapter(ingredientAdapter);
+
 
 //        CollectionReference collectionReference = db.collection("users")
 
@@ -123,9 +127,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
         //initializing edit text
         final EditText namek = dialog.findViewById(R.id.item_input);
-        final EditText countk= dialog.findViewById(R.id.count_input);
-
-
+        final EditText categoryk= dialog.findViewById(R.id.category_input);
 
         //to close the dialog
         final ImageView closeAlert = dialog.findViewById(R.id.closeAlert);
@@ -146,42 +148,40 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
                 mAuth = FirebaseAuth.getInstance();
                 db = FirebaseFirestore.getInstance();
                 userID = mAuth.getCurrentUser().getUid();
-                CollectionReference collectionReference = db.collection("users");
-
+                DocumentReference documentReferenceReference = db.collection("users").document(userID).collection("ingredient").document();
+                String id = documentReferenceReference.getId();
                 String name = namek.getText().toString();
-                String count = countk.getText().toString();
+                String category = categoryk.getText().toString();
 
-                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(count)){
+
+                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(category)){
                     Toast.makeText(IngredientActivity.this, "Please enter all values", Toast.LENGTH_SHORT).show();
                     return;
                 }else {
 
                     System.out.println(ingredientModelList.size());
-                    IngredientModel ingredientModel = new IngredientModel(name, count);
+                    IngredientModel ingredientModel = new IngredientModel(name, category,id);
                     ingredientModelList.add(ingredientModel);
                     System.out.println(ingredientModelList.size());
 
                     HashMap<String, Object> map = new HashMap<>();
                     map.put("description", name);
-                    map.put("category", count);
+                    map.put("category", category);
+                    map.put("id", id);
 
-                    collectionReference.document(userID).collection("ingredient").document(name).set(map)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    documentReferenceReference.set(map)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-
-                                        dialog.dismiss();
-
-                                        Toast.makeText(IngredientActivity.this, "Ingredient added", Toast.LENGTH_SHORT).show();
-                                        ingredientAdapter.notifyDataSetChanged();
-
-                                    }
+                                public void onSuccess(Void aVoid) {
+                                    dialog.dismiss();
+                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                                    ingredientAdapter.notifyDataSetChanged();
                                 }
-                            }).addOnFailureListener(new OnFailureListener() {
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(IngredientActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                                    Log.w(TAG, "Error writing document", e);
                                 }
                             });
 
@@ -189,10 +189,13 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
             }
         });
-
+        //dialog.dismiss();
+        //ingredientAdapter.notifyDataSetChanged();
         dialog.show();
 
     }
+    //dialog.dismiss();
+    //ingredientAdapter.notifyDataSetChanged();
 
 
     private void showData(){
@@ -206,20 +209,20 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
                         ingredientModelList.clear();
 
                         for (DocumentSnapshot snapshot : task.getResult()){
-                            IngredientModel ingredientModel = new IngredientModel(snapshot.getString("description"), snapshot.getString("category"));
+                            IngredientModel ingredientModel = new IngredientModel(snapshot.getString("description"), snapshot.getString("category"), snapshot.getString("id"));
                             ingredientModelList.add(ingredientModel);
                             //System.out.println(ingredientModelList.size());
 
                         }
 
-                        Toast.makeText(IngredientActivity.this, "Ingredients shown", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(IngredientActivity.this, "Ingredients shown", Toast.LENGTH_SHORT).show();
                         ingredientAdapter.notifyDataSetChanged();
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(IngredientActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(IngredientActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -236,20 +239,76 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
         closeAlert.setOnClickListener(v -> {
             alertDialog.cancel();
         });
-
         //Initializing
         Button btnEdit = view.findViewById(R.id.btnEdit);
         EditText na = view.findViewById(R.id.item_input);
-        EditText co = view.findViewById(R.id.count_input);
+        EditText cat = view.findViewById(R.id.category_input);
+        String findID = ingredientModelList.get(curPosition).getDocumentID();
         na.setText(listData.getDescription());
-        co.setText(listData.getCategory());
+        cat.setText(listData.getCategory());
+        CollectionReference collectionReference = db.collection("users");
+
+
 
 
         builderObj.setCancelable(false);
         builderObj.setView(view);
 
+        btnEdit.setOnClickListener(v -> {
+
+
+
+            String name = na.getText().toString();
+            String count = cat.getText().toString();
+
+
+            //Error checking for missing fields on edit
+            if (na.length() == 0) {
+                na.setError("Enter name");
+            }else if (cat.length() == 0) {
+                cat.setError("Enter name");
+
+            } else {
+                //editing the values and information
+                editContact(name,count,"sss", curPosition);
+                HashMap<String,Object> data = new HashMap<>();
+                data.put("description",name);
+                data.put("category",count);
+                data.put("id",findID);
+                collectionReference.document(userID).collection("ingredient").document(findID)
+                        .update(data)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot updated successfully!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error updating document", e);
+                                Toast.makeText(IngredientActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+            }
+
+        });
+
         alertDialog = builderObj.create();
         alertDialog.show();
+    }
+
+
+    //Editing to recycler view
+    public void editContact(String name, String count,String docID,int currentPosition){
+        IngredientModel obj = new IngredientModel(name,count,docID);
+        obj.setDescription(name);
+        obj.setCategory(count);
+        ingredientAdapter.editDatalist(obj,currentPosition);
+        alertDialog.cancel();
+
 
     }
 
