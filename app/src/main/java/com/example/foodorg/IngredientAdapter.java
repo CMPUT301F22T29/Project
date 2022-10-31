@@ -1,6 +1,9 @@
 package com.example.foodorg;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.List;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.MyViewHolder>  {
@@ -17,6 +27,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
     private Context context;
     private List<IngredientModel> ingredientModelList;
     private OnEditListner TheOnEditListener;
+    private FirebaseFirestore db;
+    String userID;
+    private FirebaseAuth mAuth;
+
 
     public IngredientAdapter(Context context, List<IngredientModel> ingredientModelList, OnEditListner onEditListener) {
         this.context = context;
@@ -34,15 +48,46 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
+
         holder.desc.setText(ingredientModelList.get(position).getDescription());
         holder.category.setText(ingredientModelList.get(position).getCategory());
-
         holder.editbutt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TheOnEditListener.onEditClick(ingredientModelList.get(position), position);
             }
         });
+
+        holder.delbutt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String findID = ingredientModelList.get(position).getDocumentID();
+                db = FirebaseFirestore.getInstance();
+                mAuth = FirebaseAuth.getInstance();
+                userID = mAuth.getCurrentUser().getUid();
+                DocumentReference collectionReference = db.collection("users").document(userID).collection("ingredient").document(findID.toString());
+                collectionReference
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                ingredientModelList.remove(position);
+                                Log.d(TAG, " has been deleted successfully!");
+                                notifyDataSetChanged();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+
+            }
+        });
+
+
+
 
     }
 
@@ -55,7 +100,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
 
 
         TextView desc, category;
-        Button editbutt;
+        Button editbutt,delbutt;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,6 +108,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
             desc = itemView.findViewById(R.id.name);
             category = itemView.findViewById(R.id.category);
             editbutt = itemView.findViewById(R.id.editIngredient);
+            delbutt = itemView.findViewById(R.id.deleteIngredient);
 
         }
     }
@@ -74,6 +120,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
     public void editDatalist(IngredientModel dataClassObj, int curpos){
         ingredientModelList.get(curpos).setDescription(dataClassObj.getDescription());
         ingredientModelList.get(curpos).setCategory(dataClassObj.getCategory());
+        ingredientModelList.get(curpos).setDocumentID(dataClassObj.getDocumentID());
 
         notifyDataSetChanged();
     }

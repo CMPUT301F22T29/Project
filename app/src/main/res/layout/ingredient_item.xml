@@ -19,7 +19,7 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#BAECAF"
+            android:background="#2EACA1"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:text="name"
@@ -115,6 +115,7 @@
                 android:text="DELETE" />
 
         </LinearLayout>
+
 
 
     </LinearLayout>
