@@ -26,27 +26,21 @@
             android:textAlignment="center"
             android:textColor="#263238"
             android:textSize="30sp" />
-        <TextView
-            android:id="@+id/recipe_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:text="category" />
+
+
+            <TextView
+                android:id="@+id/recipe_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:text="category" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/prep_time"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Preparation Time"
-                android:textSize="20sp"
-                android:textAlignment="center"/>
 
             <TextView
                 android:id="@+id/servings"
@@ -54,6 +48,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Servings"
+                android:textSize="20sp"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/prep_time"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Preparation Time"
                 android:textSize="20sp"
                 android:textAlignment="center"/>
 
@@ -87,10 +90,10 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/editIngredient"
+                android:id="@+id/editRecipe"
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="left"
                 android:text="EDIT" />
 
             <View
@@ -98,12 +101,21 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/deleteIngredient"
-                android:layout_width="110dp"
+                android:layout_width="145dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="Add Ingredient" />
+
+            <Button
+                android:id="@+id/deleteRecipe"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:text="DELETE" />
+
+
 
         </LinearLayout>
 
