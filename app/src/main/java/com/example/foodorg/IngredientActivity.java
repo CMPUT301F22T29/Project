@@ -51,7 +51,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
     private Button returnHome;
     private Button add;
-    private Button delete;
+    //private Button delete;
 
 
     private RecyclerView recyclerView;
@@ -270,7 +270,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
             } else {
                 //editing the values and information
-                editContact(name,count,"sss", curPosition);
+                editContact(name,count,findID, curPosition);
                 HashMap<String,Object> data = new HashMap<>();
                 data.put("description",name);
                 data.put("category",count);
