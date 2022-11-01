@@ -60,10 +60,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
             @Override
             public void onClick(View view) {
                 String findID = ingredientModelList.get(position).getDocumentID();
+                String recipeID = ingredientModelList.get(position).getRecipeID();
+
+
                 db = FirebaseFirestore.getInstance();
                 mAuth = FirebaseAuth.getInstance();
                 userID = mAuth.getCurrentUser().getUid();
-                DocumentReference collectionReference = db.collection("users").document(userID).collection("Ingredients").document(findID.toString());
+                DocumentReference collectionReference = db.collection("users").document(userID).collection("Recipes").document(recipeID).collection("Ingredients").document(findID.toString());
                 collectionReference
                         .delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -119,6 +122,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
         ingredientModelList.get(curpos).setDescription(dataClassObj.getDescription());
         ingredientModelList.get(curpos).setCategory(dataClassObj.getCategory());
         ingredientModelList.get(curpos).setDocumentID(dataClassObj.getDocumentID());
+        ingredientModelList.get(curpos).setRecipeID(dataClassObj.getRecipeID());
 
         notifyDataSetChanged();
     }

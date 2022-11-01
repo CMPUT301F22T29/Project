@@ -11,8 +11,11 @@
         <entry key="app/src/main/res/layout/homepage.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/ingredient.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/ingredient_item.xml" value="0.3880208333333333" />
+        <entry key="app/src/main/res/layout/ingredient_storage.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/ingredient_storage_item.xml" value="0.3880208333333333" />
+        <entry key="app/src/main/res/layout/ingredients_recipe_list.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/input_layout.xml" value="0.38697916666666665" />
+        <entry key="app/src/main/res/layout/login.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/recipe_input.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/recipe_item.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/recipepage.xml" value="0.25" />

@@ -166,7 +166,7 @@
             android:backgroundTint="#018786"
             android:fontFamily="@font/comfortaabold"
 
-            android:text="RETURN TO HOME PAGE" />
+            android:text="RETURN TO RECIPES" />
 
     </LinearLayout>
 
