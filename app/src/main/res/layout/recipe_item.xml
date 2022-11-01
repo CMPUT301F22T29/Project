@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="20sp"
-                android:text="category" />
+                android:text="Category" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Preparation Time"
+                android:text=" Prep Time"
                 android:textSize="20sp"
                 android:textAlignment="center"/>
 
@@ -68,22 +68,27 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="200dp"
-                android:layout_height="100dp" />
+                android:layout_width="230dp"
+                android:layout_height="120dp" />
 
             <TextView
-                android:id="@+id/comments"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Comment"
+                android:text="Comments"
                 android:textSize="20sp"
-                android:textAlignment="center"/>
+                />
 
 
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -101,12 +106,6 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/deleteIngredient"
-                android:layout_width="145dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Add Ingredient" />
 
             <Button
                 android:id="@+id/deleteRecipe"
@@ -114,13 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:text="DELETE" />
-
-
-
         </LinearLayout>
-
-
-
     </LinearLayout>
 
 

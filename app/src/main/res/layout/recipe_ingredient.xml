@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_weight="1"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/closeAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/btn_dialog" />
+
+    <EditText
+        android:id="@+id/recipeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:hint="Name"
+        android:inputType="textCapCharacters"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/recipeCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:hint="Category"
+        android:inputType="textCapCharacters"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/recipeServing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:hint="Servings"
+        android:inputType="textCapCharacters"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/recipePrep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:hint="Preparation Time"
+        android:inputType="textCapCharacters"
+        android:minHeight="48dp" />
+    <EditText
+        android:id="@+id/recipeComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:hint="Comments"
+        android:inputType="textCapCharacters"
+        android:minHeight="48dp" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/recipeAddIngButton"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Add Ingredient" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/AddPhoto"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Add Photo" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="10sp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0"
+        android:text="Add/Edit" />
+</LinearLayout>
