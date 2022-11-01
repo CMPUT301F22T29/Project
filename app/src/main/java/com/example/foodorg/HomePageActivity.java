@@ -14,7 +14,7 @@ public class HomePageActivity extends AppCompatActivity {
     Button returnLogin;
     ImageButton recipeBtn;
     ImageButton ingredientStorageBtn;
-    Button ingredientBtn;
+
     TextView userText;
 
     @Override
@@ -25,19 +25,12 @@ public class HomePageActivity extends AppCompatActivity {
         returnLogin = findViewById(R.id.LogOutButton);
         ingredientStorageBtn = findViewById(R.id.ingredientButtonHome);
         recipeBtn = findViewById(R.id.recipeButtonHome);
-        ingredientBtn = findViewById(R.id.ingredientsBtn);
+
 
 
         //userText = findViewById(R.id.userName);
         //userText.setText(getIntent().getExtras().getString("name"));
 
-        ingredientBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(HomePageActivity.this,IngredientActivity.class);
-                startActivity(i);
-            }
-        });
 
         returnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

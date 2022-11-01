@@ -4,11 +4,13 @@ public class IngredientModel {
     String description;
     String category;
     String documentID;
+    String recipeID;
 
-    public IngredientModel(String description, String category, String documentID) {
+    public IngredientModel(String description, String category, String documentID, String recipeID) {
         this.description = description;
         this.category = category;
         this.documentID = documentID;
+        this.recipeID = recipeID;
 
     }
 
@@ -36,5 +38,11 @@ public class IngredientModel {
         this.documentID = documentID;
     }
 
+    public String getRecipeID() {
+        return recipeID;
+    }
 
+    public void setRecipeID(String recipeID) {
+        this.recipeID = recipeID;
+    }
 }

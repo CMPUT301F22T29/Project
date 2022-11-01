@@ -50,6 +50,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
     AlertDialog alertDialog;
 
+    String recipeID;
     String userID;
     private FirebaseAuth mAuth;
 
@@ -62,8 +63,11 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
+        recipeID= getIntent().getExtras().getString("recipe_id");
+
 
         returnHome = findViewById(R.id.returnButtonIngredientStorage);
+
         returnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +117,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.input_layout);
 
-        //initializing edit text
+        recipeID= getIntent().getExtras().getString("recipe_id");
         final EditText namek = dialog.findViewById(R.id.item_input);
         final EditText categoryk= dialog.findViewById(R.id.category_input);
 
@@ -136,7 +140,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
                 mAuth = FirebaseAuth.getInstance();
                 db = FirebaseFirestore.getInstance();
                 userID = mAuth.getCurrentUser().getUid();
-                DocumentReference documentReferenceReference = db.collection("users").document(userID).collection("Ingredients").document();
+                DocumentReference documentReferenceReference = db.collection("users").document(userID).collection("Recipes").document(recipeID).collection("Ingredients").document();
                 String id = documentReferenceReference.getId();
                 String name = namek.getText().toString();
                 String category = categoryk.getText().toString();
@@ -148,7 +152,8 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
                 }else {
 
                     System.out.println(ingredientModelList.size());
-                    IngredientModel ingredientModel = new IngredientModel(name, category,id);
+                    recipeID= getIntent().getExtras().getString("recipe_id");
+                    IngredientModel ingredientModel = new IngredientModel(name, category,id,recipeID);
                     ingredientModelList.add(ingredientModel);
                     System.out.println(ingredientModelList.size());
 
@@ -156,6 +161,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
                     map.put("description", name);
                     map.put("category", category);
                     map.put("id", id);
+                    map.put("recipe_id",recipeID);
 
                     documentReferenceReference.set(map)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -189,7 +195,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
     private void showData(){
 
         CollectionReference collectionReference = db.collection("users");
-        collectionReference.document(userID).collection("Ingredients").get()
+        collectionReference.document(userID).collection("Recipes").document(recipeID).collection("Ingredients").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -197,7 +203,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
                         ingredientModelList.clear();
 
                         for (DocumentSnapshot snapshot : task.getResult()){
-                            IngredientModel ingredientModel = new IngredientModel(snapshot.getString("description"), snapshot.getString("category"), snapshot.getString("id"));
+                            IngredientModel ingredientModel = new IngredientModel(snapshot.getString("description"), snapshot.getString("category"), snapshot.getString("id"),snapshot.getString("recipe_id"));
                             ingredientModelList.add(ingredientModel);
                             //System.out.println(ingredientModelList.size());
 
@@ -219,10 +225,12 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
 
     //Editing to recycler view
-    public void editContact(String name, String count,String docID,int currentPosition){
-        IngredientModel obj = new IngredientModel(name,count,docID);
+    public void editContact(String name, String count,String docID,String recipeID,int currentPosition){
+
+        IngredientModel obj = new IngredientModel(name,count,docID,recipeID);
         obj.setDescription(name);
         obj.setCategory(count);
+        //obj.setRecipeID(recipeID);
         ingredientAdapter.editDatalist(obj,currentPosition);
         alertDialog.cancel();
 
@@ -244,6 +252,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
         EditText na = view.findViewById(R.id.item_input);
         EditText cat = view.findViewById(R.id.category_input);
         String findID = ingredientModelList.get(curPosition).getDocumentID();
+        String findrecipeID = ingredientModelList.get(curPosition).getRecipeID();
         na.setText(listData.getDescription());
         cat.setText(listData.getCategory());
         CollectionReference collectionReference = db.collection("users");
@@ -269,13 +278,15 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
                 cat.setError("Enter name");
 
             } else {
+
                 //editing the values and information
-                editContact(name,count,findID, curPosition);
+                editContact(name,count,findID,findrecipeID, curPosition);
                 HashMap<String,Object> data = new HashMap<>();
                 data.put("description",name);
                 data.put("category",count);
                 data.put("id",findID);
-                collectionReference.document(userID).collection("Ingredients").document(findID)
+                data.put("recipe_id",findrecipeID);
+                collectionReference.document(userID).collection("Recipes").document(findrecipeID).collection("Ingredients").document(findID)
                         .update(data)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

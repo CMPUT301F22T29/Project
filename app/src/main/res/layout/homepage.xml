@@ -64,13 +64,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/ingredientsBtn"
-
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:text="ingredients"
-            android:textSize="10dp" />
 
 
     </RelativeLayout>

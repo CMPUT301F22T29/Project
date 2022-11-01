@@ -100,6 +100,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
     }
 
 
+
     private void showCustomDialog(){
 
         final Dialog dialog = new Dialog(RecipeActivity.this);
@@ -168,6 +169,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     dialog.dismiss();
+                                    IngredientsListCustomDialog(id);
                                     Log.d(TAG, "DocumentSnapshot successfully written!");
                                     recipeAdapter.notifyDataSetChanged();
                                 }
@@ -186,6 +188,45 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
         //dialog.dismiss();
         //ingredientAdapter.notifyDataSetChanged();
         dialog.show();
+
+    }
+
+    private void IngredientsListCustomDialog(String findID) {
+
+
+
+        final Dialog dialog = new Dialog(RecipeActivity.this);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.add_ingredients_recipe);
+
+        final ImageView closeAlert = dialog.findViewById(R.id.closeAlert);
+
+        closeAlert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        Button ingredientAddBtn = dialog.findViewById(R.id.addIngredientsRecipeBtn);
+        ingredientAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(RecipeActivity.this, IngredientActivity.class);
+                i.putExtra("recipe_id",findID);
+                startActivity(i);
+                dialog.dismiss();
+
+            }
+
+
+
+        });
+
+        dialog.show();
+
 
     }
 
@@ -315,6 +356,8 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                                 Toast.makeText(RecipeActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
                             }
                         });
+                IngredientsListCustomDialog(findID);
+
 
 
             }
