@@ -1,15 +1,6 @@
 package com.example.foodorg;
 
-
-
 import static android.content.ContentValues.TAG;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -24,34 +15,31 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class IngredientActivity extends AppCompatActivity implements IngredientAdapter.OnEditListner{
-
+public class IngredientActivity extends AppCompatActivity implements IngredientAdapter.OnEditListner {
     private Button returnHome;
     private Button add;
-    private Button delete;
+
 
 
     private RecyclerView recyclerView;
@@ -95,7 +83,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
 
 
-        recyclerView = findViewById(R.id.ingredientListRecyclerView);
+        recyclerView = findViewById(R.id.ingredientOnlyListRecyclerView);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -148,7 +136,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
                 mAuth = FirebaseAuth.getInstance();
                 db = FirebaseFirestore.getInstance();
                 userID = mAuth.getCurrentUser().getUid();
-                DocumentReference documentReferenceReference = db.collection("users").document(userID).collection("ingredient").document();
+                DocumentReference documentReferenceReference = db.collection("users").document(userID).collection("Ingredients").document();
                 String id = documentReferenceReference.getId();
                 String name = namek.getText().toString();
                 String category = categoryk.getText().toString();
@@ -201,7 +189,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
     private void showData(){
 
         CollectionReference collectionReference = db.collection("users");
-        collectionReference.document(userID).collection("ingredient").get()
+        collectionReference.document(userID).collection("Ingredients").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -228,10 +216,22 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
     }
 
+
+
+    //Editing to recycler view
+    public void editContact(String name, String count,String docID,int currentPosition){
+        IngredientModel obj = new IngredientModel(name,count,docID);
+        obj.setDescription(name);
+        obj.setCategory(count);
+        ingredientAdapter.editDatalist(obj,currentPosition);
+        alertDialog.cancel();
+
+
+    }
+
+
     @Override
     public void onEditClick(IngredientModel listData, int curPosition) {
-
-        //Show dialog
         AlertDialog.Builder builderObj = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.input_layout, null);
         ImageView closeAlert = view.findViewById(R.id.closeAlert);
@@ -270,12 +270,12 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
             } else {
                 //editing the values and information
-                editContact(name,count,"sss", curPosition);
+                editContact(name,count,findID, curPosition);
                 HashMap<String,Object> data = new HashMap<>();
                 data.put("description",name);
                 data.put("category",count);
                 data.put("id",findID);
-                collectionReference.document(userID).collection("ingredient").document(findID)
+                collectionReference.document(userID).collection("Ingredients").document(findID)
                         .update(data)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -298,18 +298,11 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
         alertDialog = builderObj.create();
         alertDialog.show();
-    }
-
-
-    //Editing to recycler view
-    public void editContact(String name, String count,String docID,int currentPosition){
-        IngredientModel obj = new IngredientModel(name,count,docID);
-        obj.setDescription(name);
-        obj.setCategory(count);
-        ingredientAdapter.editDatalist(obj,currentPosition);
-        alertDialog.cancel();
-
 
     }
-
 }
+
+
+
+
+

@@ -21,55 +21,57 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.MyViewHolder>  {
-
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHolder> {
     private Context context;
-    private List<IngredientModel> ingredientModelList;
+    private List<RecipeModel> recipeModelList;
     private OnEditListner TheOnEditListener;
     private FirebaseFirestore db;
     String userID;
     private FirebaseAuth mAuth;
 
-
-    public IngredientAdapter(Context context, List<IngredientModel> ingredientModelList, OnEditListner onEditListener) {
+    public RecipeAdapter(Context context, List<RecipeModel> recipeModelList, OnEditListner theOnEditListener) {
         this.context = context;
-        this.ingredientModelList = ingredientModelList;
-        this.TheOnEditListener = onEditListener;
+        this.recipeModelList = recipeModelList;
+        this.TheOnEditListener = theOnEditListener;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_item, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull IngredientAdapter.MyViewHolder holder, int position) {
-        holder.desc.setText(ingredientModelList.get(position).getDescription());
-        holder.category.setText(ingredientModelList.get(position).getCategory());
+    public void onBindViewHolder(@NonNull RecipeAdapter.MyViewHolder holder, int position) {
+        holder.title.setText(recipeModelList.get(position).getTitle());
+        holder.category.setText(recipeModelList.get(position).getCategory());
+        holder.comment.setText(recipeModelList.get(position).getComments());
+        holder.prep.setText(recipeModelList.get(position).getTime());
+        holder.serving.setText(recipeModelList.get(position).getServings());
+
         holder.editbutt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TheOnEditListener.onEditClick(ingredientModelList.get(position), position);
-                TheOnEditListener.onEditClick(ingredientModelList.get(position),position);
+                TheOnEditListener.onEditClick(recipeModelList.get(position),position);
             }
         });
 
         holder.delbutt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String findID = ingredientModelList.get(position).getDocumentID();
+                String findID = recipeModelList.get(position).getDocumentID();
                 db = FirebaseFirestore.getInstance();
                 mAuth = FirebaseAuth.getInstance();
                 userID = mAuth.getCurrentUser().getUid();
-                DocumentReference collectionReference = db.collection("users").document(userID).collection("Ingredients").document(findID.toString());
+                DocumentReference collectionReference = db.collection("users").document(userID).collection("Recipes").document(findID.toString());
                 collectionReference
                         .delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                ingredientModelList.remove(position);
+                                recipeModelList.remove(position);
                                 Log.d(TAG, " has been deleted successfully!");
                                 notifyDataSetChanged();
                             }
@@ -87,39 +89,47 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
     }
 
 
+
     @Override
     public int getItemCount() {
-        return ingredientModelList.size();
+        return recipeModelList.size();
     }
 
+
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-
-
-        TextView desc, category;
+        TextView title, category, prep, serving, comment ;
         Button editbutt,delbutt;
+
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            title = itemView.findViewById(R.id.title_recipe);
+            category = itemView.findViewById(R.id.categor_recipe);
+            prep = itemView.findViewById(R.id.prep_recipe);
+            serving = itemView.findViewById(R.id.servings);
+            comment = itemView.findViewById(R.id.comment);
 
-            desc = itemView.findViewById(R.id.name_ingredient);
-            category = itemView.findViewById(R.id.category_ingredient);
-            editbutt = itemView.findViewById(R.id.editIngredientBtn);
-            delbutt = itemView.findViewById(R.id.deleteIngredientBtn);
-
+            editbutt = itemView.findViewById(R.id.editRecipe);
+            delbutt = itemView.findViewById(R.id.deleteRecipe);
         }
     }
 
+
     public interface OnEditListner {
-        void onEditClick(IngredientModel listData, int curPosition);
+        void onEditClick(RecipeModel listData, int curPosition);
 
     }
 
-
-    public void editDatalist(IngredientModel dataClassObj, int curpos){
-        ingredientModelList.get(curpos).setDescription(dataClassObj.getDescription());
-        ingredientModelList.get(curpos).setCategory(dataClassObj.getCategory());
-        ingredientModelList.get(curpos).setDocumentID(dataClassObj.getDocumentID());
+    public void editDatalist(RecipeModel dataClassObj, int curpos){
+        recipeModelList.get(curpos).setTitle(dataClassObj.getTitle());
+        recipeModelList.get(curpos).setCategory(dataClassObj.getCategory());
+        recipeModelList.get(curpos).setComments(dataClassObj.getComments());
+        recipeModelList.get(curpos).setServings(dataClassObj.getServings());
+        recipeModelList.get(curpos).setTime(dataClassObj.getTime());
+        recipeModelList.get(curpos).setDocumentID(dataClassObj.getDocumentID());
 
         notifyDataSetChanged();
     }
 }
+

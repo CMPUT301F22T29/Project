@@ -104,7 +104,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ingredientListRecyclerView"
+        android:id="@+id/RecipeListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="435dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,7 +124,7 @@
         app:layout_constraintHorizontal_bias="0.0"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredientListRecyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/RecipeListRecyclerView"
         app:layout_constraintVertical_bias="0.2">
 
         <Button
