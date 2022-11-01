@@ -7,6 +7,7 @@
     android:layout_weight="1"
     android:layout_height="match_parent">
 
+
     <ImageView
         android:id="@+id/closeAlert"
         android:layout_width="match_parent"
@@ -21,7 +22,6 @@
         android:hint="Item"
         android:inputType="textCapCharacters"
         android:minHeight="48dp" />
-
     <EditText
         android:id="@+id/category_input"
         android:layout_width="match_parent"
@@ -30,6 +30,11 @@
         android:hint="Category"
         android:inputType="textCapCharacters"
         android:minHeight="48dp" />
+
+
+
+
+
 
 
 
