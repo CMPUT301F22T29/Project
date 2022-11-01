@@ -21,55 +21,56 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.MyViewHolder>  {
+public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientStorageAdapter.MyViewHolder>  {
 
     private Context context;
-    private List<IngredientModel> ingredientModelList;
+    private List<IngredientStorageModel> ingredientStorageModelList;
     private OnEditListner TheOnEditListener;
     private FirebaseFirestore db;
     String userID;
     private FirebaseAuth mAuth;
 
 
-    public IngredientAdapter(Context context, List<IngredientModel> ingredientModelList, OnEditListner onEditListener) {
+    public IngredientStorageAdapter(Context context, List<IngredientStorageModel> ingredientStorageModelList, OnEditListner onEditListener) {
         this.context = context;
-        this.ingredientModelList = ingredientModelList;
+        this.ingredientStorageModelList = ingredientStorageModelList;
         this.TheOnEditListener = onEditListener;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_storage_item, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull IngredientAdapter.MyViewHolder holder, int position) {
-        holder.desc.setText(ingredientModelList.get(position).getDescription());
-        holder.category.setText(ingredientModelList.get(position).getCategory());
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
+
+        holder.desc.setText(ingredientStorageModelList.get(position).getDescription());
+        holder.category.setText(ingredientStorageModelList.get(position).getCategory());
         holder.editbutt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TheOnEditListener.onEditClick(ingredientModelList.get(position), position);
-                TheOnEditListener.onEditClick(ingredientModelList.get(position),position);
+                TheOnEditListener.onEditClick(ingredientStorageModelList.get(position), position);
             }
         });
 
         holder.delbutt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String findID = ingredientModelList.get(position).getDocumentID();
+                String findID = ingredientStorageModelList.get(position).getDocumentID();
                 db = FirebaseFirestore.getInstance();
                 mAuth = FirebaseAuth.getInstance();
                 userID = mAuth.getCurrentUser().getUid();
-                DocumentReference collectionReference = db.collection("users").document(userID).collection("Ingredients").document(findID.toString());
+                DocumentReference collectionReference = db.collection("users").document(userID).collection("Ingredient_Storage").document(findID.toString());
                 collectionReference
                         .delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                ingredientModelList.remove(position);
+                                ingredientStorageModelList.remove(position);
                                 Log.d(TAG, " has been deleted successfully!");
                                 notifyDataSetChanged();
                             }
@@ -84,12 +85,14 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
             }
         });
 
-    }
 
+
+
+    }
 
     @Override
     public int getItemCount() {
-        return ingredientModelList.size();
+        return ingredientStorageModelList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -101,24 +104,22 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            desc = itemView.findViewById(R.id.name_ingredient);
-            category = itemView.findViewById(R.id.category_ingredient);
-            editbutt = itemView.findViewById(R.id.editIngredientBtn);
-            delbutt = itemView.findViewById(R.id.deleteIngredientBtn);
+            desc = itemView.findViewById(R.id.name);
+            category = itemView.findViewById(R.id.category);
+            editbutt = itemView.findViewById(R.id.editIngredient);
+            delbutt = itemView.findViewById(R.id.deleteIngredient);
 
         }
     }
 
     public interface OnEditListner {
-        void onEditClick(IngredientModel listData, int curPosition);
+        void onEditClick(IngredientStorageModel listData, int curPosition);
 
     }
-
-
-    public void editDatalist(IngredientModel dataClassObj, int curpos){
-        ingredientModelList.get(curpos).setDescription(dataClassObj.getDescription());
-        ingredientModelList.get(curpos).setCategory(dataClassObj.getCategory());
-        ingredientModelList.get(curpos).setDocumentID(dataClassObj.getDocumentID());
+    public void editDatalist(IngredientStorageModel dataClassObj, int curpos){
+        ingredientStorageModelList.get(curpos).setDescription(dataClassObj.getDescription());
+        ingredientStorageModelList.get(curpos).setCategory(dataClassObj.getCategory());
+        ingredientStorageModelList.get(curpos).setDocumentID(dataClassObj.getDocumentID());
 
         notifyDataSetChanged();
     }

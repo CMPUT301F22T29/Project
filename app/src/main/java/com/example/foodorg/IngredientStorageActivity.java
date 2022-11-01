@@ -1,5 +1,7 @@
 package com.example.foodorg;
 
+
+
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
@@ -32,56 +34,60 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.OnEditListner {
+public class IngredientStorageActivity extends AppCompatActivity implements IngredientStorageAdapter.OnEditListner{
 
-    Button returnHome;
+    private Button returnHome;
     private Button add;
+
+
 
     private RecyclerView recyclerView;
     private FirebaseFirestore db;
 
-    private RecipeAdapter recipeAdapter;
-    private List<RecipeModel> recipeModelList;
+    private IngredientStorageAdapter ingredientStorageAdapter;
+    private List<IngredientStorageModel> ingredientStorageModelList;
 
     AlertDialog alertDialog;
 
     String userID;
     private FirebaseAuth mAuth;
 
+    //String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recipepage);
+        setContentView(R.layout.ingredient_storage);
 
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
 
-        returnHome = findViewById(R.id.returnButtonRecipe);
-
+        returnHome = findViewById(R.id.returnButtonIngredientStorage);
         returnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(RecipeActivity.this, HomePageActivity.class);
+                Intent i = new Intent(IngredientStorageActivity.this, HomePageActivity.class);
                 startActivity(i);
             }
         });
 
-
-        add = findViewById(R.id.AddButtonRecipe);
+        add = findViewById(R.id.AddButtonIngredientStorage);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCustomDialog();
-                Toast.makeText(RecipeActivity.this, "Dialog shown", Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientStorageActivity.this, "Dialog shown", Toast.LENGTH_SHORT).show();
             }
         });
 
 
-        recyclerView = findViewById(R.id.RecipeListRecyclerView);
+
+        recyclerView = findViewById(R.id.ingredientListRecyclerView);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -89,32 +95,31 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
 
         mAuth = FirebaseAuth.getInstance();
 
-        recipeModelList = new ArrayList<>();
-        recipeAdapter = new RecipeAdapter(RecipeActivity.this, recipeModelList, this::onEditClick);
+        ingredientStorageModelList = new ArrayList<>();
+        ingredientStorageAdapter = new IngredientStorageAdapter(this, ingredientStorageModelList,this::onEditClick);
 
-        recyclerView.setAdapter(recipeAdapter);
+        recyclerView.setAdapter(ingredientStorageAdapter);
+
 
 //        CollectionReference collectionReference = db.collection("users")
 
         showData();
+
+
     }
 
 
     private void showCustomDialog(){
 
-        final Dialog dialog = new Dialog(RecipeActivity.this);
+        final Dialog dialog = new Dialog(IngredientStorageActivity.this);
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.recipe_input);
+        dialog.setContentView(R.layout.input_layout);
 
         //initializing edit text
-        final EditText titlek = dialog.findViewById(R.id.title_recipe_input);
-        final EditText categoryk= dialog.findViewById(R.id.category_recipe_input);
-        final EditText timek = dialog.findViewById(R.id.time_recipe_input);
-        final EditText servingsk= dialog.findViewById(R.id.servings_recipe_input);
-        final EditText commentsk = dialog.findViewById(R.id.comment_recipe_input);
-
+        final EditText namek = dialog.findViewById(R.id.item_input);
+        final EditText categoryk= dialog.findViewById(R.id.category_input);
 
         //to close the dialog
         final ImageView closeAlert = dialog.findViewById(R.id.closeAlert);
@@ -126,7 +131,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
             }
         });
 
-        Button submitButton = dialog.findViewById(R.id.btnRecipeEdit);
+        Button submitButton = dialog.findViewById(R.id.btnEdit);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,32 +140,25 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                 mAuth = FirebaseAuth.getInstance();
                 db = FirebaseFirestore.getInstance();
                 userID = mAuth.getCurrentUser().getUid();
-                DocumentReference documentReferenceReference = db.collection("users").document(userID).collection("Recipes").document();
+                DocumentReference documentReferenceReference = db.collection("users").document(userID).collection("Ingredient_Storage").document();
                 String id = documentReferenceReference.getId();
-                String title = titlek.getText().toString();
+                String name = namek.getText().toString();
                 String category = categoryk.getText().toString();
-                String time = timek.getText().toString();
-                String servings = servingsk.getText().toString();
-                String comments = commentsk.getText().toString();
 
 
-
-                if(TextUtils.isEmpty(title) || TextUtils.isEmpty(category) || TextUtils.isEmpty(time) || TextUtils.isEmpty(servings) || TextUtils.isEmpty(comments)){
-                    Toast.makeText(RecipeActivity.this, "Please enter all values", Toast.LENGTH_SHORT).show();
+                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(category)){
+                    Toast.makeText(IngredientStorageActivity.this, "Please enter all values", Toast.LENGTH_SHORT).show();
                     return;
                 }else {
 
-                    System.out.println(recipeModelList.size());
-                    RecipeModel recipeModel = new RecipeModel(title, category,time,servings,comments,id);
-                    recipeModelList.add(recipeModel);
-                    System.out.println(recipeModelList.size());
+                    System.out.println(ingredientStorageModelList.size());
+                    IngredientStorageModel ingredientStorageModel = new IngredientStorageModel(name, category,id);
+                    ingredientStorageModelList.add(ingredientStorageModel);
+                    System.out.println(ingredientStorageModelList.size());
 
                     HashMap<String, Object> map = new HashMap<>();
-                    map.put("title", title);
+                    map.put("description", name);
                     map.put("category", category);
-                    map.put("time", time);
-                    map.put("servings", servings);
-                    map.put("comments", comments);
                     map.put("id", id);
 
                     documentReferenceReference.set(map)
@@ -169,7 +167,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                                 public void onSuccess(Void aVoid) {
                                     dialog.dismiss();
                                     Log.d(TAG, "DocumentSnapshot successfully written!");
-                                    recipeAdapter.notifyDataSetChanged();
+                                    ingredientStorageAdapter.notifyDataSetChanged();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -188,27 +186,29 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
         dialog.show();
 
     }
+    //dialog.dismiss();
+    //ingredientAdapter.notifyDataSetChanged();
 
 
     private void showData(){
 
         CollectionReference collectionReference = db.collection("users");
-        collectionReference.document(userID).collection("Recipes").get()
+        collectionReference.document(userID).collection("Ingredient_Storage").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                        recipeModelList.clear();
+                        ingredientStorageModelList.clear();
 
                         for (DocumentSnapshot snapshot : task.getResult()){
-                            RecipeModel recipeModel = new RecipeModel(snapshot.getString("title"), snapshot.getString("category"), snapshot.getString("time"),snapshot.getString("servings"), snapshot.getString("comments"), snapshot.getString("id"));
-                            recipeModelList.add(recipeModel);
+                            IngredientStorageModel ingredientStorageModel = new IngredientStorageModel(snapshot.getString("description"), snapshot.getString("category"), snapshot.getString("id"));
+                            ingredientStorageModelList.add(ingredientStorageModel);
                             //System.out.println(ingredientModelList.size());
 
                         }
 
                         //Toast.makeText(IngredientActivity.this, "Ingredients shown", Toast.LENGTH_SHORT).show();
-                        recipeAdapter.notifyDataSetChanged();
+                        ingredientStorageAdapter.notifyDataSetChanged();
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -220,46 +220,24 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
 
     }
 
-
-
-    public void editContact(String title, String category, String time, String servings, String comments, String docID,int currentPosition){
-        RecipeModel obj = new RecipeModel(title,category,time,servings,comments,docID);
-        obj.setTitle(title);
-        obj.setCategory(category);
-        obj.setTime(time);
-        obj.setServings(servings);
-        obj.setComments(comments);
-        obj.setDocumentID(docID);
-        recipeAdapter.editDatalist(obj,currentPosition);
-        alertDialog.cancel();
-
-
-    }
-
-
     @Override
-    public void onEditClick(RecipeModel listData, int curPosition) {
+    public void onEditClick(IngredientStorageModel listData, int curPosition) {
+
+        //Show dialog
         AlertDialog.Builder builderObj = new AlertDialog.Builder(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.recipe_input, null);
+        View view = LayoutInflater.from(this).inflate(R.layout.input_layout, null);
         ImageView closeAlert = view.findViewById(R.id.closeAlert);
         //Close dialog button
         closeAlert.setOnClickListener(v -> {
             alertDialog.cancel();
         });
         //Initializing
-        Button btnEdit = view.findViewById(R.id.btnRecipeEdit);
-        EditText na = view.findViewById(R.id.title_recipe_input);
-        EditText cat = view.findViewById(R.id.category_recipe_input);
-        EditText prep = view.findViewById(R.id.time_recipe_input);
-        EditText serv = view.findViewById(R.id.servings_recipe_input);
-        EditText comm = view.findViewById(R.id.comment_recipe_input);
-
-        String findID = recipeModelList.get(curPosition).getDocumentID();
-        na.setText(listData.getTitle());
+        Button btnEdit = view.findViewById(R.id.btnEdit);
+        EditText na = view.findViewById(R.id.item_input);
+        EditText cat = view.findViewById(R.id.category_input);
+        String findID = ingredientStorageModelList.get(curPosition).getDocumentID();
+        na.setText(listData.getDescription());
         cat.setText(listData.getCategory());
-        prep.setText(listData.getTime());
-        serv.setText(listData.getServings());
-        comm.setText(listData.getComments());
         CollectionReference collectionReference = db.collection("users");
 
 
@@ -272,35 +250,24 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
 
 
 
-            String title = na.getText().toString();
-            String category = cat.getText().toString();
-            String time = prep.getText().toString();
-            String servings = serv.getText().toString();
-            String comments = comm.getText().toString();
+            String name = na.getText().toString();
+            String count = cat.getText().toString();
 
 
             //Error checking for missing fields on edit
             if (na.length() == 0) {
                 na.setError("Enter name");
             }else if (cat.length() == 0) {
-                cat.setError("Enter category");
-            }else if (prep.length() == 0) {
-                prep.setError("Enter prep time");
-            }else if (serv.length() == 0) {
-                serv.setError("Enter servings");
-            }else if (comm.length() == 0) {
-                comm.setError("Enter name");
+                cat.setError("Enter name");
+
             } else {
                 //editing the values and information
-                editContact(title,category,time,servings,comments,findID, curPosition);
+                editContact(name,count,findID, curPosition);
                 HashMap<String,Object> data = new HashMap<>();
-                data.put("title", title);
-                data.put("category", category);
-                data.put("time", time);
-                data.put("servings", servings);
-                data.put("comments", comments);
+                data.put("description",name);
+                data.put("category",count);
                 data.put("id",findID);
-                collectionReference.document(userID).collection("Recipes").document(findID)
+                collectionReference.document(userID).collection("Ingredient_Storage").document(findID)
                         .update(data)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -312,7 +279,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.w(TAG, "Error updating document", e);
-                                Toast.makeText(RecipeActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(IngredientStorageActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -323,8 +290,18 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
 
         alertDialog = builderObj.create();
         alertDialog.show();
-
     }
 
+
+    //Editing to recycler view
+    public void editContact(String name, String count,String docID,int currentPosition){
+        IngredientStorageModel obj = new IngredientStorageModel(name,count,docID);
+        obj.setDescription(name);
+        obj.setCategory(count);
+        ingredientStorageAdapter.editDatalist(obj,currentPosition);
+        alertDialog.cancel();
+
+
+    }
 
 }

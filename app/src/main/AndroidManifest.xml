@@ -16,6 +16,13 @@
         android:theme="@style/Theme.FoodOrg"
         tools:targetApi="31">
         <activity
+            android:name=".IngredientActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".RecipeActivity"
             android:exported="false">
             <meta-data
@@ -23,7 +30,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".IngredientActivity"
+            android:name=".IngredientStorageActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -1,15 +1,15 @@
 package com.example.foodorg;
 
-public class IngredientModel {
+public class IngredientStorageModel {
+
     String description;
     String category;
     String documentID;
 
-    public IngredientModel(String description, String category, String documentID) {
+    public IngredientStorageModel(String description, String category, String documentID) {
         this.description = description;
         this.category = category;
         this.documentID = documentID;
-
     }
 
     public String getDescription() {
@@ -35,6 +35,4 @@ public class IngredientModel {
     public void setDocumentID(String documentID) {
         this.documentID = documentID;
     }
-
-
 }

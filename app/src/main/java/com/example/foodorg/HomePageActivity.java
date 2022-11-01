@@ -13,7 +13,8 @@ public class HomePageActivity extends AppCompatActivity {
 
     Button returnLogin;
     ImageButton recipeBtn;
-    ImageButton ingredientBtn;
+    ImageButton ingredientStorageBtn;
+    Button ingredientBtn;
     TextView userText;
 
     @Override
@@ -22,13 +23,21 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.homepage);
 
         returnLogin = findViewById(R.id.LogOutButton);
-        ingredientBtn = findViewById(R.id.ingredientButtonHome);
+        ingredientStorageBtn = findViewById(R.id.ingredientButtonHome);
         recipeBtn = findViewById(R.id.recipeButtonHome);
+        ingredientBtn = findViewById(R.id.ingredientsBtn);
 
 
         //userText = findViewById(R.id.userName);
         //userText.setText(getIntent().getExtras().getString("name"));
 
+        ingredientBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(HomePageActivity.this,IngredientActivity.class);
+                startActivity(i);
+            }
+        });
 
         returnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,10 +47,10 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-        ingredientBtn.setOnClickListener(new View.OnClickListener() {
+        ingredientStorageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomePageActivity.this, IngredientActivity.class);
+                Intent i = new Intent(HomePageActivity.this, IngredientStorageActivity.class);
                 startActivity(i);
             }
         });
