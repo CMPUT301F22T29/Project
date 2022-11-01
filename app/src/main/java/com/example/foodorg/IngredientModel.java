@@ -6,6 +6,7 @@ public class IngredientModel {
     String category;
     String documentID;
 
+
     public IngredientModel(String description, String category, String documentID) {
         this.description = description;
         this.category = category;
