@@ -30,6 +30,24 @@
         android:hint="Category"
         android:inputType="textCapCharacters"
         android:minHeight="48dp" />
+    <EditText
+        android:id="@+id/amount_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:hint="Amount"
+        android:inputType="textCapCharacters"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/unit_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:hint="Unit"
+        android:inputType="textCapCharacters"
+        android:minHeight="48dp" />
+
 
 
 

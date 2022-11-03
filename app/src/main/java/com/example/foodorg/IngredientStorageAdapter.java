@@ -48,14 +48,14 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
 
-        holder.IStorageItemName.setText(ingredientStorageModelList.get(position).getName());
-        holder.IStorageItemDescription.setText(ingredientStorageModelList.get(position).getDescription());
-        holder.IStorageItemCategory.setText(ingredientStorageModelList.get(position).getCategory());
+        holder.storageItemName.setText(ingredientStorageModelList.get(position).getName());
+        holder.storageItemDescription.setText(ingredientStorageModelList.get(position).getDescription());
+        holder.storageItemCategory.setText(ingredientStorageModelList.get(position).getCategory());
 
-        holder.IStorageItemBB.setText(ingredientStorageModelList.get(position).getBestBefore());
-        holder.IStorageItemLocation.setText(ingredientStorageModelList.get(position).getLocation());
-        holder.IStorageItemAmount.setText(ingredientStorageModelList.get(position).getAmount());
-        holder.IStorageItemUnit.setText(ingredientStorageModelList.get(position).getUnit());
+        holder.storageItemBB.setText(ingredientStorageModelList.get(position).getBestBefore());
+        holder.storageItemLocation.setText(ingredientStorageModelList.get(position).getLocation());
+        holder.storageItemAmount.setText(ingredientStorageModelList.get(position).getAmount());
+        holder.storageItemUnit.setText(ingredientStorageModelList.get(position).getUnit());
 
         holder.editBtnIStorage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,22 +104,22 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
 
-        TextView IStorageItemName, IStorageItemDescription, IStorageItemCategory;
+        TextView storageItemName, storageItemDescription, storageItemCategory;
 
-        TextView IStorageItemBB, IStorageItemLocation, IStorageItemAmount, IStorageItemUnit;
+        TextView storageItemBB, storageItemLocation, storageItemAmount, storageItemUnit;
         Button editBtnIStorage,delBtnIStorage;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            IStorageItemName = itemView.findViewById(R.id.IStorageItemViewName);
-            IStorageItemCategory = itemView.findViewById(R.id.IStorageItemViewCategory);
-            IStorageItemDescription = itemView.findViewById(R.id.IStorageItemViewDescription);
+            storageItemName = itemView.findViewById(R.id.storageItemViewName);
+            storageItemCategory = itemView.findViewById(R.id.storageItemViewCategory);
+            storageItemDescription = itemView.findViewById(R.id.storageItemViewDescription);
 
-            IStorageItemBB = itemView.findViewById(R.id.IStorageItemViewBestBefore);
-            IStorageItemLocation = itemView.findViewById(R.id.IStorageItemViewLocation);
-            IStorageItemAmount = itemView.findViewById(R.id.IStorageItemViewAmount);
-            IStorageItemUnit = itemView.findViewById(R.id.IStorageItemViewUnit);
+            storageItemBB = itemView.findViewById(R.id.storageItemViewBestBefore);
+            storageItemLocation = itemView.findViewById(R.id.storageItemViewLocation);
+            storageItemAmount = itemView.findViewById(R.id.storageItemViewAmount);
+            storageItemUnit = itemView.findViewById(R.id.storageItemViewUnit);
 
             editBtnIStorage = itemView.findViewById(R.id.editIngredient);
             delBtnIStorage = itemView.findViewById(R.id.deleteIngredient);

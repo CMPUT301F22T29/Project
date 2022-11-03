@@ -46,8 +46,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.MyViewHolder holder, int position) {
-        holder.desc.setText(ingredientModelList.get(position).getDescription());
+        holder.description.setText(ingredientModelList.get(position).getDescription());
         holder.category.setText(ingredientModelList.get(position).getCategory());
+        holder.unit.setText(ingredientModelList.get(position).getUnit());
+        holder.amount.setText(ingredientModelList.get(position).getAmount());
+
+
+
         holder.editbutt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,14 +103,17 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
 
-        TextView desc, category;
+        TextView description, category,unit,amount;
         Button editbutt,delbutt;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            desc = itemView.findViewById(R.id.name_ingredient);
+            description = itemView.findViewById(R.id.name_ingredient);
             category = itemView.findViewById(R.id.category_ingredient);
+            amount= itemView.findViewById(R.id.amount_ingredient);
+            unit = itemView.findViewById(R.id.unit_ingredient);
+
             editbutt = itemView.findViewById(R.id.editIngredientBtn);
             delbutt = itemView.findViewById(R.id.deleteIngredientBtn);
 
@@ -123,6 +131,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
         ingredientModelList.get(curpos).setCategory(dataClassObj.getCategory());
         ingredientModelList.get(curpos).setDocumentID(dataClassObj.getDocumentID());
         ingredientModelList.get(curpos).setRecipeID(dataClassObj.getRecipeID());
+        ingredientModelList.get(curpos).setAmount(dataClassObj.getAmount());
+        ingredientModelList.get(curpos).setUnit(dataClassObj.getUnit());
 
         notifyDataSetChanged();
     }
