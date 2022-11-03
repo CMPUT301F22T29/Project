@@ -9,13 +9,17 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HomePageActivity extends AppCompatActivity {
 
     Button returnLogin;
     ImageButton recipeBtn;
     ImageButton ingredientStorageBtn;
 
-    TextView userText;
+    TextView usernameText;
+    String userEmail;
+    private FirebaseAuth fireBaseAuthentication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +30,11 @@ public class HomePageActivity extends AppCompatActivity {
         ingredientStorageBtn = findViewById(R.id.ingredientButtonHome);
         recipeBtn = findViewById(R.id.recipeButtonHome);
 
-
-
-        //userText = findViewById(R.id.userName);
-        //userText.setText(getIntent().getExtras().getString("name"));
+        fireBaseAuthentication = FirebaseAuth.getInstance();
+        usernameText = findViewById(R.id.userName);
+        userEmail = fireBaseAuthentication.getCurrentUser().getEmail();
+        String[] arrOfStr = userEmail.split("@", 2);
+        usernameText.setText(arrOfStr[0]);
 
 
         returnLogin.setOnClickListener(new View.OnClickListener() {

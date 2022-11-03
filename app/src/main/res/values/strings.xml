@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">FoodOrg</string>
+    <string-array name="IStorageSortSpinnerList">
+        <item>name</item>
+        <item>description</item>
+        <item>bestBefore</item>
+        <item>location</item>
+        <item>amount</item>
+        <item>unit</item>
+        <item>category</item>
+    </string-array>
 </resources>
