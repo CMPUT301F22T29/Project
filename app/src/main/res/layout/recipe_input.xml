@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
         android:hint="Title"
-        android:inputType="textCapCharacters"
+        android:inputType="text"
         android:minHeight="48dp" />
     <EditText
         android:id="@+id/category_recipe_input"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
         android:hint="Category"
-        android:inputType="textCapCharacters"
+        android:inputType="text"
         android:minHeight="48dp" />
     <EditText
         android:id="@+id/time_recipe_input"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
         android:hint="Time(MINUTES)"
-        android:inputType="textCapCharacters"
+        android:inputType="number"
         android:minHeight="48dp" />
     <EditText
         android:id="@+id/servings_recipe_input"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
         android:hint="Servings"
-        android:inputType="textCapCharacters"
+        android:inputType="number"
         android:minHeight="48dp" />
 
     <EditText
@@ -64,9 +64,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="10sp"
+        android:backgroundTint="@color/black"
         android:layout_marginBottom="10dp"
         android:layout_weight="0"
-        android:text="Done" />
+        android:text="Confirm and Add ingredients" />
 
 
 

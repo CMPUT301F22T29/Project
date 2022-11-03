@@ -3,6 +3,7 @@ package com.example.foodorg;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +59,18 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
             }
         });
 
+        holder.ingredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String findID = recipeModelList.get(position).getDocumentID();
+                Intent i = new Intent(context,IngredientActivity.class);
+                i.putExtra("recipe_id",findID);
+                context.startActivity(i);
+
+            }
+        });
+
+
         holder.delbutt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,7 +111,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView title, category, prep, serving, comment ;
-        Button editbutt,delbutt;
+        Button editbutt,delbutt,ingredientButton;
 
 
 
@@ -112,6 +125,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
 
             editbutt = itemView.findViewById(R.id.editRecipe);
             delbutt = itemView.findViewById(R.id.deleteRecipe);
+            ingredientButton = itemView.findViewById(R.id.ingredientsRecipeCardBtn);
         }
     }
 

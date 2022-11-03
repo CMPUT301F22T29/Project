@@ -16,9 +16,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,6 +51,8 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
     private List<RecipeModel> recipeModelList;
 
     AlertDialog alertDialog;
+
+    private Spinner recipeSpinner;
 
     String userID;
     private FirebaseAuth mAuth;
@@ -96,9 +101,71 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
 
 //        CollectionReference collectionReference = db.collection("users")
 
+        recipeSpinner = (Spinner) findViewById(R.id.spinnerRecipe);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.recipeSpinnerList, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        recipeSpinner.setAdapter(adapter);
+
+        recipeSpinner.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+                        System.out.println(recipeSpinner.getItemAtPosition(position));
+                        System.out.println("nice");
+
+                        orderDataRecipe(String.valueOf(recipeSpinner.getItemAtPosition(position)));
+                        //Toast.makeText(IngredientStorageActivity.this, "what you clicked " +
+                        //IStorageSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                }
+        );
+
+
         showData();
     }
 
+    private void orderDataRecipe(String by) {
+
+        CollectionReference collectionReference = db.collection("users");
+        collectionReference.document(userID).collection("Recipes")
+                .orderBy(by)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        recipeModelList.clear();
+
+                        for (DocumentSnapshot snapshot : task.getResult()){
+                            RecipeModel recipeModel = new RecipeModel(snapshot.getString("title"), snapshot.getString("category"),
+                                    String.valueOf(snapshot.getLong("time").intValue()),String.valueOf(snapshot.getLong("servings").intValue()), snapshot.getString("comments"),
+                                    snapshot.getString("id"));
+                            recipeModelList.add(recipeModel);
+                            //System.out.println(ingredientModelList.size());
+
+                        }
+
+                        recipeAdapter.notifyDataSetChanged();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Toast.makeText(IngredientActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+    }
 
 
     private void showCustomDialog(){
@@ -156,11 +223,14 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                     recipeModelList.add(recipeModel);
                     System.out.println(recipeModelList.size());
 
+                    Integer time_number = Integer.parseInt(time);
+                    Integer servings_number = Integer.parseInt(servings);
+
                     HashMap<String, Object> map = new HashMap<>();
                     map.put("title", title);
                     map.put("category", category);
-                    map.put("time", time);
-                    map.put("servings", servings);
+                    map.put("time", time_number);
+                    map.put("servings", servings_number);
                     map.put("comments", comments);
                     map.put("id", id);
 
@@ -169,9 +239,12 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     dialog.dismiss();
-                                    IngredientsListCustomDialog(id);
+                                    //IngredientsListCustomDialog(id);
                                     Log.d(TAG, "DocumentSnapshot successfully written!");
                                     recipeAdapter.notifyDataSetChanged();
+                                    Intent i = new Intent(RecipeActivity.this, IngredientActivity.class);
+                                    i.putExtra("recipe_id",id);
+                                    startActivity(i);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -191,44 +264,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
 
     }
 
-    private void IngredientsListCustomDialog(String findID) {
 
-
-
-        final Dialog dialog = new Dialog(RecipeActivity.this);
-
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.add_ingredients_recipe);
-
-        final ImageView closeAlert = dialog.findViewById(R.id.closeAlert);
-
-        closeAlert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
-        Button ingredientAddBtn = dialog.findViewById(R.id.addIngredientsRecipeBtn);
-        ingredientAddBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(RecipeActivity.this, IngredientActivity.class);
-                i.putExtra("recipe_id",findID);
-                startActivity(i);
-                dialog.dismiss();
-
-            }
-
-
-
-        });
-
-        dialog.show();
-
-
-    }
 
 
     private void showData(){
@@ -242,7 +278,9 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                         recipeModelList.clear();
 
                         for (DocumentSnapshot snapshot : task.getResult()){
-                            RecipeModel recipeModel = new RecipeModel(snapshot.getString("title"), snapshot.getString("category"), snapshot.getString("time"),snapshot.getString("servings"), snapshot.getString("comments"), snapshot.getString("id"));
+                            RecipeModel recipeModel = new RecipeModel(snapshot.getString("title"), snapshot.getString("category"),
+                                    String.valueOf(snapshot.getLong("time").intValue()),String.valueOf(snapshot.getLong("servings").intValue()), snapshot.getString("comments"),
+                                    snapshot.getString("id"));
                             recipeModelList.add(recipeModel);
                             //System.out.println(ingredientModelList.size());
 
@@ -335,10 +373,12 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                 //editing the values and information
                 editContact(title,category,time,servings,comments,findID, curPosition);
                 HashMap<String,Object> data = new HashMap<>();
+                Integer time_number = Integer.parseInt(time);
+                Integer servings_number = Integer.parseInt(servings);
                 data.put("title", title);
                 data.put("category", category);
-                data.put("time", time);
-                data.put("servings", servings);
+                data.put("time", time_number);
+                data.put("servings", servings_number);
                 data.put("comments", comments);
                 data.put("id",findID);
                 collectionReference.document(userID).collection("Recipes").document(findID)
@@ -356,7 +396,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                                 Toast.makeText(RecipeActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
                             }
                         });
-                IngredientsListCustomDialog(findID);
+                //IngredientsListCustomDialog(findID);
 
 
 

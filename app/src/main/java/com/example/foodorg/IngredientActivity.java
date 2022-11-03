@@ -131,7 +131,9 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
                         if(task.isSuccessful()) {
                             DocumentSnapshot doc = task.getResult();
-                            RecipeModel recipeModel = new RecipeModel(doc.getString("title"), doc.getString("category"), doc.getString("time"),doc.getString("servings"), doc.getString("comments"), doc.getString("id"));
+                            RecipeModel recipeModel = new RecipeModel(doc.getString("title"), doc.getString("category"),
+                                    String.valueOf(doc.getLong("time").intValue()),String.valueOf(doc.getLong("servings").intValue()),
+                                    doc.getString("comments"), doc.getString("id"));
                             recipeModelList.add(recipeModel);
                             recipeTitle.setText("Ingredients list for "+recipeModel.getTitle());
                             recipePrepTime.setText(recipeModel.getTime());

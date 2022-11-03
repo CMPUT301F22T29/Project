@@ -79,28 +79,27 @@
             android:id="@+id/AddButtonRecipe"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
+
+            android:layout_marginLeft="30dp"
 
             android:backgroundTint="#04AF57"
             android:fontFamily="@font/comfortaabold"
+            android:layout_gravity="center_vertical"
 
             android:text="ADD" />
+
 
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/sortButtonRecipe"
-            android:layout_width="90dp"
+        <Spinner
+            android:id="@+id/spinnerRecipe"
+            android:layout_marginRight="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="60dp"
-
-            android:backgroundTint="#1C1B64"
-            android:fontFamily="@font/comfortaabold"
-
-            android:text="SORT" />
+            android:layout_weight="1" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
