@@ -15,81 +15,183 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/shadow">
 
-        <TextView
-            android:id="@+id/name_ingredient"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#2EACA1"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="name"
-            android:textAlignment="center"
-            android:textColor="#263238"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/category_ingredient"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:text="category" />
-
-
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-
-
-            <TextView
-                android:id="@+id/location_ingredient"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="location"
-                android:textSize="20sp"
-                android:textAlignment="center"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:background="#EFF3F2"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/amount_ingredient"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="amount"
-                android:textSize="20sp"
-                android:textAlignment="center"/>
+                android:inputType="textPersonName"
+                android:text="Ingredient Name:"
+
+                android:fontFamily="@font/comfortaabold"
+
+                android:layout_marginLeft="40dp"
+                android:textAlignment="center"
+
+                android:textColor="#263238"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
 
 
+            <TextView
+                android:id="@+id/name_ingredient"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaabold"
+
+                android:text="name"
+
+                android:textAlignment="center"
+
+                android:textColor="#263238"
+                android:textSize="12sp" />
 
         </LinearLayout>
+
+
+
+
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Unit:"
+
+                android:fontFamily="@font/comfortaaregular"
+
+                android:layout_marginLeft="40dp"
+                android:textAlignment="center"
+
+                android:textColor="#263238"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
 
             <TextView
                 android:id="@+id/unit_ingredient"
-                android:layout_width="50dp"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="unit"
-                android:textSize="20sp"
-                android:textAlignment="center"/>
 
+                android:textAlignment="center"
+                android:text="time"
 
+                android:fontFamily="@font/comfortaaregular"
+
+                android:textColor="#263238"
+                android:textSize="12sp" />
 
         </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Amount:"
+
+                android:layout_marginLeft="40dp"
+                android:textAlignment="center"
+
+                android:fontFamily="@font/comfortaaregular"
+
+                android:textColor="#263238"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+
+            <TextView
+                android:id="@+id/amount_ingredient"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+
+                android:textAlignment="center"
+                android:text="amount"
+
+                android:fontFamily="@font/comfortaaregular"
+
+                android:textColor="#263238"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Category:"
+
+                android:layout_marginLeft="40dp"
+                android:textAlignment="center"
+
+                android:fontFamily="@font/comfortaaregular"
+
+                android:textColor="#263238"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+
+            <TextView
+                android:id="@+id/category_ingredient"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+
+                android:textAlignment="center"
+                android:text="category"
+
+                android:fontFamily="@font/comfortaaregular"
+
+                android:textColor="#263238"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,8 +202,11 @@
             <Button
                 android:id="@+id/editIngredientBtn"
                 android:layout_width="110dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
+                android:textSize="10sp"
+                android:layout_marginLeft="30dp"
+                android:fontFamily="@font/comfortaaregular"
                 android:text="EDIT" />
 
             <View
@@ -112,15 +217,19 @@
             <Button
                 android:id="@+id/deleteIngredientBtn"
                 android:layout_width="110dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
+                android:layout_marginRight="60dp"
+                android:fontFamily="@font/comfortaaregular"
+                android:textSize="10sp"
                 android:text="DELETE" />
 
         </LinearLayout>
 
 
-
     </LinearLayout>
+
+
 
 
 </androidx.cardview.widget.CardView>

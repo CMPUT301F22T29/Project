@@ -122,8 +122,8 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
                             Toast.makeText(IngredientStorageActivity.this, "nice", Toast.LENGTH_SHORT).show();
                         }
                         orderData(String.valueOf(IStorageSpinner.getItemAtPosition(position)));
-                        Toast.makeText(IngredientStorageActivity.this, "what you clicked " +
-                                IStorageSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(IngredientStorageActivity.this, "what you clicked " +
+                                //IStorageSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
 
                     }
 

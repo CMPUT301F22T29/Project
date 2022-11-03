@@ -13,6 +13,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +43,8 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
     private Button returnHome;
     private Button add;
 
-
+    private RecipeAdapter recipeAdapter;
+    private List<RecipeModel> recipeModelList;
 
     private RecyclerView recyclerView;
     private FirebaseFirestore db;
@@ -71,7 +75,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
         returnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(IngredientActivity.this, HomePageActivity.class);
+                Intent i = new Intent(IngredientActivity.this, RecipeActivity.class);
                 startActivity(i);
             }
         });
@@ -84,6 +88,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
                 Toast.makeText(IngredientActivity.this, "Dialog shown", Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
 
@@ -101,9 +106,50 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
         recyclerView.setAdapter(ingredientAdapter);
 
 
-//        CollectionReference collectionReference = db.collection("users")
+        showRecipeDetails();
 
         showData();
+
+
+    }
+
+    private void showRecipeDetails(){
+        TextView recipeTitle = (TextView)findViewById(R.id.recipe_tile);
+        TextView recipePrepTime = (TextView)findViewById(R.id.prep_time_recipe);
+        TextView recipeServings = (TextView) findViewById(R.id.servings_recipe);
+        TextView recipeComments = (TextView) findViewById(R.id.comments_recipe);
+        TextView recipeCategory = (TextView)findViewById(R.id.category_recipe);
+        recipeModelList = new ArrayList<>();
+
+        DocumentReference collectionReference = db.collection("users").document(userID);
+        collectionReference.collection("Recipes").document(recipeID).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                        recipeModelList.clear();
+
+                        if(task.isSuccessful()) {
+                            DocumentSnapshot doc = task.getResult();
+                            RecipeModel recipeModel = new RecipeModel(doc.getString("title"), doc.getString("category"), doc.getString("time"),doc.getString("servings"), doc.getString("comments"), doc.getString("id"));
+                            recipeModelList.add(recipeModel);
+                            recipeTitle.setText("Ingredients list for "+recipeModel.getTitle());
+                            recipePrepTime.setText(recipeModel.getTime());
+                            recipeServings.setText(recipeModel.getServings());
+                            recipeComments.setText(recipeModel.getComments());
+                            recipeCategory.setText(recipeModel.getCategory());
+                        }
+
+
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Toast.makeText(IngredientActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
 
     }
@@ -118,8 +164,10 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
         dialog.setContentView(R.layout.input_layout);
 
         recipeID= getIntent().getExtras().getString("recipe_id");
-        final EditText namek = dialog.findViewById(R.id.item_input);
-        final EditText categoryk= dialog.findViewById(R.id.category_input);
+        final EditText nameText = dialog.findViewById(R.id.item_input);
+        final EditText categoryText= dialog.findViewById(R.id.category_input);
+        final EditText amountText = dialog.findViewById(R.id.amount_input);
+        final EditText costText = dialog.findViewById(R.id.unit_input);
 
         //to close the dialog
         final ImageView closeAlert = dialog.findViewById(R.id.closeAlert);
@@ -142,18 +190,20 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
                 userID = mAuth.getCurrentUser().getUid();
                 DocumentReference documentReferenceReference = db.collection("users").document(userID).collection("Recipes").document(recipeID).collection("Ingredients").document();
                 String id = documentReferenceReference.getId();
-                String name = namek.getText().toString();
-                String category = categoryk.getText().toString();
+                String name = nameText.getText().toString();
+                String category = categoryText.getText().toString();
+                String unit = costText.getText().toString();
+                String amount = amountText.getText().toString();
 
 
-                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(category)){
+                if(TextUtils.isEmpty(name) || TextUtils.isEmpty(category) || TextUtils.isEmpty(unit) || TextUtils.isEmpty(amount)){
                     Toast.makeText(IngredientActivity.this, "Please enter all values", Toast.LENGTH_SHORT).show();
                     return;
                 }else {
 
                     System.out.println(ingredientModelList.size());
                     recipeID= getIntent().getExtras().getString("recipe_id");
-                    IngredientModel ingredientModel = new IngredientModel(name, category,id,recipeID);
+                    IngredientModel ingredientModel = new IngredientModel(name, category,id,recipeID,amount,unit);
                     ingredientModelList.add(ingredientModel);
                     System.out.println(ingredientModelList.size());
 
@@ -162,6 +212,8 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
                     map.put("category", category);
                     map.put("id", id);
                     map.put("recipe_id",recipeID);
+                    map.put("unit",unit);
+                    map.put("amount",amount);
 
                     documentReferenceReference.set(map)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -203,7 +255,7 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
                         ingredientModelList.clear();
 
                         for (DocumentSnapshot snapshot : task.getResult()){
-                            IngredientModel ingredientModel = new IngredientModel(snapshot.getString("description"), snapshot.getString("category"), snapshot.getString("id"),snapshot.getString("recipe_id"));
+                            IngredientModel ingredientModel = new IngredientModel(snapshot.getString("description"), snapshot.getString("category"), snapshot.getString("id"),snapshot.getString("recipe_id"),snapshot.getString("unit"),snapshot.getString("amount"));
                             ingredientModelList.add(ingredientModel);
                             //System.out.println(ingredientModelList.size());
 
@@ -225,9 +277,9 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
 
     //Editing to recycler view
-    public void editContact(String name, String count,String docID,String recipeID,int currentPosition){
+    public void editContact(String name, String count,String docID,String recipeID,String unit,String amount,int currentPosition){
 
-        IngredientModel obj = new IngredientModel(name,count,docID,recipeID);
+        IngredientModel obj = new IngredientModel(name,count,docID,recipeID,unit,amount);
         obj.setDescription(name);
         obj.setCategory(count);
         //obj.setRecipeID(recipeID);
@@ -249,12 +301,21 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
         });
         //Initializing
         Button btnEdit = view.findViewById(R.id.btnEdit);
-        EditText na = view.findViewById(R.id.item_input);
-        EditText cat = view.findViewById(R.id.category_input);
+
+        EditText nameInput = view.findViewById(R.id.item_input);
+        EditText categoryInput = view.findViewById(R.id.category_input);
+        EditText amountInput = view.findViewById(R.id.amount_input);
+        EditText unitInput = view.findViewById(R.id.unit_input);
+
+
+
         String findID = ingredientModelList.get(curPosition).getDocumentID();
         String findrecipeID = ingredientModelList.get(curPosition).getRecipeID();
-        na.setText(listData.getDescription());
-        cat.setText(listData.getCategory());
+
+        nameInput.setText(listData.getDescription());
+        categoryInput.setText(listData.getCategory());
+        amountInput.setText(listData.getAmount());
+        unitInput.setText(listData.getUnit());
         CollectionReference collectionReference = db.collection("users");
 
 
@@ -267,23 +328,32 @@ public class IngredientActivity extends AppCompatActivity implements IngredientA
 
 
 
-            String name = na.getText().toString();
-            String count = cat.getText().toString();
+            String name = nameInput.getText().toString();
+            String category = categoryInput.getText().toString();
+            String amount = amountInput.getText().toString();
+            String unit = unitInput.getText().toString();
 
 
             //Error checking for missing fields on edit
-            if (na.length() == 0) {
-                na.setError("Enter name");
-            }else if (cat.length() == 0) {
-                cat.setError("Enter name");
+            if (nameInput.length() == 0) {
+                nameInput.setError("Enter name");
+            }else if (categoryInput.length() == 0) {
+                categoryInput.setError("Enter name");
+            }else if (amountInput.length() == 0) {
+                amountInput.setError("Enter name");
+            }else if (unitInput.length() == 0) {
+                unitInput.setError("Enter name");
 
             } else {
 
                 //editing the values and information
-                editContact(name,count,findID,findrecipeID, curPosition);
+                editContact(name,category,findID,findrecipeID,unit,amount, curPosition);
                 HashMap<String,Object> data = new HashMap<>();
                 data.put("description",name);
-                data.put("category",count);
+                data.put("category",category);
+                data.put("unit",unit);
+                data.put("amount",amount);
+
                 data.put("id",findID);
                 data.put("recipe_id",findrecipeID);
                 collectionReference.document(userID).collection("Recipes").document(findrecipeID).collection("Ingredients").document(findID)

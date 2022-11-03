@@ -42,7 +42,7 @@
 
 
             <TextView
-                android:id="@+id/IStorageItemViewName"
+                android:id="@+id/storageItemViewName"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaabold"
@@ -84,7 +84,7 @@
 
 
             <TextView
-                android:id="@+id/IStorageItemViewDescription"
+                android:id="@+id/storageItemViewDescription"
                 android:layout_width="240dp"
                 android:layout_height="50dp"
 
@@ -125,7 +125,7 @@
 
 
             <TextView
-                android:id="@+id/IStorageItemViewBestBefore"
+                android:id="@+id/storageItemViewBestBefore"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
 
@@ -167,7 +167,7 @@
 
 
             <TextView
-                android:id="@+id/IStorageItemViewLocation"
+                android:id="@+id/storageItemViewLocation"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
 
@@ -209,7 +209,7 @@
 
 
             <TextView
-                android:id="@+id/IStorageItemViewAmount"
+                android:id="@+id/storageItemViewAmount"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
 
@@ -234,7 +234,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Unit:"
+                android:text="Cost($):"
 
                 android:layout_marginLeft="40dp"
                 android:textAlignment="center"
@@ -251,7 +251,7 @@
 
 
             <TextView
-                android:id="@+id/IStorageItemViewUnit"
+                android:id="@+id/storageItemViewUnit"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
 
@@ -293,7 +293,7 @@
 
 
             <TextView
-                android:id="@+id/IStorageItemViewCategory"
+                android:id="@+id/storageItemViewCategory"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
 
