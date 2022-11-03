@@ -9,4 +9,12 @@
         <item>unit</item>
         <item>category</item>
     </string-array>
+
+    <string-array name="recipeSpinnerList">
+        <item>title</item>
+        <item>category</item>
+        <item>servings</item>
+        <item>time</item>
+
+    </string-array>
 </resources>

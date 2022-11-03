@@ -245,23 +245,30 @@
                 android:layout_gravity="center"
                 android:textSize="10sp"
                 android:layout_marginLeft="30dp"
+                android:layout_marginRight="10dp"
                 android:fontFamily="@font/comfortaaregular"
                 android:text="EDIT" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+            <Button
+                android:id="@+id/ingredientsRecipeCardBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/comfortaaregular"
+                android:text="Ingredients"
+                android:textSize="10sp" />
+
 
             <Button
                 android:id="@+id/deleteRecipe"
                 android:layout_width="110dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:layout_marginRight="60dp"
+                android:layout_marginRight="30dp"
                 android:fontFamily="@font/comfortaaregular"
-                android:textSize="10sp"
-                android:text="DELETE" />
+                android:text="DELETE"
+                android:textSize="10sp" />
 
         </LinearLayout>
 
