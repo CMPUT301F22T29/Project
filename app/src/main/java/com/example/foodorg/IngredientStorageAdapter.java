@@ -48,16 +48,23 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
 
-        holder.desc.setText(ingredientStorageModelList.get(position).getDescription());
-        holder.category.setText(ingredientStorageModelList.get(position).getCategory());
-        holder.editbutt.setOnClickListener(new View.OnClickListener() {
+        holder.IStorageItemName.setText(ingredientStorageModelList.get(position).getName());
+        holder.IStorageItemDescription.setText(ingredientStorageModelList.get(position).getDescription());
+        holder.IStorageItemCategory.setText(ingredientStorageModelList.get(position).getCategory());
+
+        holder.IStorageItemBB.setText(ingredientStorageModelList.get(position).getBestBefore());
+        holder.IStorageItemLocation.setText(ingredientStorageModelList.get(position).getLocation());
+        holder.IStorageItemAmount.setText(ingredientStorageModelList.get(position).getAmount());
+        holder.IStorageItemUnit.setText(ingredientStorageModelList.get(position).getUnit());
+
+        holder.editBtnIStorage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TheOnEditListener.onEditClick(ingredientStorageModelList.get(position), position);
             }
         });
 
-        holder.delbutt.setOnClickListener(new View.OnClickListener() {
+        holder.delBtnIStorage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String findID = ingredientStorageModelList.get(position).getDocumentID();
@@ -81,7 +88,6 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
                                 Log.w(TAG, "Error deleting document", e);
                             }
                         });
-
             }
         });
 
@@ -98,16 +104,25 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
 
-        TextView desc, category;
-        Button editbutt,delbutt;
+        TextView IStorageItemName, IStorageItemDescription, IStorageItemCategory;
+
+        TextView IStorageItemBB, IStorageItemLocation, IStorageItemAmount, IStorageItemUnit;
+        Button editBtnIStorage,delBtnIStorage;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            desc = itemView.findViewById(R.id.name);
-            category = itemView.findViewById(R.id.category);
-            editbutt = itemView.findViewById(R.id.editIngredient);
-            delbutt = itemView.findViewById(R.id.deleteIngredient);
+            IStorageItemName = itemView.findViewById(R.id.IStorageItemViewName);
+            IStorageItemCategory = itemView.findViewById(R.id.IStorageItemViewCategory);
+            IStorageItemDescription = itemView.findViewById(R.id.IStorageItemViewDescription);
+
+            IStorageItemBB = itemView.findViewById(R.id.IStorageItemViewBestBefore);
+            IStorageItemLocation = itemView.findViewById(R.id.IStorageItemViewLocation);
+            IStorageItemAmount = itemView.findViewById(R.id.IStorageItemViewAmount);
+            IStorageItemUnit = itemView.findViewById(R.id.IStorageItemViewUnit);
+
+            editBtnIStorage = itemView.findViewById(R.id.editIngredient);
+            delBtnIStorage = itemView.findViewById(R.id.deleteIngredient);
 
         }
     }
@@ -117,9 +132,16 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
 
     }
     public void editDatalist(IngredientStorageModel dataClassObj, int curpos){
+
+        ingredientStorageModelList.get(curpos).setName(dataClassObj.getName());
         ingredientStorageModelList.get(curpos).setDescription(dataClassObj.getDescription());
         ingredientStorageModelList.get(curpos).setCategory(dataClassObj.getCategory());
         ingredientStorageModelList.get(curpos).setDocumentID(dataClassObj.getDocumentID());
+
+        ingredientStorageModelList.get(curpos).setBestBefore(dataClassObj.getBestBefore());
+        ingredientStorageModelList.get(curpos).setLocation(dataClassObj.getLocation());
+        ingredientStorageModelList.get(curpos).setAmount(dataClassObj.getAmount());
+        ingredientStorageModelList.get(curpos).setUnit(dataClassObj.getUnit());
 
         notifyDataSetChanged();
     }

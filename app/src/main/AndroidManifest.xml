@@ -33,13 +33,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".IngredientStorageActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".RegistrationActivity"
             android:exported="false" />
         <activity
@@ -59,6 +52,13 @@
             android:name=".HomePageActivity"
             android:exported="false"
             android:launchMode="singleTask">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".IngredientStorageActivity"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
