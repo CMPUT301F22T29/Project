@@ -122,8 +122,8 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
                             Toast.makeText(IngredientStorageActivity.this, "nice", Toast.LENGTH_SHORT).show();
                         }
                         orderData(String.valueOf(IStorageSpinner.getItemAtPosition(position)));
-                        //Toast.makeText(IngredientStorageActivity.this, "what you clicked " +
-                                //IStorageSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(IngredientStorageActivity.this, "what you clicked " +
+                                IStorageSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -208,8 +208,8 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
 
 
                 if(TextUtils.isEmpty(nameIS) || TextUtils.isEmpty(descriptionIS) || TextUtils.isEmpty(categoryIS) ||
-                TextUtils.isEmpty(bbIS) || TextUtils.isEmpty(locationIS) || TextUtils.isEmpty(amountIS) ||
-                TextUtils.isEmpty(unitIS)){
+                        TextUtils.isEmpty(bbIS) || TextUtils.isEmpty(locationIS) || TextUtils.isEmpty(amountIS) ||
+                        TextUtils.isEmpty(unitIS)){
                     Toast.makeText(IngredientStorageActivity.this, "Please enter all values", Toast.LENGTH_SHORT).show();
                     return;
                 }else {
@@ -225,8 +225,8 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
 
                     map.put("bestBefore", bbIS);
                     map.put("location", locationIS);
-                    map.put("amount", amountIS);
-                    map.put("unit", unitIS);
+                    map.put("amount", Integer.parseInt(amountIS));
+                    map.put("unit", Integer.parseInt(unitIS));
 
                     map.put("category", categoryIS);
                     map.put("id", idIS);
@@ -276,7 +276,7 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
 
         CollectionReference collectionReference = Firestoredb.collection("users");
         collectionReference.document(userID).collection("Ingredient_Storage")
-                .orderBy("bestBefore")
+                .orderBy("name")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -286,8 +286,8 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
 
                         for (DocumentSnapshot snapshot : task.getResult()){
                             IngredientStorageModel ingredientStorageModel = new IngredientStorageModel(snapshot.getString("name"), snapshot.getString("description"),
-                                    snapshot.getString("bestBefore"), snapshot.getString("location"), snapshot.getString("amount"),
-                                    snapshot.getString("unit"), snapshot.getString("category"), snapshot.getString("id"));
+                                    snapshot.getString("bestBefore"), snapshot.getString("location"), String.valueOf(snapshot.getLong("amount").intValue()),
+                                    String.valueOf(snapshot.getLong("unit").intValue()), snapshot.getString("category"), snapshot.getString("id"));
                             ingredientStorageModelList.add(ingredientStorageModel);
 
                         }
@@ -317,8 +317,8 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
 
                         for (DocumentSnapshot snapshot : task.getResult()){
                             IngredientStorageModel ingredientStorageModel = new IngredientStorageModel(snapshot.getString("name"), snapshot.getString("description"),
-                                    snapshot.getString("bestBefore"), snapshot.getString("location"), snapshot.getString("amount"),
-                                    snapshot.getString("unit"), snapshot.getString("category"), snapshot.getString("id"));
+                                    snapshot.getString("bestBefore"), snapshot.getString("location"), String.valueOf(snapshot.getLong("amount").intValue()),
+                                    String.valueOf(snapshot.getLong("unit").intValue()), snapshot.getString("category"), snapshot.getString("id"));
                             ingredientStorageModelList.add(ingredientStorageModel);
 
                         }
@@ -439,8 +439,8 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
 
                 data.put("bestBefore", bestBeforeIngredient);
                 data.put("location", locationIngredient);
-                data.put("amount", amountIngredient);
-                data.put("unit", unitIngredient);
+                data.put("amount", Integer.valueOf(amountIngredient));
+                data.put("unit", Integer.valueOf(unitIngredient));
 
                 data.put("category",categoryIngredient);
                 data.put("id",ingredientID);
