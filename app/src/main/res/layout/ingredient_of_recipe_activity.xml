@@ -45,10 +45,14 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="17dp"
-            android:layout_marginEnd="239dp"
-            android:layout_marginBottom="140dp"
-            android:text="Preparation time recipe:" />
+            android:layout_marginStart="11dp"
+            android:layout_marginEnd="245dp"
+
+            android:layout_marginBottom="129dp"
+            android:fontFamily="@font/comfortaaregular"
+            android:text="Preparation time recipe:"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/text3"
@@ -57,9 +61,12 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="17dp"
-            android:layout_marginEnd="304dp"
-            android:layout_marginBottom="121dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="306dp"
+            android:layout_marginBottom="94dp"
+            android:fontFamily="@font/comfortaaregular"
+            android:textColor="@color/black"
+            android:textSize="12sp"
             android:text="Servings:" />
 
         <TextView
@@ -69,10 +76,13 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="17dp"
-            android:layout_marginEnd="310dp"
-            android:layout_marginBottom="102dp"
-            android:text="Category:" />
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="312dp"
+            android:layout_marginBottom="61dp"
+            android:text="Category:"
+            android:fontFamily="@font/comfortaaregular"
+            android:textColor="@color/black"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/text5"
@@ -81,10 +91,13 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="17dp"
-            android:layout_marginEnd="308dp"
-            android:layout_marginBottom="82dp"
-            android:text="Comments:" />
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="307dp"
+            android:layout_marginBottom="20dp"
+            android:text="Comments:"
+            android:fontFamily="@font/comfortaaregular"
+            android:textColor="@color/black"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/prep_time_recipe"
@@ -92,8 +105,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="181dp"
-            android:layout_marginBottom="139dp"
+            android:layout_marginEnd="144dp"
+            android:layout_marginBottom="129dp"
+            android:fontFamily="@font/comfortaaregular"
+            android:textColor="@color/black"
+            android:textSize="12sp"
             android:text="TextView" />
 
         <TextView
@@ -102,8 +118,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="274dp"
-            android:layout_marginBottom="120dp"
+            android:layout_marginEnd="144dp"
+            android:layout_marginBottom="93dp"
+            android:fontFamily="@font/comfortaaregular"
+            android:textColor="@color/black"
+            android:textSize="12sp"
             android:text="TextView" />
 
         <TextView
@@ -112,19 +131,25 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="274dp"
-            android:layout_marginBottom="101dp"
-            android:text="TextView" />
+            android:layout_marginEnd="141dp"
+            android:layout_marginBottom="61dp"
+            android:fontFamily="@font/comfortaaregular"
+            android:text="TextView"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/comments_recipe"
-            android:layout_width="306dp"
-            android:layout_height="86dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="14dp"
-            android:layout_marginBottom="15dp"
-            android:text="TextView" />
+            android:layout_marginEnd="139dp"
+            android:layout_marginBottom="25dp"
+            android:fontFamily="@font/comfortaaregular"
+            android:text="TextView"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
 
 
     </RelativeLayout>
