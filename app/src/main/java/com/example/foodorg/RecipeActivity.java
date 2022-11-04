@@ -12,10 +12,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -39,24 +41,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * RecipeActivity is the activity the user access to store recipes in the Recipes Storage
+ * or access the recipes. The activity contains
+ * <ul>
+ *     <li>Add button to add recipes</li>
+ *     <li>Return to HomePage Activity Button to return home</li>
+ *     <li>Sort spinner to sort the Recipes</li>
+ *     <li>Recyclerview for the recipes</li>
+ * </ul>
+ * @author amman1
+ * @author mohaimin
+ */
 public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.OnEditListner {
 
-    Button returnHome;
+    private Button returnHome;
     private Button add;
-
     private RecyclerView recyclerView;
     private FirebaseFirestore db;
-
     private RecipeAdapter recipeAdapter;
     private List<RecipeModel> recipeModelList;
-
-    AlertDialog alertDialog;
-
+    private AlertDialog alertDialog;
     private Spinner recipeSpinner;
-
-    String userID;
+    private String userID;
     private FirebaseAuth mAuth;
 
+    /**
+     *
+     * @param savedInstanceState bundle of arguments
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +79,12 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
         userID = mAuth.getCurrentUser().getUid();
 
         returnHome = findViewById(R.id.returnButtonRecipe);
-
+        // OnClickListener to return home
         returnHome.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v view
+             */
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(RecipeActivity.this, HomePageActivity.class);
@@ -77,7 +94,12 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
 
 
         add = findViewById(R.id.AddButtonRecipe);
+        // OnClickListener to add ingredient
         add.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This onClick shows the custom dialog which adds the recipes
+             * @param v view
+             */
             @Override
             public void onClick(View v) {
                 showCustomDialog();
@@ -85,47 +107,46 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
             }
         });
 
-
+        // Initialize recyclerview
         recyclerView = findViewById(R.id.RecipeListRecyclerView);
-        //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Initialize database and authentication
         db = FirebaseFirestore.getInstance();
-
         mAuth = FirebaseAuth.getInstance();
 
+        // Initialize the list for the recipes, and the adapter
         recipeModelList = new ArrayList<>();
         recipeAdapter = new RecipeAdapter(RecipeActivity.this, recipeModelList, this::onEditClick);
-
         recyclerView.setAdapter(recipeAdapter);
 
-//        CollectionReference collectionReference = db.collection("users")
-
+        // Initialize spinner for sorting recipes
         recipeSpinner = (Spinner) findViewById(R.id.spinnerRecipe);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.recipeSpinnerList, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
+        // Apply the adapter to the spinner
         recipeSpinner.setAdapter(adapter);
 
+        // OnItemSelectedListener for sorting by each item (string value of sort)
         recipeSpinner.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
+                    /**
+                     *
+                     * @param parent parent spinner
+                     * @param view string view in spinner
+                     * @param position position of the item to be ordered by string
+                     * @param id id of the item to be ordered by string
+                     */
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
-                        System.out.println(recipeSpinner.getItemAtPosition(position));
-                        System.out.println("nice");
-
                         orderDataRecipe(String.valueOf(recipeSpinner.getItemAtPosition(position)));
-                        //Toast.makeText(IngredientStorageActivity.this, "what you clicked " +
-                        //IStorageSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(RecipeActivity.this, "Sorted by " +
+                        recipeSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
                     }
                 }
         );
@@ -134,98 +155,117 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
         showData();
     }
 
-    private void orderDataRecipe(String by) {
+    /**
+     * orderData shows the recyclerview ordered by String by
+     * @param orderBy which is the string value for ordering the data
+     */
+    private void orderDataRecipe(String orderBy) {
 
+        // Access Firestore database to get the data based on userID from appropriate collectionPath
         CollectionReference collectionReference = db.collection("users");
         collectionReference.document(userID).collection("Recipes")
-                .orderBy(by)
+                .orderBy(orderBy)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    /**
+                     * onComplete method for the task
+                     * @param task which is the task for firestore
+                     */
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
+                        // First clear recipes list, then add recipe based on the models as stored in Firestore
+                        // which will be in order as given by the String orderBy
                         recipeModelList.clear();
-
                         for (DocumentSnapshot snapshot : task.getResult()){
                             RecipeModel recipeModel = new RecipeModel(snapshot.getString("title"), snapshot.getString("category"),
                                     String.valueOf(snapshot.getLong("time").intValue()),String.valueOf(snapshot.getLong("servings").intValue()), snapshot.getString("comments"),
                                     snapshot.getString("id"));
                             recipeModelList.add(recipeModel);
-                            //System.out.println(ingredientModelList.size());
-
                         }
-
                         recipeAdapter.notifyDataSetChanged();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //Toast.makeText(IngredientActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RecipeActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 });
 
 
     }
 
-
+    /**
+     * showCustomDialog() shows the dialog for adding a new Recipe
+     */
     private void showCustomDialog(){
 
+        // Initialize the dialog and its settings
         final Dialog dialog = new Dialog(RecipeActivity.this);
-
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.recipe_input);
 
         //initializing edit text
-        final EditText titlek = dialog.findViewById(R.id.title_recipe_input);
-        final EditText categoryk= dialog.findViewById(R.id.category_recipe_input);
-        final EditText timek = dialog.findViewById(R.id.time_recipe_input);
-        final EditText servingsk= dialog.findViewById(R.id.servings_recipe_input);
-        final EditText commentsk = dialog.findViewById(R.id.comment_recipe_input);
-
+        final EditText titleRecipe = dialog.findViewById(R.id.title_recipe_input);
+        final EditText categoryRecipe= dialog.findViewById(R.id.category_recipe_input);
+        final EditText timeRecipe = dialog.findViewById(R.id.time_recipe_input);
+        final EditText servingsRecipe= dialog.findViewById(R.id.servings_recipe_input);
+        final EditText commentsRecipe = dialog.findViewById(R.id.comment_recipe_input);
 
         //to close the dialog
         final ImageView closeAlert = dialog.findViewById(R.id.closeAlert);
-
         closeAlert.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view view of closeAlert
+             */
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
             }
         });
 
+        // submitButton OnClickListener to add details to a recipe
         Button submitButton = dialog.findViewById(R.id.btnRecipeEdit);
-
         submitButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This onClick finally adds the new details to Firestore if correct details
+             * entered, and updates the recyclerview; otherwise sends appropriate toast message
+             * @param v which is the submitButton view
+             */
             @Override
             public void onClick(View v) {
 
+                // Initialize the firebase Authentication, the database,
+                // the userid and the document reference for the ingredient storage
                 mAuth = FirebaseAuth.getInstance();
                 db = FirebaseFirestore.getInstance();
                 userID = mAuth.getCurrentUser().getUid();
                 DocumentReference documentReferenceReference = db.collection("users").document(userID).collection("Recipes").document();
+
                 String id = documentReferenceReference.getId();
-                String title = titlek.getText().toString();
-                String category = categoryk.getText().toString();
-                String time = timek.getText().toString();
-                String servings = servingsk.getText().toString();
-                String comments = commentsk.getText().toString();
+                String title = titleRecipe.getText().toString();
+                String category = categoryRecipe.getText().toString();
+                String time = timeRecipe.getText().toString();
+                String servings = servingsRecipe.getText().toString();
+                String comments = commentsRecipe.getText().toString();
 
-
-
+                // Check if fields are empty
                 if(TextUtils.isEmpty(title) || TextUtils.isEmpty(category) || TextUtils.isEmpty(time) || TextUtils.isEmpty(servings) || TextUtils.isEmpty(comments)){
                     Toast.makeText(RecipeActivity.this, "Please enter all values", Toast.LENGTH_SHORT).show();
-                    return;
+
                 }else {
 
-                    System.out.println(recipeModelList.size());
+                    // Otherwise we can finally add the recipe to our recipeModelList
                     RecipeModel recipeModel = new RecipeModel(title, category,time,servings,comments,id);
                     recipeModelList.add(recipeModel);
-                    System.out.println(recipeModelList.size());
 
                     Integer time_number = Integer.parseInt(time);
                     Integer servings_number = Integer.parseInt(servings);
 
+                    // Next we create a hashmap where we set the data into the firestore
+                    // based on the hashmap
                     HashMap<String, Object> map = new HashMap<>();
                     map.put("title", title);
                     map.put("category", category);
@@ -233,16 +273,18 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                     map.put("servings", servings_number);
                     map.put("comments", comments);
                     map.put("id", id);
-
                     documentReferenceReference.set(map)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                /**
+                                 *
+                                 * @param aVoid which references void
+                                 */
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     dialog.dismiss();
-                                    //IngredientsListCustomDialog(id);
                                     Log.d(TAG, "DocumentSnapshot successfully written!");
                                     recipeAdapter.notifyDataSetChanged();
-                                    Intent i = new Intent(RecipeActivity.this, IngredientActivity.class);
+                                    Intent i = new Intent(RecipeActivity.this, IngredientOfRecipeActivity.class);
                                     i.putExtra("recipe_id",id);
                                     startActivity(i);
                                 }
@@ -258,49 +300,71 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
 
             }
         });
-        //dialog.dismiss();
-        //ingredientAdapter.notifyDataSetChanged();
+
         dialog.show();
+
+        // The below are code to set dialog to 80% of the screen
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int displayWidth = displayMetrics.widthPixels;
+        int displayHeight = displayMetrics.heightPixels;
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        int dialogWindowWidth = (int) (displayWidth * 0.8f);
+        int dialogWindowHeight = (int) (displayHeight * 0.8f);
+        layoutParams.width = dialogWindowWidth;
+        layoutParams.height = dialogWindowHeight;
+        dialog.getWindow().setAttributes(layoutParams);
 
     }
 
 
-
-
+    /**
+     * showData shows the recyclerview
+     */
     private void showData(){
 
+        // Access Firestore database to get the data based on userID from appropriate collectionPath
         CollectionReference collectionReference = db.collection("users");
         collectionReference.document(userID).collection("Recipes").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    /**
+                     * onComplete method for the task
+                     * @param task which is the task for firestore
+                     */
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
+                        // clear the list and then add data from firestore
                         recipeModelList.clear();
-
                         for (DocumentSnapshot snapshot : task.getResult()){
                             RecipeModel recipeModel = new RecipeModel(snapshot.getString("title"), snapshot.getString("category"),
                                     String.valueOf(snapshot.getLong("time").intValue()),String.valueOf(snapshot.getLong("servings").intValue()), snapshot.getString("comments"),
                                     snapshot.getString("id"));
                             recipeModelList.add(recipeModel);
-                            //System.out.println(ingredientModelList.size());
-
                         }
-
-                        //Toast.makeText(IngredientActivity.this, "Ingredients shown", Toast.LENGTH_SHORT).show();
                         recipeAdapter.notifyDataSetChanged();
-
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //Toast.makeText(IngredientActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RecipeActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 });
 
     }
 
 
-
+    /**
+     * Edit the data of the recipe
+     * @param title title
+     * @param category category
+     * @param time time
+     * @param servings servings
+     * @param comments comments
+     * @param docID docID
+     * @param currentPosition currentPosition
+     */
     public void editContact(String title, String category, String time, String servings, String comments, String docID,int currentPosition){
         RecipeModel obj = new RecipeModel(title,category,time,servings,comments,docID);
         obj.setTitle(title);
@@ -312,66 +376,78 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
         recipeAdapter.editDatalist(obj,currentPosition);
         alertDialog.cancel();
 
-
     }
 
 
+    /**
+     * onEditClick is the method that edits the RecipeModel data based on the
+     * position value given by {Integer curPosition}
+     * @param listData which is the specific data model
+     * @param curPosition which is position of the model
+     */
     @Override
     public void onEditClick(RecipeModel listData, int curPosition) {
+
+        // Intialize Dialog
         AlertDialog.Builder builderObj = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.recipe_input, null);
         ImageView closeAlert = view.findViewById(R.id.closeAlert);
+
         //Close dialog button
         closeAlert.setOnClickListener(v -> {
             alertDialog.cancel();
         });
-        //Initializing
+
+        // Initialize the button for editing/ the editTexts
         Button btnEdit = view.findViewById(R.id.btnRecipeEdit);
-        EditText na = view.findViewById(R.id.title_recipe_input);
-        EditText cat = view.findViewById(R.id.category_recipe_input);
-        EditText prep = view.findViewById(R.id.time_recipe_input);
-        EditText serv = view.findViewById(R.id.servings_recipe_input);
-        EditText comm = view.findViewById(R.id.comment_recipe_input);
+        EditText nameEditRecipe = view.findViewById(R.id.title_recipe_input);
+        EditText categoryEditRecipe = view.findViewById(R.id.category_recipe_input);
+        EditText preparationTimeEditRecipe = view.findViewById(R.id.time_recipe_input);
+        EditText servingsEditRecipe = view.findViewById(R.id.servings_recipe_input);
+        EditText commentsEditRecipe = view.findViewById(R.id.comment_recipe_input);
 
         String findID = recipeModelList.get(curPosition).getDocumentID();
-        na.setText(listData.getTitle());
-        cat.setText(listData.getCategory());
-        prep.setText(listData.getTime());
-        serv.setText(listData.getServings());
-        comm.setText(listData.getComments());
+        nameEditRecipe.setText(listData.getTitle());
+        categoryEditRecipe.setText(listData.getCategory());
+        preparationTimeEditRecipe.setText(listData.getTime());
+        servingsEditRecipe.setText(listData.getServings());
+        commentsEditRecipe.setText(listData.getComments());
         CollectionReference collectionReference = db.collection("users");
 
-
-
-
+        // Dialog Setting
         builderObj.setCancelable(false);
         builderObj.setView(view);
 
+        // OnClickListener for editing the recipe
         btnEdit.setOnClickListener(v -> {
 
+            // the have the appropriate String values for each variables
+            // taken from their respective EditTexts
+            String title = nameEditRecipe.getText().toString();
+            String category = categoryEditRecipe.getText().toString();
+            String time = preparationTimeEditRecipe.getText().toString();
+            String servings = servingsEditRecipe.getText().toString();
+            String comments = commentsEditRecipe.getText().toString();
 
 
-            String title = na.getText().toString();
-            String category = cat.getText().toString();
-            String time = prep.getText().toString();
-            String servings = serv.getText().toString();
-            String comments = comm.getText().toString();
-
-
-            //Error checking for missing fields on edit
-            if (na.length() == 0) {
-                na.setError("Enter name");
-            }else if (cat.length() == 0) {
-                cat.setError("Enter category");
-            }else if (prep.length() == 0) {
-                prep.setError("Enter prep time");
-            }else if (serv.length() == 0) {
-                serv.setError("Enter servings");
-            }else if (comm.length() == 0) {
-                comm.setError("Enter name");
+            //Error checking for missing fields on editTexts
+            if (nameEditRecipe.length() == 0) {
+                nameEditRecipe.setError("Enter name");
+            }else if (categoryEditRecipe.length() == 0) {
+                categoryEditRecipe.setError("Enter category");
+            }else if (preparationTimeEditRecipe.length() == 0) {
+                preparationTimeEditRecipe.setError("Enter prep time");
+            }else if (servingsEditRecipe.length() == 0) {
+                servingsEditRecipe.setError("Enter servings");
+            }else if (commentsEditRecipe.length() == 0) {
+                commentsEditRecipe.setError("Enter name");
             } else {
+
                 //editing the values and information
                 editContact(title,category,time,servings,comments,findID, curPosition);
+
+                // Next we create a hashmap where we set the data into the firestore
+                // based on the hashmap
                 HashMap<String,Object> data = new HashMap<>();
                 Integer time_number = Integer.parseInt(time);
                 Integer servings_number = Integer.parseInt(servings);
@@ -384,6 +460,10 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                 collectionReference.document(userID).collection("Recipes").document(findID)
                         .update(data)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            /**
+                             *
+                             * @param aVoid void reference
+                             */
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d(TAG, "DocumentSnapshot updated successfully!");
@@ -396,10 +476,6 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                                 Toast.makeText(RecipeActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
                             }
                         });
-                //IngredientsListCustomDialog(findID);
-
-
-
             }
 
         });

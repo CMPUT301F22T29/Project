@@ -16,7 +16,7 @@
         android:theme="@style/Theme.FoodOrg"
         tools:targetApi="31">
         <activity
-            android:name=".IngredientActivity"
+            android:name=".IngredientOfRecipeActivity"
             android:launchMode="singleTask"
             android:exported="false">
             <meta-data
