@@ -7,23 +7,33 @@
         <entry key="..\:/Users/penin/AndroidStudioProjects/Project/app/src/main/res/layout/homepage.xml" value="0.24320652173913043" />
         <entry key="..\:/Users/penin/AndroidStudioProjects/Project/app/src/main/res/layout/register.xml" value="0.16145833333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3880208333333333" />
+        <entry key="app/src/main/res/layout/activity_recipe_meal_plan.xml" value="0.37395833333333334" />
         <entry key="app/src/main/res/layout/activity_registration_actiivity.xml" value="0.3171875" />
         <entry key="app/src/main/res/layout/add_ingredients_recipe.xml" value="0.31614583333333335" />
+        <entry key="app/src/main/res/layout/camera_activity_page.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/cardview.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/edit_input_ingredient_storage.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/homepage.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/ingredient.xml" value="0.3550389607747395" />
         <entry key="app/src/main/res/layout/ingredient_item.xml" value="0.3880208333333333" />
+        <entry key="app/src/main/res/layout/ingredient_item_of_recipe.xml" value="0.3880208333333333" />
+        <entry key="app/src/main/res/layout/ingredient_of_recipe_activity.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/ingredient_storage.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/ingredient_storage_item.xml" value="0.40799865722656253" />
         <entry key="app/src/main/res/layout/ingredients_recipe_list.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/input_ingredient_storage.xml" value="0.27037037037037037" />
         <entry key="app/src/main/res/layout/input_layout.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/login.xml" value="0.3880208333333333" />
+        <entry key="app/src/main/res/layout/meal_plan_page.xml" value="0.38697916666666665" />
+        <entry key="app/src/main/res/layout/mealplan_item.xml" value="0.38697916666666665" />
+        <entry key="app/src/main/res/layout/mealplan_recipe_input_dialog.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/recipe_input.xml" value="0.38697916666666665" />
         <entry key="app/src/main/res/layout/recipe_item.xml" value="0.39918670654296884" />
-        <entry key="app/src/main/res/layout/recipepage.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/recipe_mealplan_item.xml" value="0.38697916666666665" />
+        <entry key="app/src/main/res/layout/recipepage.xml" value="0.43924713134765625" />
         <entry key="app/src/main/res/layout/register.xml" value="0.303125" />
+        <entry key="app/src/main/res/layout/test.xml" value="0.234375" />
+        <entry key="app/src/main/res/xml/file_paths.xml" value="0.38697916666666665" />
       </map>
     </option>
   </component>

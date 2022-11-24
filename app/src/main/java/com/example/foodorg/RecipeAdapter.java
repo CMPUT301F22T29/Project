@@ -60,8 +60,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_item, parent, false);
         return new MyViewHolder(v);
+
     }
 
     /**
@@ -80,6 +82,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         holder.comment.setText(recipeModelList.get(position).getComments());
         holder.prep.setText(recipeModelList.get(position).getTime());
         holder.serving.setText(recipeModelList.get(position).getServings());
+
+
+        holder.cameraBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String findID = recipeModelList.get(position).getDocumentID();
+                Intent i = new Intent(context,CameraActivity.class);
+                i.putExtra("recipe_id",findID);
+                context.startActivity(i);
+            }
+        });
 
         // editButton listener
         holder.editbutt.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +179,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
 
         // Create variables for the respective buttons and the textViews on the View
         TextView title, category, prep, serving, comment ;
-        Button editbutt,delbutt,ingredientButton;
+        Button editbutt,delbutt,ingredientButton,cameraBtn;
 
         /**
          * find the items in the view
@@ -182,6 +195,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
             editbutt = itemView.findViewById(R.id.editRecipe);
             delbutt = itemView.findViewById(R.id.deleteRecipe);
             ingredientButton = itemView.findViewById(R.id.ingredientsRecipeCardBtn);
+            cameraBtn = itemView.findViewById(R.id.cameraBtn);
         }
     }
 

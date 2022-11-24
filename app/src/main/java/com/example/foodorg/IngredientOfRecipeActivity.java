@@ -4,6 +4,8 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -34,7 +36,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,6 +70,7 @@ public class IngredientOfRecipeActivity extends AppCompatActivity implements Ing
     private String recipeID;
     private String userID;
     private FirebaseAuth mAuth;
+    private ImageView recipeImage;
 
     /**
      *
@@ -124,8 +132,36 @@ public class IngredientOfRecipeActivity extends AppCompatActivity implements Ing
         // show the recipe details at the tope
         showRecipeDetails();
         showData();
+        showImage();
 
 
+    }
+
+    private void showImage() {
+        recipeID= getIntent().getExtras().getString("recipe_id");
+        recipeImage = (ImageView)findViewById(R.id.ingredientRecipeImageView);
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("recipe_images/"+recipeID);
+        try{
+            final File localFile = File.createTempFile(recipeID,"jpeg");
+            storageReference.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                            recipeImage.setImageBitmap(bitmap);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(IngredientOfRecipeActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showRecipeDetails(){

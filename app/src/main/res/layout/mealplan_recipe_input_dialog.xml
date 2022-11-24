@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/closeAlertMealPlan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/btn_dialog" />
+
+    <TextView
+        android:id="@+id/nameRecipeMealPlan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+
+        android:fontFamily="@font/comfortaaregular"
+        android:hint="Name"
+
+        android:textSize="15sp" />
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/inputServingsMealPlan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:textSize="12sp"
+            android:fontFamily="@font/comfortaaregular"
+
+            android:ems="10"
+            android:hint="How many servings?" />
+
+        <EditText
+            android:id="@+id/inputDaysToMealPlan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:textSize="12sp"
+            android:fontFamily="@font/comfortaaregular"
+            android:inputType="number"
+            android:ems="10"
+            android:hint="How many days?" />
+
+
+    </LinearLayout>
+
+    <DatePicker
+        android:id="@+id/datePickerMPRecipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addRecipeToMealPlanFSBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="10sp"
+        android:layout_marginBottom="10dp"
+        android:text="Add" />
+
+
+
+</LinearLayout>
