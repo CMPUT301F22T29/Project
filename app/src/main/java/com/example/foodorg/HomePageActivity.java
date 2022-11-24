@@ -39,6 +39,7 @@ public class HomePageActivity extends AppCompatActivity {
     Button returnLogin;
     ImageButton recipeBtn;
     ImageButton ingredientStorageBtn;
+    ImageButton mealPlanBtn;
     TextView usernameText;
     String userEmail;
 
@@ -62,6 +63,7 @@ public class HomePageActivity extends AppCompatActivity {
         returnLogin = findViewById(R.id.LogOutButton);
         ingredientStorageBtn = findViewById(R.id.ingredientButtonHome);
         recipeBtn = findViewById(R.id.recipeButtonHome);
+        mealPlanBtn =findViewById(R.id.mealPlanButtonHome);
         fireBaseAuthentication = FirebaseAuth.getInstance();
         usernameText = findViewById(R.id.userName);
 
@@ -108,6 +110,20 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomePageActivity.this, RecipeActivity.class);
+                i.putExtra("key","1");
+                startActivity(i);
+            }
+        });
+
+        // OnClickListener for going to MealPlan Page
+        mealPlanBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * The onCreate Method
+             * @param v Where here view is the mealPlanBtn ImageButton
+             */
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomePageActivity.this, MealPlanActivity.class);
                 startActivity(i);
             }
         });

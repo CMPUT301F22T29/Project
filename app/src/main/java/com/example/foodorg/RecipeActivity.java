@@ -60,11 +60,13 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
     private RecyclerView recyclerView;
     private FirebaseFirestore db;
     private RecipeAdapter recipeAdapter;
+    private RecipeMealPlanAdapter recipeMealPlanAdapter;
     private List<RecipeModel> recipeModelList;
     private AlertDialog alertDialog;
     private Spinner recipeSpinner;
     private String userID;
     private FirebaseAuth mAuth;
+    private String validity;
 
     /**
      *
@@ -79,6 +81,21 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
         userID = mAuth.getCurrentUser().getUid();
 
         returnHome = findViewById(R.id.returnButtonRecipe);
+        String validity= getIntent().getStringExtra("key");
+
+        if (validity.equals("0")){
+            add = findViewById(R.id.AddButtonRecipe);
+            add.setVisibility(View.INVISIBLE);
+            recipeSpinner = (Spinner) findViewById(R.id.spinnerRecipe);
+            recipeSpinner.setVisibility(View.INVISIBLE);
+        }
+        else{
+            add = findViewById(R.id.AddButtonRecipe);
+        }
+
+
+
+
         // OnClickListener to return home
         returnHome.setOnClickListener(new View.OnClickListener() {
             /**
@@ -116,9 +133,20 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
         mAuth = FirebaseAuth.getInstance();
 
         // Initialize the list for the recipes, and the adapter
-        recipeModelList = new ArrayList<>();
-        recipeAdapter = new RecipeAdapter(RecipeActivity.this, recipeModelList, this::onEditClick);
-        recyclerView.setAdapter(recipeAdapter);
+
+
+
+        if (validity.equals("0")){
+            recipeModelList = new ArrayList<>();
+            recipeMealPlanAdapter = new RecipeMealPlanAdapter(RecipeActivity.this, recipeModelList);
+            recyclerView.setAdapter(recipeMealPlanAdapter);
+        }
+        else{
+            recipeModelList = new ArrayList<>();
+            recipeAdapter = new RecipeAdapter(RecipeActivity.this, recipeModelList, this::onEditClick);
+            recyclerView.setAdapter(recipeAdapter);
+        }
+
 
         // Initialize spinner for sorting recipes
         recipeSpinner = (Spinner) findViewById(R.id.spinnerRecipe);
@@ -140,7 +168,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                      */
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        orderDataRecipe(String.valueOf(recipeSpinner.getItemAtPosition(position)));
+                        orderDataRecipe(String.valueOf(recipeSpinner.getItemAtPosition(position)),validity);
                         Toast.makeText(RecipeActivity.this, "Sorted by " +
                         recipeSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
                     }
@@ -152,14 +180,14 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
         );
 
 
-        showData();
+        showData(validity);
     }
 
     /**
      * orderData shows the recyclerview ordered by String by
      * @param orderBy which is the string value for ordering the data
      */
-    private void orderDataRecipe(String orderBy) {
+    private void orderDataRecipe(String orderBy,String valid) {
 
         // Access Firestore database to get the data based on userID from appropriate collectionPath
         CollectionReference collectionReference = db.collection("users");
@@ -183,7 +211,13 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                                     snapshot.getString("id"));
                             recipeModelList.add(recipeModel);
                         }
-                        recipeAdapter.notifyDataSetChanged();
+                        if (valid.equals("0")){
+                            recipeMealPlanAdapter.notifyDataSetChanged();
+                        }
+                        else{
+                            recipeAdapter.notifyDataSetChanged();
+                        }
+                        //recipeAdapter.notifyDataSetChanged();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -322,7 +356,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
     /**
      * showData shows the recyclerview
      */
-    private void showData(){
+    private void showData(String valid){
 
         // Access Firestore database to get the data based on userID from appropriate collectionPath
         CollectionReference collectionReference = db.collection("users");
@@ -343,7 +377,13 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                                     snapshot.getString("id"));
                             recipeModelList.add(recipeModel);
                         }
-                        recipeAdapter.notifyDataSetChanged();
+                        if (valid.equals("0")){
+                            recipeMealPlanAdapter.notifyDataSetChanged();
+                        }
+                        else{
+                            recipeAdapter.notifyDataSetChanged();
+                        }
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

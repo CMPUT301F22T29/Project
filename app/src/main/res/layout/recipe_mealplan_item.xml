@@ -42,7 +42,7 @@
 
 
             <TextView
-                android:id="@+id/title_recipe"
+                android:id="@+id/title_recipe_mealplan"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaabold"
@@ -89,7 +89,7 @@
 
 
             <TextView
-                android:id="@+id/prep_recipe"
+                android:id="@+id/prep_recipe_mealplan"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
 
@@ -131,7 +131,7 @@
 
 
             <TextView
-                android:id="@+id/servings"
+                android:id="@+id/servings_mealplan"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
 
@@ -177,7 +177,7 @@
 
 
             <TextView
-                android:id="@+id/categor_recipe"
+                android:id="@+id/categor_recipe_mealplan"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
 
@@ -218,7 +218,7 @@
 
 
             <TextView
-                android:id="@+id/comment"
+                android:id="@+id/comment_mealplan"
                 android:layout_width="240dp"
                 android:layout_height="50dp"
 
@@ -235,77 +235,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:fontFamily="@font/comfortaaregular"
-
-                android:inputType="textPersonName"
-                android:text="Add Photo to your recipe:"
-
-                android:textAlignment="center"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-            <Button
-                android:id="@+id/cameraBtn"
-                android:layout_width="107dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="70dp"
-                android:backgroundTint="#9C1919"
-                android:layout_marginRight="10dp"
-                android:fontFamily="@font/comfortaaregular"
-                android:text="camera"
-                android:textSize="10sp" />
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/editRecipe"
-                android:layout_width="110dp"
+                android:id="@+id/addRecipeToMealPlan"
+                android:layout_width="163dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:textSize="10sp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="10dp"
                 android:fontFamily="@font/comfortaaregular"
-                android:text="EDIT" />
-
-            <Button
-                android:id="@+id/ingredientsRecipeCardBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:fontFamily="@font/comfortaaregular"
-                android:text="Ingredients"
+                android:text="Add to Mealplan"
                 android:textSize="10sp" />
 
-
-            <Button
-                android:id="@+id/deleteRecipe"
-                android:layout_width="110dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="30dp"
-                android:fontFamily="@font/comfortaaregular"
-                android:text="DELETE"
-                android:textSize="10sp" />
 
         </LinearLayout>
 
