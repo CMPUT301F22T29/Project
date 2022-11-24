@@ -45,7 +45,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="3dp"
-            android:layout_marginBottom="80dp" />
+            android:layout_marginBottom="80dp"
+            android:src="@drawable/recipe"/>
 
         <TextView
             android:id="@+id/text2"
