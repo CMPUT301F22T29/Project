@@ -154,7 +154,7 @@ public class IngredientOfRecipeActivity extends AppCompatActivity implements Ing
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(IngredientOfRecipeActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(IngredientOfRecipeActivity.this, "Failed", Toast.LENGTH_SHORT).show();
 
                         }
                     });
