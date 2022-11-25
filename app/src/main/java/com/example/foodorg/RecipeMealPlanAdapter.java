@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +46,7 @@ import java.util.List;
  */
 public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAdapter.MyViewHolder> {
     private Context context;
-    private List<RecipeModel> recipeModelList;
+    private static List<RecipeModel> recipeModelList;
     private FirebaseFirestore db;
     String userID;
     private FirebaseAuth FireAuth;
@@ -97,6 +98,9 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
         holder.comment.setText(recipeModelList.get(position).getComments());
         holder.prep.setText(recipeModelList.get(position).getTime());
         holder.serving.setText(recipeModelList.get(position).getServings());
+
+        boolean isExpanded = recipeModelList.get(position).isExpanded();
+        holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
         // editButton listener
         holder.addMealRecipeBtn.setOnClickListener(new View.OnClickListener() {
@@ -235,11 +239,12 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
      * initialize the variables for it based on the id's
      * in the layout
      */
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
         // Create variables for the respective buttons and the textViews on the View
         TextView title, category, prep, serving, comment ;
         Button addMealRecipeBtn;
+        LinearLayout expandableLayout;
 
         /**
          * find the items in the view
@@ -253,6 +258,18 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
             serving = itemView.findViewById(R.id.servings_mealplan);
             comment = itemView.findViewById(R.id.comment_mealplan);
             addMealRecipeBtn = itemView.findViewById(R.id.addRecipeToMealPlan);
+
+            expandableLayout = itemView.findViewById(R.id.recipeOfMealPlanExpandableLayout);
+
+            title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    RecipeModel recipe = recipeModelList.get(getAdapterPosition());
+                    recipe.setExpanded(!recipe.isExpanded());
+                    notifyItemChanged(getAdapterPosition());
+                }
+            });
+
         }
     }
 
