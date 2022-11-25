@@ -17,6 +17,7 @@ public class RecipeModel {
     String servings;
     String comments;
     String documentID;
+    private boolean expanded;
 
     /**
      *
@@ -34,6 +35,15 @@ public class RecipeModel {
         this.servings = servings;
         this.comments = comments;
         this.documentID = documentID;
+        this.expanded = false;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 
     /**

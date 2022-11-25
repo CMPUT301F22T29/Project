@@ -75,24 +75,35 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recipepage);
+
+
+        String validity= getIntent().getStringExtra("key");
+
+
+        if (validity.equals("0")){
+            setContentView(R.layout.recipepage_frommealplan);
+        }
+        else{
+            setContentView(R.layout.recipepage);
+            add = findViewById(R.id.AddButtonRecipe);
+            // OnClickListener to add ingredient
+            add.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * This onClick shows the custom dialog which adds the recipes
+                 * @param v view
+                 */
+                @Override
+                public void onClick(View v) {
+                    showCustomDialog();
+                    Toast.makeText(RecipeActivity.this, "Dialog shown", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
 
         returnHome = findViewById(R.id.returnButtonRecipe);
-        String validity= getIntent().getStringExtra("key");
-
-        if (validity.equals("0")){
-            add = findViewById(R.id.AddButtonRecipe);
-            add.setVisibility(View.INVISIBLE);
-            recipeSpinner = (Spinner) findViewById(R.id.spinnerRecipe);
-            recipeSpinner.setVisibility(View.INVISIBLE);
-        }
-        else{
-            add = findViewById(R.id.AddButtonRecipe);
-        }
-
 
 
 
@@ -104,23 +115,14 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
              */
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(RecipeActivity.this, HomePageActivity.class);
-                startActivity(i);
-            }
-        });
-
-
-        add = findViewById(R.id.AddButtonRecipe);
-        // OnClickListener to add ingredient
-        add.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This onClick shows the custom dialog which adds the recipes
-             * @param v view
-             */
-            @Override
-            public void onClick(View v) {
-                showCustomDialog();
-                Toast.makeText(RecipeActivity.this, "Dialog shown", Toast.LENGTH_SHORT).show();
+                if (validity.equals("0")){
+                    Intent i = new Intent(RecipeActivity.this, MealPlanActivity.class);
+                    startActivity(i);
+                }
+                else{
+                    Intent i = new Intent(RecipeActivity.this, HomePageActivity.class);
+                    startActivity(i);
+                }
             }
         });
 
@@ -145,39 +147,38 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
             recipeModelList = new ArrayList<>();
             recipeAdapter = new RecipeAdapter(RecipeActivity.this, recipeModelList, this::onEditClick);
             recyclerView.setAdapter(recipeAdapter);
+
+            // Initialize spinner for sorting recipes
+            recipeSpinner = (Spinner) findViewById(R.id.spinnerRecipe);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                    R.array.recipeSpinnerList, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            // Apply the adapter to the spinner
+            recipeSpinner.setAdapter(adapter);
+
+            // OnItemSelectedListener for sorting by each item (string value of sort)
+            recipeSpinner.setOnItemSelectedListener(
+                    new AdapterView.OnItemSelectedListener() {
+                        /**
+                         *
+                         * @param parent parent spinner
+                         * @param view string view in spinner
+                         * @param position position of the item to be ordered by string
+                         * @param id id of the item to be ordered by string
+                         */
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            orderDataRecipe(String.valueOf(recipeSpinner.getItemAtPosition(position)),validity);
+                            Toast.makeText(RecipeActivity.this, "Sorted by " +
+                                    recipeSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                        }
+                    }
+            );
         }
-
-
-        // Initialize spinner for sorting recipes
-        recipeSpinner = (Spinner) findViewById(R.id.spinnerRecipe);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.recipeSpinnerList, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        recipeSpinner.setAdapter(adapter);
-
-        // OnItemSelectedListener for sorting by each item (string value of sort)
-        recipeSpinner.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-                    /**
-                     *
-                     * @param parent parent spinner
-                     * @param view string view in spinner
-                     * @param position position of the item to be ordered by string
-                     * @param id id of the item to be ordered by string
-                     */
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        orderDataRecipe(String.valueOf(recipeSpinner.getItemAtPosition(position)),validity);
-                        Toast.makeText(RecipeActivity.this, "Sorted by " +
-                        recipeSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                }
-        );
 
 
         showData(validity);

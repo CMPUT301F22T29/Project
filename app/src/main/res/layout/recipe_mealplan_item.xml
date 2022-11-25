@@ -18,32 +18,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#EFF3F2"
+            android:background="@drawable/shapee"
             android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Recipe Title:"
-
-                android:fontFamily="@font/comfortaabold"
-
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
-
-                android:textColor="#263238"
-                android:textSize="18sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
 
 
             <TextView
                 android:id="@+id/title_recipe_mealplan"
-                android:layout_width="240dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaabold"
 
@@ -56,198 +37,201 @@
 
         </LinearLayout>
 
-
-
-
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal">
+            android:id="@+id/recipeOfMealPlanExpandableLayout"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Preparation(mins):"
+                android:background="@color/white"
+                android:orientation="horizontal">
 
-                android:fontFamily="@font/comfortaaregular"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Preparation(mins):"
 
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
+                    android:fontFamily="@font/comfortaaregular"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:layout_marginLeft="40dp"
+                    android:textAlignment="center"
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                    android:textColor="#263238"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
 
 
-            <TextView
-                android:id="@+id/prep_recipe_mealplan"
-                android:layout_width="240dp"
+                <TextView
+                    android:id="@+id/prep_recipe_mealplan"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/comfortaaregular"
+                    android:text="time"
+
+                    android:textAlignment="center"
+
+                    android:textColor="#263238"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
 
-                android:fontFamily="@font/comfortaaregular"
-                android:text="time"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Servings:"
 
-                android:textAlignment="center"
+                    android:layout_marginLeft="40dp"
+                    android:textAlignment="center"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:fontFamily="@font/comfortaaregular"
 
-        </LinearLayout>
+                    android:textColor="#263238"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/servings_mealplan"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
 
-            <TextView
-                android:layout_width="wrap_content"
+                    android:textAlignment="center"
+                    android:text="servings"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Servings:"
+                android:background="@color/white"
+                android:orientation="horizontal">
 
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Category:"
 
-                android:fontFamily="@font/comfortaaregular"
+                    android:layout_marginLeft="40dp"
+                    android:textAlignment="center"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:fontFamily="@font/comfortaaregular"
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                    android:textColor="#263238"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
 
 
-            <TextView
-                android:id="@+id/servings_mealplan"
-                android:layout_width="240dp"
+                <TextView
+                    android:id="@+id/categor_recipe_mealplan"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+
+                    android:textAlignment="center"
+                    android:text="category"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
 
-                android:textAlignment="center"
-                android:text="servings"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Comments:"
 
-                android:fontFamily="@font/comfortaaregular"
+                    android:layout_marginLeft="40dp"
+                    android:textAlignment="center"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:fontFamily="@font/comfortaaregular"
 
-        </LinearLayout>
+                    android:textColor="#263238"
+                    android:textSize="12sp" />
 
-
-
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Category:"
-
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
 
 
-            <TextView
-                android:id="@+id/categor_recipe_mealplan"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/comment_mealplan"
+                    android:layout_width="240dp"
+                    android:layout_height="40dp"
 
-                android:textAlignment="center"
-                android:text="category"
+                    android:textAlignment="center"
+                    android:text="comment"
 
-                android:fontFamily="@font/comfortaaregular"
+                    android:fontFamily="@font/comfortaaregular"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:textColor="#263238"
+                    android:textSize="12sp" />
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Comments:"
-
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                <Button
+                    android:id="@+id/addRecipeToMealPlan"
+                    android:layout_width="163dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:text="Add to Mealplan"
+                    android:textSize="10sp" />
 
 
-            <TextView
-                android:id="@+id/comment_mealplan"
-                android:layout_width="240dp"
-                android:layout_height="40dp"
-
-                android:textAlignment="center"
-                android:text="comment"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/addRecipeToMealPlan"
-                android:layout_width="163dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="10dp"
-                android:fontFamily="@font/comfortaaregular"
-                android:text="Add to Mealplan"
-                android:textSize="10sp" />
+            </LinearLayout>
 
 
         </LinearLayout>
