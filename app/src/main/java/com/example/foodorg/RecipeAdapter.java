@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -82,6 +83,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         holder.comment.setText(recipeModelList.get(position).getComments());
         holder.prep.setText(recipeModelList.get(position).getTime());
         holder.serving.setText(recipeModelList.get(position).getServings());
+
+        boolean isExpanded = recipeModelList.get(position).isExpanded();
+        holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
 
         holder.cameraBtn.setOnClickListener(new View.OnClickListener() {
@@ -175,11 +179,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
      * initialize the variables for it based on the id's
      * in the layout
      */
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
         // Create variables for the respective buttons and the textViews on the View
         TextView title, category, prep, serving, comment ;
         Button editbutt,delbutt,ingredientButton,cameraBtn;
+        LinearLayout expandableLayout;
 
         /**
          * find the items in the view
@@ -196,6 +201,18 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
             delbutt = itemView.findViewById(R.id.deleteRecipe);
             ingredientButton = itemView.findViewById(R.id.ingredientsRecipeCardBtn);
             cameraBtn = itemView.findViewById(R.id.cameraBtn);
+
+            expandableLayout = itemView.findViewById(R.id.recipeItemAdapter);
+
+            title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    RecipeModel recipe1 = recipeModelList.get(getAdapterPosition());
+                    recipe1.setExpanded(!recipe1.isExpanded());
+                    notifyItemChanged(getAdapterPosition());
+                }
+            });
+
         }
     }
 

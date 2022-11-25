@@ -5,8 +5,8 @@
             <solid android:color="#FFFFFF"/>
 
             <stroke
-                android:width="4dip"
-                android:color="#DBDBDB" />
+                android:width="3dip"
+                android:color="#B89E9E" />
         </shape>
     </item>
 </layer-list>

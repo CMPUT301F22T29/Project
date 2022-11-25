@@ -22,6 +22,7 @@ public class IngredientStorageModel {
     String unit;
     String category;
     String documentID;
+    private boolean expanded;
 
 
     /**
@@ -43,6 +44,15 @@ public class IngredientStorageModel {
         this.unit = unit;
         this.category = category;
         this.documentID = documentID;
+        this.expanded = false;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 
     /**

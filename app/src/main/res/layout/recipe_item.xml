@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shadow">
+    android:background="@drawable/shapee">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,300 +12,262 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/shadow">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#EFF3F2"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@drawable/shapee">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Recipe Title:"
-
-                android:fontFamily="@font/comfortaabold"
-
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
-
-                android:textColor="#263238"
-                android:textSize="18sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
 
 
             <TextView
                 android:id="@+id/title_recipe"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:fontFamily="@font/comfortaabold"
 
-                android:text="name"
+                android:text="NAME"
 
                 android:textAlignment="center"
 
                 android:textColor="#263238"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-
-
-
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Preparation(mins):"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-
-            <TextView
-                android:id="@+id/prep_recipe"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-
-                android:fontFamily="@font/comfortaaregular"
-                android:text="time"
-
-                android:textAlignment="center"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Servings:"
-
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-
-            <TextView
-                android:id="@+id/servings"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-
-                android:textAlignment="center"
-                android:text="servings"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-
-
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Category:"
-
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-
-            <TextView
-                android:id="@+id/categor_recipe"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-
-                android:textAlignment="center"
-                android:text="category"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                android:textSize="25sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
+            android:id="@+id/recipeItemAdapter"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Comements:"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
 
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Preparation(mins):"
 
-                android:fontFamily="@font/comfortaaregular"
+                    android:fontFamily="@font/comfortaaregular"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-
-            <TextView
-                android:id="@+id/comment"
-                android:layout_width="240dp"
-                android:layout_height="50dp"
-
-                android:textAlignment="center"
-                android:text="comment"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
+                    android:textColor="#263238"/>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:fontFamily="@font/comfortaaregular"
+                <TextView
+                    android:id="@+id/prep_recipe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                android:inputType="textPersonName"
-                android:text="Add Photo to your recipe:"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:text="time"
 
-                android:textAlignment="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:textColor="#263238" />
 
-            <Button
-                android:id="@+id/cameraBtn"
-                android:layout_width="107dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="70dp"
-                android:backgroundTint="#9C1919"
-                android:layout_marginRight="10dp"
-                android:fontFamily="@font/comfortaaregular"
-                android:text="camera"
-                android:textSize="10sp" />
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Servings:"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+                    android:fontFamily="@font/comfortaaregular"
 
-            <Button
-                android:id="@+id/editRecipe"
-                android:layout_width="110dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:textSize="10sp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="10dp"
-                android:fontFamily="@font/comfortaaregular"
-                android:text="EDIT" />
-
-            <Button
-                android:id="@+id/ingredientsRecipeCardBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:fontFamily="@font/comfortaaregular"
-                android:text="Ingredients"
-                android:textSize="10sp" />
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+                    android:textColor="#263238"/>
 
 
-            <Button
-                android:id="@+id/deleteRecipe"
-                android:layout_width="110dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="30dp"
-                android:fontFamily="@font/comfortaaregular"
-                android:text="DELETE"
-                android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/servings"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="servings"
+
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Category:"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:textColor="#263238" />
+
+
+                <TextView
+                    android:id="@+id/categor_recipe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="category"
+
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Comments:"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238" />
+
+                <TextView
+                    android:id="@+id/comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="12sp"
+
+                    android:text="comment"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:inputType="textPersonName"
+                    android:text="Add Photo to your recipe:"
+
+
+                    android:textColor="#263238"
+                    android:textSize="15sp" />
+
+                <Button
+                    android:id="@+id/cameraBtn"
+                    android:layout_width="107dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:backgroundTint="#9C1919"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:text="photo"
+                    android:textSize="10sp" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/editRecipe"
+                    android:layout_width="110dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:backgroundTint="#018786"
+                    android:text="EDIT" />
+
+                <Button
+                    android:id="@+id/ingredientsRecipeCardBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:text="Ingredients"
+                    android:textSize="10sp" />
+
+
+                <Button
+                    android:id="@+id/deleteRecipe"
+                    android:layout_width="110dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="30dp"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:text="DELETE"
+                    android:backgroundTint="@color/black"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

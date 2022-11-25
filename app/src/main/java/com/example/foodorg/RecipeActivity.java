@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -24,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -169,6 +171,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             orderDataRecipe(String.valueOf(recipeSpinner.getItemAtPosition(position)),validity);
+                            ((TextView) parent.getChildAt(0)).setTextColor(Color.parseColor("#1C1B64"));
                             Toast.makeText(RecipeActivity.this, "Sorted by " +
                                     recipeSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
                         }

@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -38,9 +39,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.checkerframework.checker.units.qual.C;
+
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -150,11 +158,16 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                        // First we call orderData to order the Data
-                        orderData(String.valueOf(IStorageSpinner.getItemAtPosition(position)));
-                        // Appropriate text message
-                        Toast.makeText(IngredientStorageActivity.this, "Sorted by " +
-                                IStorageSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                        if (String.valueOf(IStorageSpinner.getItemAtPosition(position)).equals("bestBefore")){
+                            orderDateData();
+                        }
+                        else{
+                            // First we call orderData to order the Data
+                            orderData(String.valueOf(IStorageSpinner.getItemAtPosition(position)));
+                            // Appropriate text message
+                            Toast.makeText(IngredientStorageActivity.this, "Sorted by " +
+                                    IStorageSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -398,6 +411,73 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
                     }
                 });
 
+    }
+
+
+    private void orderDateData(){
+
+        // Access Firestore database to get the data based on userID from appropriate collectionPath
+        CollectionReference collectionReference = Firestoredb.collection("users");
+        collectionReference.document(userID).collection("Ingredient_Storage")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    /**
+                     * onComplete method for the task
+                     * @param task which is the task for firestore
+                     */
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        // First clear ingredient list, then add ingredients based on the models as stored in Firestore
+                        // which will be in order as given by the String orderBy
+                        ingredientStorageModelList.clear();
+                        for (DocumentSnapshot snapshot : task.getResult()){
+                            IngredientStorageModel ingredientStorageModel = new IngredientStorageModel(snapshot.getString("name"), snapshot.getString("description"),
+                                    snapshot.getString("bestBefore"), snapshot.getString("location"), String.valueOf(snapshot.getLong("amount").intValue()),
+                                    String.valueOf(snapshot.getLong("unit").intValue()), snapshot.getString("category"), snapshot.getString("id"));
+                            ingredientStorageModelList.add(ingredientStorageModel);
+                        }
+
+                        Collections.sort(ingredientStorageModelList, new Comparator<IngredientStorageModel>() {
+                            @Override
+                            public int compare(IngredientStorageModel ingredientStorageModel, IngredientStorageModel t1) {
+                                return 0;
+                            }
+                        });
+
+                        ingredientStorageModelList = sortlist(ingredientStorageModelList);
+                        ingredientStorageAdapter.notifyDataSetChanged();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(IngredientStorageActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+    private List<IngredientStorageModel> sortlist(List<IngredientStorageModel> array){
+
+
+        Collections.sort(array, new Comparator<IngredientStorageModel>() {
+            @Override
+            public int compare(IngredientStorageModel t1, IngredientStorageModel t2) {
+
+                int comparison = 0;
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                try {
+                    comparison = sdf.parse(t1.getBestBefore()).compareTo(sdf.parse(t2.getBestBefore()));
+                    return comparison;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return comparison;
+            }
+        });
+
+
+        return array;
     }
 
 
