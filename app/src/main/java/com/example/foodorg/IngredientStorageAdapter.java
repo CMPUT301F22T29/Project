@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,7 +37,7 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
     // the onEditListener method for editing the adapter, the Firestore database,
     // the userID and the FireBase Authentication
     private Context context;
-    private List<IngredientStorageModel> ingredientStorageModelList;
+    private static List<IngredientStorageModel> ingredientStorageModelList;
     private OnEditListner TheOnEditListener;
     private FirebaseFirestore db;
     private String userID;
@@ -91,6 +92,9 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
         holder.storageItemLocation.setText(ingredientStorageModelList.get(position).getLocation());
         holder.storageItemAmount.setText(ingredientStorageModelList.get(position).getAmount());
         holder.storageItemUnit.setText(ingredientStorageModelList.get(position).getUnit());
+
+        boolean isExpanded = ingredientStorageModelList.get(position).isExpanded();
+        holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
 
         // onClickListener for the edit button
@@ -161,11 +165,13 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
      * initialize the variables for it based on the id's
      * in the layout
      */
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView storageItemName, storageItemDescription, storageItemCategory;
         TextView storageItemBB, storageItemLocation, storageItemAmount, storageItemUnit;
         Button editBtnIStorage,delBtnIStorage;
+
+        LinearLayout expandableLayout;
 
         /**
          * find the items in the view
@@ -183,6 +189,17 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
             storageItemUnit = itemView.findViewById(R.id.storageItemViewUnit);
             editBtnIStorage = itemView.findViewById(R.id.editIngredient);
             delBtnIStorage = itemView.findViewById(R.id.deleteIngredient);
+
+            expandableLayout = itemView.findViewById(R.id.ingredientStorageExpandable);
+
+            storageItemName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    IngredientStorageModel ingredientStorageModel = ingredientStorageModelList.get(getAdapterPosition());
+                    ingredientStorageModel.setExpanded(!ingredientStorageModel.isExpanded());
+                    notifyItemChanged(getAdapterPosition());
+                }
+            });
 
         }
     }

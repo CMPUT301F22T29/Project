@@ -11,52 +11,51 @@
         android:id="@+id/IngredientTitleLayout"
         android:layout_width="match_parent"
         android:layout_height="114dp"
-        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="245dp"
+            android:layout_height="69dp"
 
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="41dp"
+            android:layout_marginStart="0dp"
 
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="31dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginBottom="22dp"
 
             android:fontFamily="@font/comfortaabold"
             android:text="FoodOrg"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="40sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="165dp"
-            android:layout_height="42dp"
+            android:layout_width="133dp"
+            android:layout_height="46dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
 
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
-            android:layout_marginStart="33dp"
-            android:layout_marginTop="41dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="31dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="35dp"
             android:layout_toEndOf="@+id/Title"
             android:fontFamily="@font/comfortaabold"
             android:minHeight="20dp"
             android:text="Recipes"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -67,7 +66,6 @@
         android:id="@+id/addAndSortIngredients"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -95,53 +93,43 @@
             android:layout_weight="1" />
 
         <Spinner
+            android:layout_marginTop="10dp"
             android:id="@+id/spinnerRecipe"
             android:layout_marginRight="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecipeListRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="435dp"
+        android:layout_height="450dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         app:layout_constraintTop_toBottomOf="@+id/addAndSortIngredients" />
 
     <LinearLayout
         android:id="@+id/deleteAndReturnIngredients"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RecipeListRecyclerView"
-        app:layout_constraintVertical_bias="0.2">
-
-
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
+        app:layout_constraintTop_toBottomOf="@+id/RecipeListRecyclerView">
 
         <Button
             android:id="@+id/returnButtonRecipe"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="20dp"
 
             android:backgroundTint="#018786"
             android:fontFamily="@font/comfortaabold"
+            android:layout_gravity="center"
 
             android:text="RETURN TO HOME PAGE" />
 

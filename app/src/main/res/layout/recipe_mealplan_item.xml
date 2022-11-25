@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shadow">
+    android:background="@drawable/shapee">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,28 +12,29 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/shadow">
+
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/shapee"
+
             android:orientation="horizontal">
 
 
             <TextView
                 android:id="@+id/title_recipe_mealplan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:fontFamily="@font/comfortaabold"
 
-                android:text="name"
+                android:text="NAME"
 
                 android:textAlignment="center"
 
-                android:textColor="#263238"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="25sp" />
 
         </LinearLayout>
 
@@ -50,37 +51,27 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:text="Preparation(mins):"
-
+                    android:layout_marginLeft="10dp"
                     android:fontFamily="@font/comfortaaregular"
-
-                    android:layout_marginLeft="40dp"
-                    android:textAlignment="center"
-
                     android:textColor="#263238"
-                    android:textSize="12sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
+                    android:textSize="15sp" />
 
 
                 <TextView
                     android:id="@+id/prep_recipe_mealplan"
-                    android:layout_width="240dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:fontFamily="@font/comfortaaregular"
+                    android:layout_marginLeft="20dp"
                     android:text="time"
-
-                    android:textAlignment="center"
-
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:textColor="#263238"
-                    android:textSize="12sp" />
+                    android:textSize="15sp" />
+
 
             </LinearLayout>
 
@@ -91,38 +82,35 @@
                 android:background="@color/white"
                 android:orientation="horizontal">
 
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:text="Servings:"
 
-                    android:layout_marginLeft="40dp"
-                    android:textAlignment="center"
-
                     android:fontFamily="@font/comfortaaregular"
+                    android:layout_marginLeft="10dp"
 
                     android:textColor="#263238"
-                    android:textSize="12sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/servings_mealplan"
-                    android:layout_width="240dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:textAlignment="center"
                     android:text="servings"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
 
                     android:fontFamily="@font/comfortaaregular"
 
                     android:textColor="#263238"
-                    android:textSize="12sp" />
+                    android:textSize="15sp" />
+
+
 
             </LinearLayout>
 
@@ -135,40 +123,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:text="Category:"
+                    android:layout_marginLeft="10dp"
 
-                    android:layout_marginLeft="40dp"
-                    android:textAlignment="center"
 
                     android:fontFamily="@font/comfortaaregular"
 
                     android:textColor="#263238"
-                    android:textSize="12sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
+                    android:textSize="15sp" />
 
 
                 <TextView
                     android:id="@+id/categor_recipe_mealplan"
-                    android:layout_width="240dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:textAlignment="center"
+                    android:layout_weight="1"
                     android:text="category"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
 
                     android:fontFamily="@font/comfortaaregular"
 
                     android:textColor="#263238"
-                    android:textSize="12sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -179,33 +163,27 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:text="Comments:"
-
-                    android:layout_marginLeft="40dp"
-                    android:textAlignment="center"
+                    android:layout_marginLeft="10dp"
 
                     android:fontFamily="@font/comfortaaregular"
 
                     android:textColor="#263238"
-                    android:textSize="12sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
+                    android:textSize="15sp" />
 
 
                 <TextView
                     android:id="@+id/comment_mealplan"
-                    android:layout_width="240dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                    android:textAlignment="center"
                     android:text="comment"
-
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:fontFamily="@font/comfortaaregular"
 
                     android:textColor="#263238"
@@ -217,6 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <Button
@@ -228,6 +207,7 @@
                     android:layout_marginRight="10dp"
                     android:fontFamily="@font/comfortaaregular"
                     android:text="Add to Mealplan"
+                    android:backgroundTint="#018786"
                     android:textSize="10sp" />
 
 

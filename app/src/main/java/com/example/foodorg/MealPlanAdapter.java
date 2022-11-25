@@ -45,7 +45,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MyView
         return mealPlanModelList.size();
     }
 
-    public class MyViewHolder extends IngredientStorageAdapter.MyViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title, servings, date;
         Button viewBtn;
         public MyViewHolder(@NonNull View itemView) {
@@ -59,4 +59,5 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MyView
 
         }
     }
+
 }

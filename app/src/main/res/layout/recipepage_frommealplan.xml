@@ -18,45 +18,45 @@
 
         <TextView
             android:id="@+id/Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="240dp"
+            android:layout_height="69dp"
 
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="41dp"
+            android:layout_marginStart="0dp"
 
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="31dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="23dp"
 
             android:fontFamily="@font/comfortaabold"
             android:text="FoodOrg"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="165dp"
-            android:layout_height="42dp"
+            android:layout_width="145dp"
+            android:layout_height="51dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
 
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
-            android:layout_marginStart="33dp"
-            android:layout_marginTop="41dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="31dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="34dp"
             android:layout_toEndOf="@+id/Title"
             android:fontFamily="@font/comfortaabold"
             android:minHeight="20dp"
             android:text="Recipes"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -87,7 +87,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
 
             android:backgroundTint="#018786"
             android:fontFamily="@font/comfortaabold"

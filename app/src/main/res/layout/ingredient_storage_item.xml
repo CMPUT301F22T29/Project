@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shadow">
+    android:background="@drawable/titleshape">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,331 +12,299 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/shadow">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#EFF3F2"
+            android:background="@drawable/shapee"
             android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Name:"
-
-                android:fontFamily="@font/comfortaabold"
-
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
-
-                android:textColor="#263238"
-                android:textSize="18sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
 
 
             <TextView
                 android:id="@+id/storageItemViewName"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:fontFamily="@font/comfortaabold"
 
-                android:text="name"
+                android:text="NAME"
 
                 android:textAlignment="center"
 
                 android:textColor="#263238"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Description:"
-
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-
-            <TextView
-                android:id="@+id/storageItemViewDescription"
-                android:layout_width="240dp"
-                android:layout_height="50dp"
-
-                android:textAlignment="center"
-                android:text="description"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                android:textSize="25sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
+            android:id="@+id/ingredientStorageExpandable"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Best Before Date"
 
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
 
-                android:fontFamily="@font/comfortaaregular"
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Description:"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                    android:fontFamily="@font/comfortaaregular"
 
+                    android:textColor="#263238" />
 
-            <TextView
-                android:id="@+id/storageItemViewBestBefore"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
 
-                android:textAlignment="center"
-                android:text="bb date"
+                <TextView
+                    android:id="@+id/storageItemViewDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                android:fontFamily="@font/comfortaaregular"
+                    android:text="description"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
 
-        </LinearLayout>
+                    android:fontFamily="@font/comfortaaregular"
 
+                    android:textColor="#263238" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Location:"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
 
-                android:fontFamily="@font/comfortaaregular"
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Best Before Date"
 
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:fontFamily="@font/comfortaaregular"
+                    android:textColor="#263238"/>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
 
+                <TextView
+                    android:id="@+id/storageItemViewBestBefore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-            <TextView
-                android:id="@+id/storageItemViewLocation"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
 
-                android:textAlignment="center"
-                android:text="location"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:text="bb date"
 
-                android:fontFamily="@font/comfortaaregular"
+                    android:fontFamily="@font/comfortaaregular"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:textColor="#263238" />
 
-        </LinearLayout>
+            </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Amount:"
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Location:"
 
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
+                    android:fontFamily="@font/comfortaaregular"
 
-                android:fontFamily="@font/comfortaaregular"
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:textColor="#263238" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                <TextView
+                    android:id="@+id/storageItemViewLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
 
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:text="location"
 
-            <TextView
-                android:id="@+id/storageItemViewAmount"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
+                    android:textColor="#263238"
 
-                android:textAlignment="center"
-                android:text="amount"
+                    android:textSize="15sp" />
 
-                android:fontFamily="@font/comfortaaregular"
+            </LinearLayout>
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Category:"
 
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
+                    android:fontFamily="@font/comfortaaregular"
+                    android:textColor="#263238" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Cost($):"
 
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
+                <TextView
+                    android:id="@+id/storageItemViewCategory"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
 
-                android:fontFamily="@font/comfortaaregular"
+                    android:text="category"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:fontFamily="@font/comfortaaregular"
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                    android:textColor="#263238" />
 
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/storageItemViewUnit"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
 
-                android:textAlignment="center"
-                android:text="unit"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
 
-                android:fontFamily="@font/comfortaaregular"
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Amount:"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
 
-        </LinearLayout>
 
+                    android:fontFamily="@font/comfortaaregular"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
+                    android:textColor="#263238" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Category:"
 
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
+                <TextView
+                    android:id="@+id/storageItemViewAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                android:fontFamily="@font/comfortaaregular"
+                    android:text="amount"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                    android:fontFamily="@font/comfortaaregular"
 
+                    android:textColor="#263238" />
 
-            <TextView
-                android:id="@+id/storageItemViewCategory"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
+            </LinearLayout>
 
-                android:textAlignment="center"
-                android:text="category"
 
-                android:fontFamily="@font/comfortaaregular"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Unit:"
 
-        </LinearLayout>
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+                    android:fontFamily="@font/comfortaaregular"
 
-            <Button
-                android:id="@+id/editIngredient"
-                android:layout_width="110dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:textSize="10sp"
-                android:layout_marginLeft="30dp"
-                android:fontFamily="@font/comfortaaregular"
-                android:text="EDIT" />
+                    android:textColor="#263238" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
 
-            <Button
-                android:id="@+id/deleteIngredient"
-                android:layout_width="110dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="60dp"
-                android:fontFamily="@font/comfortaaregular"
-                android:textSize="10sp"
-                android:text="DELETE" />
+                <TextView
+                    android:id="@+id/storageItemViewUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="unit"
+
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/editIngredient"
+                    android:layout_width="110dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:textSize="10sp"
+                    android:layout_marginLeft="30dp"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:backgroundTint="#018786"
+                    android:text="EDIT" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/deleteIngredient"
+                    android:layout_width="110dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="60dp"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:textSize="10sp"
+                    android:backgroundTint="#FF0000"
+                    android:text="DELETE" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
