@@ -1,11 +1,14 @@
 package com.example.foodorg;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,8 +40,47 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MyView
         holder.title.setText(mealPlanModelList.get(position).getMealName());
         holder.date.setText(mealPlanModelList.get(position).getDate());
         holder.servings.setText(mealPlanModelList.get(position).getServingsMealPlan());
+        Integer whichStore = mealPlanModelList.get(position).getWhichStore();
+
+        holder.viewBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * go to the new activity of containing the ingredients for
+             * the respective recipe
+             * @param view v
+             */
+            @Override
+            public void onClick(View view) {
+
+
+
+                if (whichStore==1){
+
+
+                    Intent i = new Intent(context, IngredientOfRecipeActivity.class);
+
+                    i.putExtra("recipe_id", mealPlanModelList.get(position).getMealPlanID());
+                    i.putExtra("key","5");
+                    context.startActivity(i);
+                    //Toast.makeText(context, findID, Toast.LENGTH_SHORT).show();
+
+
+                }
+                else {
+                    Intent i = new Intent(context, ShowActivityMealPlan.class);
+                    i.putExtra("nameFind",mealPlanModelList.get(position).getMealName());
+                    context.startActivity(i);
+                }
+
+
+
+            }
+        });
 
     }
+
+
+
+
 
     @Override
     public int getItemCount() {

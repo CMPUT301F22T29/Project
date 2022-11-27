@@ -76,6 +76,9 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
     private RecyclerView IStorageItemsRecyclerView;
     private FirebaseFirestore Firestoredb;
     private IngredientStorageAdapter ingredientStorageAdapter;
+
+    private IngredientMealPlanAdapter ingredientMealPlanAdapter;
+
     private List<IngredientStorageModel> ingredientStorageModelList;
     private AlertDialog alertDialog;
     private String userID;
@@ -88,7 +91,31 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ingredient_storage);
+        //setContentView(R.layout.ingredient_storage);
+
+
+
+        String validity= getIntent().getStringExtra("key");
+
+
+        if (validity.equals("2")){
+            setContentView(R.layout.ingredient_storage_mealplan);
+        }
+        else{
+            setContentView(R.layout.ingredient_storage);
+            addIStorageItem = findViewById(R.id.AddButtonIngredientStorage);
+            addIStorageItem.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * This onClick creates the dialog that first adds the ingredient
+                 * @param v view
+                 */
+                @Override
+                public void onClick(View v) {
+                    showCustomDialog();
+                    Toast.makeText(IngredientStorageActivity.this, "Dialog shown", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
         // Initialize firebase authentication and get the current user
         // and userID of the user
@@ -104,24 +131,20 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
             @Override
             public void onClick(View v) {
                 // Start HomePage Activity
-                Intent i = new Intent(IngredientStorageActivity.this, HomePageActivity.class);
-                startActivity(i);
+
+                if (validity.equals("2")){
+                    Intent i = new Intent(IngredientStorageActivity.this, MealPlanActivity.class);
+                    startActivity(i);
+                }
+                else{
+                    Intent i = new Intent(IngredientStorageActivity.this, HomePageActivity.class);
+                    startActivity(i);
+                }
             }
         });
 
         // Initialize the add ingredient Button
-        addIStorageItem = findViewById(R.id.AddButtonIngredientStorage);
-        addIStorageItem.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This onClick creates the dialog that first adds the ingredient
-             * @param v view
-             */
-            @Override
-            public void onClick(View v) {
-                showCustomDialog();
-                Toast.makeText(IngredientStorageActivity.this, "Dialog shown", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
         // Initialize recyclerview
         IStorageItemsRecyclerView = findViewById(R.id.ingredientListRecyclerView);
@@ -132,53 +155,66 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
         FireAuth = FirebaseAuth.getInstance();
 
         // initialize the model list of the ingredients, as well as the adapter for it and set it
-        ingredientStorageModelList = new ArrayList<>();
+
+        if (validity.equals("2")){
+            ingredientStorageModelList = new ArrayList<>();
+            ingredientMealPlanAdapter = new IngredientMealPlanAdapter(this, ingredientStorageModelList);
+            IStorageItemsRecyclerView.setAdapter(ingredientMealPlanAdapter);
+        }
+        else{
+            ingredientStorageModelList = new ArrayList<>();
+            ingredientStorageAdapter = new IngredientStorageAdapter(this, ingredientStorageModelList,this::onEditClick);
+            IStorageItemsRecyclerView.setAdapter(ingredientStorageAdapter);
+
+            IStorageSpinner = (Spinner) findViewById(R.id.spinner);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                    R.array.IStorageSortSpinnerList, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // Apply the adapter to the spinner
+            IStorageSpinner.setAdapter(adapter);
+
+            // Spinner onItemSelected listener for what is clicked
+            IStorageSpinner.setOnItemSelectedListener(
+                    new AdapterView.OnItemSelectedListener() {
+                        /**
+                         *
+                         * @param parent parent
+                         * @param view view
+                         * @param position position of view
+                         * @param id id of view
+                         */
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                            if (String.valueOf(IStorageSpinner.getItemAtPosition(position)).equals("bestBefore")){
+                                orderDateData(validity);
+                            }
+                            else{
+                                // First we call orderData to order the Data
+                                orderData(String.valueOf(IStorageSpinner.getItemAtPosition(position)),validity);
+                                // Appropriate text message
+                                Toast.makeText(IngredientStorageActivity.this, "Sorted by " +
+                                        IStorageSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    }
+            );
+        }
+        /*ingredientStorageModelList = new ArrayList<>();
         ingredientStorageAdapter = new IngredientStorageAdapter(this, ingredientStorageModelList,this::onEditClick);
-        IStorageItemsRecyclerView.setAdapter(ingredientStorageAdapter);
+        IStorageItemsRecyclerView.setAdapter(ingredientStorageAdapter);*/
 
         // Also initialize the spinner for sorting the ingredients
-        IStorageSpinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.IStorageSortSpinnerList, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // Apply the adapter to the spinner
-        IStorageSpinner.setAdapter(adapter);
-
-        // Spinner onItemSelected listener for what is clicked
-        IStorageSpinner.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-                    /**
-                     *
-                     * @param parent parent
-                     * @param view view
-                     * @param position position of view
-                     * @param id id of view
-                     */
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                        if (String.valueOf(IStorageSpinner.getItemAtPosition(position)).equals("bestBefore")){
-                            orderDateData();
-                        }
-                        else{
-                            // First we call orderData to order the Data
-                            orderData(String.valueOf(IStorageSpinner.getItemAtPosition(position)));
-                            // Appropriate text message
-                            Toast.makeText(IngredientStorageActivity.this, "Sorted by " +
-                                    IStorageSpinner.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                }
-        );
 
         // showData finally puts all the ingredients into the model list, and then shows the data
-        showData();
+        showData(validity);
 
 
     }
@@ -338,7 +374,7 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
     /**
      * howData puts all the ingredients into the model list, and then shows the data
      */
-    private void showData(){
+    private void showData(String valid){
 
         // Access Firestore database to get the data based on userID from appropriate collectionPath
         CollectionReference collectionReference = Firestoredb.collection("users");
@@ -363,7 +399,12 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
                             ingredientStorageModelList.add(ingredientStorageModel);
                         }
                         // Final update to let Adapter know dataset changed
-                        ingredientStorageAdapter.notifyDataSetChanged();
+                        if (valid.equals("2")){
+                            ingredientMealPlanAdapter.notifyDataSetChanged();
+                        }
+                        else{
+                            ingredientStorageAdapter.notifyDataSetChanged();
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -378,7 +419,7 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
      * orderData shows the recyclerview ordered by String by
      * @param orderBy which is the string value for ordering the data
      */
-    private void orderData(String orderBy){
+    private void orderData(String orderBy, String valid){
 
         // Access Firestore database to get the data based on userID from appropriate collectionPath
         CollectionReference collectionReference = Firestoredb.collection("users");
@@ -402,7 +443,12 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
                                     String.valueOf(snapshot.getLong("unit").intValue()), snapshot.getString("category"), snapshot.getString("id"));
                             ingredientStorageModelList.add(ingredientStorageModel);
                         }
-                        ingredientStorageAdapter.notifyDataSetChanged();
+                        if (valid.equals("2")){
+                            ingredientMealPlanAdapter.notifyDataSetChanged();
+                        }
+                        else{
+                            ingredientStorageAdapter.notifyDataSetChanged();
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -414,7 +460,7 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
     }
 
 
-    private void orderDateData(){
+    private void orderDateData(String valid){
 
         // Access Firestore database to get the data based on userID from appropriate collectionPath
         CollectionReference collectionReference = Firestoredb.collection("users");
@@ -446,7 +492,12 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
                         });
 
                         ingredientStorageModelList = sortlist(ingredientStorageModelList);
-                        ingredientStorageAdapter.notifyDataSetChanged();
+                        if (valid.equals("2")){
+                            ingredientMealPlanAdapter.notifyDataSetChanged();
+                        }
+                        else{
+                            ingredientStorageAdapter.notifyDataSetChanged();
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

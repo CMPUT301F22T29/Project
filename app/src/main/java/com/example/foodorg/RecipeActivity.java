@@ -324,6 +324,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                                     recipeAdapter.notifyDataSetChanged();
                                     Intent i = new Intent(RecipeActivity.this, IngredientOfRecipeActivity.class);
                                     i.putExtra("recipe_id",id);
+                                    i.putExtra("key","4");
                                     startActivity(i);
                                 }
                             })

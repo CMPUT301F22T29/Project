@@ -85,7 +85,9 @@ public class IngredientOfRecipeActivity extends AppCompatActivity implements Ing
         // and recipeID of the ingredient
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
+
         recipeID= getIntent().getExtras().getString("recipe_id");
+        Toast.makeText(IngredientOfRecipeActivity.this, recipeID, Toast.LENGTH_SHORT).show();
 
         // Initialize the returnHomeButton
         returnHome = findViewById(R.id.returnButtonIngredientStorage);
@@ -96,8 +98,18 @@ public class IngredientOfRecipeActivity extends AppCompatActivity implements Ing
              */
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(IngredientOfRecipeActivity.this, RecipeActivity.class);
-                startActivity(i);
+
+                String validity= getIntent().getStringExtra("key");
+                if (validity.equals("5")){
+                    Intent i = new Intent(IngredientOfRecipeActivity.this, MealPlanActivity.class);
+                    startActivity(i);
+                }
+                else{
+                    Intent i = new Intent(IngredientOfRecipeActivity.this, RecipeActivity.class);
+                    startActivity(i);
+
+                }
+
             }
         });
 

@@ -4,15 +4,19 @@ public class MealPlanModel {
 
     String mealName;
     String date;
-    String meal;
     String servings;
     String mealPlanID;
+    String recipeID;
+    Integer whichStore;
 
-    public MealPlanModel(String mealName, String date, String mealPlanID, String servings) {
+    public MealPlanModel(String mealName, String date, String mealPlanID, String servings, Integer whichStore) {
         this.mealName = mealName;
         this.date = date;
         this.mealPlanID = mealPlanID;
         this.servings = servings;
+        this.whichStore = whichStore;
+        //this.recipeID = recipeID;
+
     }
 
     public String getServingsMealPlan() {
@@ -45,5 +49,13 @@ public class MealPlanModel {
 
     public void setMealPlanID(String mealPlanID) {
         this.mealPlanID = mealPlanID;
+    }
+
+    public Integer getWhichStore() {
+        return whichStore;
+    }
+
+    public void setWhichStore(Integer whichStore) {
+        this.whichStore = whichStore;
     }
 }

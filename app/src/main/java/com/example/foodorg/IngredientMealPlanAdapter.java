@@ -44,11 +44,16 @@ import java.util.List;
  * @author mohaimin
  *
  */
-public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAdapter.MyViewHolder> {
+public class IngredientMealPlanAdapter extends RecyclerView.Adapter<IngredientMealPlanAdapter.MyViewHolder>  {
+
+    // Initialize the Context, the ingredient storage list for the ingredient storage models,
+    // the onEditListener method for editing the adapter, the Firestore database,
+    // the userID and the FireBase Authentication
     private Context context;
-    private static List<RecipeModel> recipeModelList;
+    private static List<IngredientStorageModel> ingredientStorageModelList;
     private FirebaseFirestore db;
-    String userID;
+    private String userID;
+
     private FirebaseAuth FireAuth;
     private FirebaseFirestore Firestoredb;
     private List<MealPlanModel> mealPlanModelList;
@@ -56,30 +61,29 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
 
     /**
      *
-     * @param context context
-     * @param recipeModelList list of recipes
+     * @param context context for the adapter
+     * @param ingredientStorageModelList list for the ingredient models
 
      */
-    public RecipeMealPlanAdapter(Context context, List<RecipeModel> recipeModelList) {
+    public IngredientMealPlanAdapter(Context context, List<IngredientStorageModel> ingredientStorageModelList) {
+        // assign each variable
         this.context = context;
-        this.recipeModelList = recipeModelList;
+        this.ingredientStorageModelList = ingredientStorageModelList;
 
     }
 
     /**
-     * create the view holder
-     * @param parent parent
-     * @param viewType the viewType
+     * This method creates the ViewHolder
+     *
+     * @param parent which is parent
+     * @param viewType which is viewType
      * @return MyViewHolder(v) which is a view
      */
     @NonNull
     @Override
-
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_mealplan_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_mealplan_item, parent, false);
         return new MyViewHolder(v);
-
     }
 
     /**
@@ -90,32 +94,39 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
      * @param position which is position of view clicked
      */
     @Override
-    public void onBindViewHolder(@NonNull RecipeMealPlanAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        // set The Strings for title, category, comment, prep and serving for the Model class respectively
-        holder.title.setText(recipeModelList.get(position).getTitle());
-        holder.category.setText(recipeModelList.get(position).getCategory());
-        holder.comment.setText(recipeModelList.get(position).getComments());
-        holder.prep.setText(recipeModelList.get(position).getTime());
-        holder.serving.setText(recipeModelList.get(position).getServings());
 
-        boolean isExpanded = recipeModelList.get(position).isExpanded();
+        // set The Strings for name, description, best before date,
+        // location, amount, unit, category and documentID for
+        // the Model class respectively
+        holder.storageItemName.setText(ingredientStorageModelList.get(position).getName());
+        holder.storageItemDescription.setText(ingredientStorageModelList.get(position).getDescription());
+        holder.storageItemCategory.setText(ingredientStorageModelList.get(position).getCategory());
+        holder.storageItemBB.setText(ingredientStorageModelList.get(position).getBestBefore());
+        holder.storageItemLocation.setText(ingredientStorageModelList.get(position).getLocation());
+        holder.storageItemAmount.setText(ingredientStorageModelList.get(position).getAmount());
+        holder.storageItemUnit.setText(ingredientStorageModelList.get(position).getUnit());
+
+        boolean isExpanded = ingredientStorageModelList.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
-        // editButton listener
-        holder.addMealRecipeBtn.setOnClickListener(new View.OnClickListener() {
-            /**
-             * edit the recipe
-             * @param v view
-             */@Override
-            public void onClick(View v) {
-                 showCustomDialog(position);
 
+        // onClickListener for the edit button
+        holder.addToMPBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * this will initialize the method to edit the view
+             * @param v which is the view
+             */
+            @Override
+            public void onClick(View v) {
+                //TheOnEditListener.onEditClick(ingredientStorageModelList.get(position), position);
+                showCustomDialog(position);
             }
         });
 
-
     }
+
 
     private void showCustomDialog(int position){
         // initialize the dialog, its settings and layout
@@ -124,13 +135,14 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.mealplan_recipe_input_dialog);
 
+        //ingredientStorageModelList = new ArrayList<>();
         mealPlanModelList = new ArrayList<>();
 
         final TextView titleRecipe = dialog.findViewById(R.id.nameRecipeMealPlan);
         final EditText servingsMPRecipe= dialog.findViewById(R.id.inputServingsMealPlan);
         final EditText daysMPRecipe = dialog.findViewById(R.id.inputDaysToMealPlan);
 
-        titleRecipe.setText(recipeModelList.get(position).getTitle());
+        titleRecipe.setText(ingredientStorageModelList.get(position).getName());
         final DatePicker datePickerMPRecipeItem = dialog.findViewById(R.id.datePickerMPRecipe);
 
         final ImageView closeMealPlanAlert = dialog.findViewById(R.id.closeAlertMealPlan);
@@ -152,11 +164,11 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
 
                 String idIS = documentReferenceReference.getId();
 
-                String nameMP = recipeModelList.get(position).getTitle();
+                String nameMP = ingredientStorageModelList.get(position).getName();
+
                 String servingsMP = servingsMPRecipe.getText().toString();
                 String daysMP = daysMPRecipe.getText().toString();
-                String id = recipeModelList.get(position).getDocumentID();
-
+                String id = ingredientStorageModelList.get(position).getDocumentID();
 
                 int day = datePickerMPRecipeItem.getDayOfMonth();
                 int month = datePickerMPRecipeItem.getMonth();
@@ -172,7 +184,7 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
                 }
 
                 else{
-                    MealPlanModel mealPlanModel = new MealPlanModel(nameMP,bbIS,id,servingsMP,1);
+                    MealPlanModel mealPlanModel = new MealPlanModel(nameMP,bbIS,id,servingsMP,2);
                     mealPlanModelList.add(mealPlanModel);
 
                     HashMap<String, Object> map = new HashMap<>();
@@ -180,7 +192,7 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
                     map.put("date", bbIS);
                     map.put("servings", servingsMP);
                     map.put("mealID", id);
-                    map.put("whichStore",1);
+                    map.put("whichStore",2);
                     documentReferenceReference.set(map)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 /**
@@ -226,14 +238,13 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
 
 
     }
-
     /**
      * getItemCount method
-     * @return the size of the recipe list
+     * @return the size of the ingredient storage list
      */
     @Override
     public int getItemCount() {
-        return recipeModelList.size();
+        return ingredientStorageModelList.size();
     }
 
     /**
@@ -243,9 +254,10 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
      */
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        // Create variables for the respective buttons and the textViews on the View
-        TextView title, category, prep, serving, comment ;
-        Button addMealRecipeBtn;
+        TextView storageItemName, storageItemDescription, storageItemCategory;
+        TextView storageItemBB, storageItemLocation, storageItemAmount, storageItemUnit;
+        Button addToMPBtn;
+
         LinearLayout expandableLayout;
 
         /**
@@ -254,20 +266,25 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
          */
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.title_recipe_mealplan);
-            category = itemView.findViewById(R.id.categor_recipe_mealplan);
-            prep = itemView.findViewById(R.id.prep_recipe_mealplan);
-            serving = itemView.findViewById(R.id.servings_mealplan);
-            comment = itemView.findViewById(R.id.comment_mealplan);
-            addMealRecipeBtn = itemView.findViewById(R.id.addRecipeToMealPlan);
 
-            expandableLayout = itemView.findViewById(R.id.recipeOfMealPlanExpandableLayout);
+            storageItemName = itemView.findViewById(R.id.storageItemViewName);
+            storageItemCategory = itemView.findViewById(R.id.storageItemViewCategory);
+            storageItemDescription = itemView.findViewById(R.id.storageItemViewDescription);
+            storageItemBB = itemView.findViewById(R.id.storageItemViewBestBefore);
+            storageItemLocation = itemView.findViewById(R.id.storageItemViewLocation);
+            storageItemAmount = itemView.findViewById(R.id.storageItemViewAmount);
+            storageItemUnit = itemView.findViewById(R.id.storageItemViewUnit);
 
-            title.setOnClickListener(new View.OnClickListener() {
+            addToMPBtn = itemView.findViewById(R.id.addIngredientToMealPlanBtn);
+            //delBtnIStorage = itemView.findViewById(R.id.deleteIngredient);
+
+            expandableLayout = itemView.findViewById(R.id.ingredientStorageExpandable);
+
+            storageItemName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    RecipeModel recipe = recipeModelList.get(getAdapterPosition());
-                    recipe.setExpanded(!recipe.isExpanded());
+                    IngredientStorageModel ingredientStorageModel = ingredientStorageModelList.get(getAdapterPosition());
+                    ingredientStorageModel.setExpanded(!ingredientStorageModel.isExpanded());
                     notifyItemChanged(getAdapterPosition());
                 }
             });
@@ -278,4 +295,3 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
 
 
 }
-
