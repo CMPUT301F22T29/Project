@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/parentlayoutHomePage"
+    android:background="#DBDBDB">
+
+    <RelativeLayout
+        android:id="@+id/IngredientTitleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/Title"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="23dp"
+
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="15dp"
+
+            android:fontFamily="@font/comfortaabold"
+            android:text="FoodOrg"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toEndOf="@+id/Title"
+            android:fontFamily="@font/comfortaabold"
+            android:minHeight="20dp"
+            android:text="Ingredient"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+
+        android:layout_width="407dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="164dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IngredientTitleLayout">
+
+
+        <TextView
+
+            android:layout_width="109dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#04AF57"
+            android:fontFamily="@font/comfortaabold"
+
+            android:text="Location" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/locationMPIngredientTV"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginRight="70dp"
+            android:backgroundTint="#04AF57"
+            android:fontFamily="@font/comfortaabold"
+
+            android:text="Location" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="407dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IngredientTitleLayout">
+
+
+        <TextView
+
+            android:layout_width="109dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#04AF57"
+            android:fontFamily="@font/comfortaabold"
+
+            android:text="Name" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/nameMPIngredientTV"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginRight="70dp"
+            android:backgroundTint="#04AF57"
+            android:fontFamily="@font/comfortaabold"
+
+            android:text="Name" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="407dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="104dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IngredientTitleLayout">
+
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#04AF57"
+            android:fontFamily="@font/comfortaabold"
+
+            android:text="Best before date" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/BBdateMPIngredientTV"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginRight="70dp"
+            android:backgroundTint="#04AF57"
+            android:fontFamily="@font/comfortaabold"
+
+            android:text="BBdate" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="407dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="356dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IngredientTitleLayout">
+
+
+        <TextView
+
+            android:layout_width="109dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#04AF57"
+            android:fontFamily="@font/comfortaabold"
+
+            android:text="Unit" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/unitMPIngredientTV"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginRight="70dp"
+            android:backgroundTint="#04AF57"
+            android:fontFamily="@font/comfortaabold"
+
+            android:text="Unit" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="407dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="228dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IngredientTitleLayout">
+
+
+        <TextView
+
+            android:layout_width="109dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#04AF57"
+            android:fontFamily="@font/comfortaabold"
+
+            android:text="Category" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/categoryMPIngredientTV"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginRight="70dp"
+            android:backgroundTint="#04AF57"
+            android:fontFamily="@font/comfortaabold"
+
+            android:text="Category" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/addAndSortIngredients"
+        android:layout_width="407dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="292dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IngredientTitleLayout">
+
+
+        <TextView
+
+            android:layout_width="109dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#04AF57"
+            android:fontFamily="@font/comfortaabold"
+
+            android:text="Amount" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/amountMPIngredientTV"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+
+            android:layout_marginRight="70dp"
+            android:backgroundTint="#04AF57"
+            android:fontFamily="@font/comfortaabold"
+
+            android:text="Amount" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/returnButtonMP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#018786"
+
+        android:fontFamily="@font/comfortaabold"
+        android:text="RETURN TO HOME PAGE"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintVertical_bias="0.384" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

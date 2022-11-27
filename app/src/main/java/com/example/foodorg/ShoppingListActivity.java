@@ -10,13 +10,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +50,11 @@ public class ShoppingListActivity extends AppCompatActivity {
     private List<ShoppingListIngredientModel> ShoppingListIngredientModelList;
 
     private AlertDialog alertDialog;
+
+    private FirebaseFirestore Firestoredb;
+    private MealPlanAdapter mealPlanAdapter;
+    private List<MealPlanModel> mealPlanModelList;
+    private FirebaseAuth FireAuth;
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -88,6 +100,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         });
 
 
+        mealPlanModelList = new ArrayList<>();
         // Initialize recyclerview
         ShoppingListItemsRecyclerView = findViewById(R.id.ShoppingListRecyclerView);
         ShoppingListItemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -167,4 +180,46 @@ public class ShoppingListActivity extends AppCompatActivity {
         shoppingListIngredientAdapter.notifyDataSetChanged();
 
     }
+
+
+    private void findData(){
+
+        Firestoredb = FirebaseFirestore.getInstance();
+        userID = FireAuth.getCurrentUser().getUid();
+        // Access Firestore database to get the data based on userID from appropriate collectionPath
+        CollectionReference collectionReference = Firestoredb.collection("users");
+        collectionReference.document(userID).collection("MealPlan")
+                .orderBy("name")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                    /**
+                     * onComplete method for the task
+                     * @param task which is the task for firestore
+                     */
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        // First clear ingredient list, then add ingredients based on the models as stored in Firestore
+                        mealPlanModelList.clear();
+                        for (DocumentSnapshot snapshot : task.getResult()){
+                            MealPlanModel mealPlanModel = new MealPlanModel(snapshot.getString("name"), snapshot.getString("date"),
+                                    snapshot.getString("mealID"), snapshot.getString("servings"),Integer.parseInt(snapshot.getString("whichStore")));
+                            mealPlanModelList.add(mealPlanModel);
+
+                        }
+                        // Final update to let Adapter know dataset changed
+                        //mealPlanAdapter.notifyDataSetChanged();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ShoppingListActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+
+
 }

@@ -27,6 +27,7 @@ public class MealPlanActivity extends AppCompatActivity {
 
     Button returnHomeFromMeal;
     Button addBYRecipeBtn;
+    Button addBYIngredientBtn;
     private FirebaseFirestore Firestoredb;
 
     private RecyclerView mealPlanRecyclerView;
@@ -51,6 +52,17 @@ public class MealPlanActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Start HomePage Activity
                 Intent i = new Intent(MealPlanActivity.this, HomePageActivity.class);
+                startActivity(i);
+            }
+        });
+
+
+        addBYIngredientBtn = findViewById(R.id.addBtnByIngredient);
+        addBYIngredientBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MealPlanActivity.this, IngredientStorageActivity.class);
+                i.putExtra("key","2");
                 startActivity(i);
             }
         });
@@ -109,7 +121,7 @@ public class MealPlanActivity extends AppCompatActivity {
                         mealPlanModelList.clear();
                         for (DocumentSnapshot snapshot : task.getResult()){
                             MealPlanModel mealPlanModel = new MealPlanModel(snapshot.getString("name"), snapshot.getString("date"),
-                                    snapshot.getString("mealID"), snapshot.getString("servings"));
+                                    snapshot.getString("mealID"), snapshot.getString("servings"),snapshot.getLong("whichStore").intValue());
                             mealPlanModelList.add(mealPlanModel);
                         }
                         // Final update to let Adapter know dataset changed

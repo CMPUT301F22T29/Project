@@ -123,6 +123,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
                 String findID = recipeModelList.get(position).getDocumentID();
                 Intent i = new Intent(context, IngredientOfRecipeActivity.class);
                 i.putExtra("recipe_id",findID);
+                i.putExtra("key","4");
                 context.startActivity(i);
 
             }

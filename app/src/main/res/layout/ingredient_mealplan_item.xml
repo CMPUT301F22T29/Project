@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/titleshape">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shapee"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/storageItemViewName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:fontFamily="@font/comfortaabold"
+
+                android:text="NAME"
+
+                android:textAlignment="center"
+
+                android:textColor="#263238"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ingredientStorageExpandable"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Description:"
+
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238" />
+
+
+                <TextView
+                    android:id="@+id/storageItemViewDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="description"
+
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Best Before Date"
+
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+
+                    android:fontFamily="@font/comfortaaregular"
+                    android:textColor="#263238"/>
+
+
+                <TextView
+                    android:id="@+id/storageItemViewBestBefore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:text="bb date"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Location:"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+
+                    android:textColor="#263238" />
+
+                <TextView
+                    android:id="@+id/storageItemViewLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:text="location"
+
+                    android:textColor="#263238"
+
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Category:"
+
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+
+                    android:fontFamily="@font/comfortaaregular"
+                    android:textColor="#263238" />
+
+
+                <TextView
+                    android:id="@+id/storageItemViewCategory"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="category"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Amount:"
+
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238" />
+
+
+                <TextView
+                    android:id="@+id/storageItemViewAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="amount"
+
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Unit:"
+
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238" />
+
+
+                <TextView
+                    android:id="@+id/storageItemViewUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="unit"
+
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+
+                    android:fontFamily="@font/comfortaaregular"
+
+                    android:textColor="#263238"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/addIngredientToMealPlanBtn"
+                    android:layout_width="163dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/comfortaaregular"
+                    android:text="Add to Mealplan"
+                    android:backgroundTint="#018786"
+                    android:textSize="10sp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>

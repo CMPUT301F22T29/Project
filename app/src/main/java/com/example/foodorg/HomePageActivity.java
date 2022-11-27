@@ -99,6 +99,7 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomePageActivity.this, IngredientStorageActivity.class);
+                i.putExtra("key","1");
                 startActivity(i);
             }
         });

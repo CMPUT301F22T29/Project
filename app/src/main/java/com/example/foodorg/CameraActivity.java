@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,11 +25,14 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 public class CameraActivity extends AppCompatActivity {
     public static final int CAMERA_PERM_CODE = 101;
@@ -78,6 +82,7 @@ public class CameraActivity extends AppCompatActivity {
                 startActivityForResult(gallery, GALLERY_REQUEST_CODE);
             }
         });
+        showImage();
 
     }
 
@@ -130,7 +135,33 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
+    private void showImage() {
+        recipeID= getIntent().getExtras().getString("recipe_id");
+        //recipeImage = (ImageView)findViewById(R.id.ingredientRecipeImageView);
+        selectedImage = findViewById(R.id.displayImageView);
 
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("recipe_images/"+recipeID);
+        try{
+            final File localFile = File.createTempFile(recipeID,"jpeg");
+            storageReference.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                            selectedImage.setImageBitmap(bitmap);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            //Toast.makeText(IngredientOfRecipeActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void handleUpload(Bitmap bitmap,String name) {
 
