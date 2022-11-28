@@ -97,7 +97,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                 @Override
                 public void onClick(View v) {
                     showCustomDialog();
-                    Toast.makeText(RecipeActivity.this, "Dialog shown", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RecipeActivity.this, "Dialog shown", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -302,6 +302,12 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                     Integer time_number = Integer.parseInt(time);
                     Integer servings_number = Integer.parseInt(servings);
 
+                    CollectionReference wholerelationship = db.collection("users")
+                            .document(userID).collection("Relationship");
+
+                    DocumentReference relationship = db.collection("users")
+                            .document(userID).collection("Relationship").document();
+
                     // Next we create a hashmap where we set the data into the firestore
                     // based on the hashmap
                     HashMap<String, Object> map = new HashMap<>();
@@ -324,6 +330,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                                     recipeAdapter.notifyDataSetChanged();
                                     Intent i = new Intent(RecipeActivity.this, IngredientOfRecipeActivity.class);
                                     i.putExtra("recipe_id",id);
+                                    i.putExtra("serving", servings);
                                     i.putExtra("key","4");
                                     startActivity(i);
                                 }
@@ -334,6 +341,13 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                                     Log.w(TAG, "Error writing document", e);
                                 }
                             });
+
+                    HashMap<String, Object> servingrefer = new HashMap<>();
+                    servingrefer.put("servings", String.valueOf(servings_number));
+                    servingrefer.put("idrecipe", id);
+
+                    relationship.set(servingrefer);
+
 
                 }
 

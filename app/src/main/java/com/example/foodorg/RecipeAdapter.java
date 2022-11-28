@@ -15,11 +15,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -155,6 +160,40 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+
+                CollectionReference wholerelationship = db.collection("users")
+                        .document(userID).collection("Relationship");
+
+                wholerelationship.get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            /**
+                             * onComplete method for the task
+                             * @param task which is the task for firestore
+                             */
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                for (DocumentSnapshot snapshot : task.getResult()){
+                                    if ((String.valueOf(snapshot.getString("recipe_id")).equals(findID.toString()))){
+                                        wholerelationship.document(snapshot.getId()).delete();
+                                    }
+                                    if ((String.valueOf(snapshot.getString("recipeID")).equals(findID.toString()))){
+                                        wholerelationship.document(snapshot.getId()).delete();
+                                    }
+
+                                    if ((String.valueOf(snapshot.getString("idrecipe")).equals(findID.toString()))){
+                                        wholerelationship.document(snapshot.getId()).delete();
+                                    }
+
+                                }
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.w(TAG, "Error deleting document", e);

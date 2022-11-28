@@ -23,11 +23,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -128,7 +133,6 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
 
         final TextView titleRecipe = dialog.findViewById(R.id.nameRecipeMealPlan);
         final EditText servingsMPRecipe= dialog.findViewById(R.id.inputServingsMealPlan);
-        final EditText daysMPRecipe = dialog.findViewById(R.id.inputDaysToMealPlan);
 
         titleRecipe.setText(recipeModelList.get(position).getTitle());
         final DatePicker datePickerMPRecipeItem = dialog.findViewById(R.id.datePickerMPRecipe);
@@ -148,13 +152,24 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
                 FireAuth = FirebaseAuth.getInstance();
                 Firestoredb = FirebaseFirestore.getInstance();
                 userID = FireAuth.getCurrentUser().getUid();
-                DocumentReference documentReferenceReference = Firestoredb.collection("users").document(userID).collection("MealPlan").document();
+                DocumentReference documentReferenceReference = Firestoredb.collection("users")
+                        .document(userID).collection("MealPlan").document();
+
+                DocumentReference relationship = Firestoredb.collection("users")
+                        .document(userID).collection("Relationship").document();
+
+                CollectionReference wholerelationship = Firestoredb.collection("users")
+                        .document(userID).collection("Relationship");
+
+                String recipeID = recipeModelList.get(position).getDocumentID();
 
                 String idIS = documentReferenceReference.getId();
 
                 String nameMP = recipeModelList.get(position).getTitle();
+
                 String servingsMP = servingsMPRecipe.getText().toString();
-                String daysMP = daysMPRecipe.getText().toString();
+
+                //String daysMP = daysMPRecipe.getText().toString();
                 String id = recipeModelList.get(position).getDocumentID();
 
 
@@ -164,22 +179,26 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, day);
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
                 String bbIS = sdf.format(calendar.getTime());
 
-                if(TextUtils.isEmpty(nameMP) || TextUtils.isEmpty(servingsMP) || TextUtils.isEmpty(daysMP) ||
+                String type = "recipe";
+
+                if(TextUtils.isEmpty(nameMP) || TextUtils.isEmpty(servingsMP) ||
                         TextUtils.isEmpty(bbIS) ) {
                     Toast.makeText(context, "Please enter all values", Toast.LENGTH_SHORT).show();
                 }
 
                 else{
-                    MealPlanModel mealPlanModel = new MealPlanModel(nameMP,bbIS,id,servingsMP,1);
+                    MealPlanModel mealPlanModel = new MealPlanModel(nameMP,bbIS,id,servingsMP,1, idIS);
                     mealPlanModelList.add(mealPlanModel);
 
                     HashMap<String, Object> map = new HashMap<>();
                     map.put("name", nameMP);
                     map.put("date", bbIS);
                     map.put("servings", servingsMP);
-                    map.put("mealID", id);
+                    map.put("mealID", idIS);
+                    map.put("recipeID", id);
                     map.put("whichStore",1);
                     documentReferenceReference.set(map)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -199,6 +218,192 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Log.w(TAG, "Error writing document", e);
+                                }
+                            });
+
+
+                    HashMap<String, Object> mapR = new HashMap<>();
+                    mapR.put("name", nameMP);
+                    mapR.put("date", bbIS);
+                    mapR.put("servings", servingsMP);
+                    mapR.put("mealID", idIS);
+
+                    mapR.put("actual", "yes");
+
+                    mapR.put("recipeID", recipeID);
+                    mapR.put("exist", "must");
+                    mapR.put("type", "recipe");
+                    relationship.set(mapR)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                /**
+                                 * onSuccess will send appropriate Log Message
+                                 * @param aVoid an uninstantiable placeholder class to hold a reference
+                                 *              to the Class object representing the Java keyword void
+                                 */
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                                    //ingredientStorageAdapter.notifyDataSetChanged();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error writing document", e);
+                                }
+                            });
+
+
+                    //HashMap<String, Object> toexist = new HashMap<>();
+                    //toexist.put("exist", "must");
+
+
+                    // first set ingredients to must
+                    wholerelationship
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                /**
+                                 * onComplete method for the task
+                                 * @param task which is the task for firestore
+                                 */
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                    List<String> allRecipeIngredientls = new ArrayList<String>();
+
+                                    for (DocumentSnapshot snapshot1 : task.getResult()){
+                                        if ( (String.valueOf(snapshot1.getString("recipe_id")).equals(recipeID)) &
+                                                (String.valueOf(snapshot1.getString("type")).equals("ingredientrecipe")) &
+                                                (!(String.valueOf(snapshot1.getString("multiple")).equals("yes"))) &
+                                                (!allRecipeIngredientls.contains(String.valueOf(snapshot1.getString("ingredientrecipeid")))) ){
+
+                                            allRecipeIngredientls.add(String.valueOf(snapshot1.getString("ingredientrecipeid")));
+
+                                        }
+                                    }
+
+                                    int e;
+
+                                    for (e = 0; e < allRecipeIngredientls.size(); e++){
+
+                                        HashMap<String, Object> eachMap = new HashMap<>();
+
+                                        for (DocumentSnapshot snapshot : task.getResult()){
+
+                                            if ( (String.valueOf(snapshot.getString("recipe_id")).equals(recipeID)) &
+                                                    (String.valueOf(snapshot.getString("type")).equals("ingredientrecipe")) &
+                                                    (String.valueOf(allRecipeIngredientls.get(e)).equals(snapshot.getString("ingredientrecipeid"))) ){
+
+                                                String mealplanID = idIS;
+//
+                                                eachMap.put("mealid", mealplanID);
+
+
+
+                                                eachMap.put("category", snapshot.getString("category"));
+                                                eachMap.put("description", snapshot.getString("description"));
+                                                eachMap.put("recipe_id", snapshot.getString("recipe_id"));
+                                                eachMap.put("type", "ingredientrecipe");
+
+                                                eachMap.put("ingredientrecipeid", allRecipeIngredientls.get(e));
+    //                                            eachMap.put("multiple","yes");
+    //                                            eachMap.put("unit", String.valueOf(unitcst));
+
+                                                Float portion = Float.valueOf(0);
+
+                                                portion = (Float) Float.valueOf(servingsMP) / Integer.parseInt(snapshot.getString("servingSize"));
+
+                                                Float unitcst = Float.valueOf(0);
+                                                unitcst = Float.valueOf(snapshot.getString("amount")) * portion;
+
+                                                Float amountcst = Float.valueOf(0);
+                                                amountcst = Float.valueOf(snapshot.getString("unit")) * portion;
+
+                                                eachMap.put("servingSize", snapshot.getString("servingSize"));
+                                                eachMap.put("date", bbIS);
+                                                eachMap.put("multiple", "yes");
+
+                                                eachMap.put("originalamount", snapshot.getString("amount"));
+                                                eachMap.put("originalunit", snapshot.getString("unit"));
+
+                                                eachMap.put("amount",String.valueOf(amountcst));
+                                                eachMap.put("unit", snapshot.getString("unit"));
+
+
+                                            }
+
+
+                                        }
+
+                                        wholerelationship.document().set(eachMap);
+                                    }
+
+
+
+//                                    for (DocumentSnapshot snapshot : task.getResult()){
+//
+//                                        if ( (String.valueOf(snapshot.getString("recipe_id")).equals(recipeID)) &
+//                                                (String.valueOf(snapshot.getString("type")).equals("ingredientrecipe")) &
+//                                                (!(String.valueOf(snapshot.getString("multiple")).equals("yes"))) ) {
+//
+//                                            wholerelationship.document(snapshot.getId()).update("exist", "must");
+//
+//                                            String theAmount = snapshot.getString("amount");
+//                                            String theCategory = snapshot.getString("category");
+//                                            String theDescription = snapshot.getString("description");
+//
+//                                            String theRecipeID = snapshot.getString("recipe_id");
+//                                            String theType = snapshot.getString("type");
+//
+//                                            String theUnit = snapshot.getString("unit");
+//                                            //String serving = snapshot.getString("servingSize");
+//
+//                                            String mealplanID = idIS;
+//
+//
+////                                            Integer portion = 0;
+////                                            portion = Integer.parseInt(servingsMP) / Integer.parseInt(serving);
+////
+////                                            Integer unitcst = 0;
+////                                            unitcst = Integer.parseInt(theUnit) * portion;
+////
+////                                            Integer amountcst = 0;
+////                                            amountcst = Integer.parseInt(theAmount) * portion;
+//
+//                                            //Integer unitcst = Integer.parseInt(theUnit);
+//                                            //Integer amountcst = Integer.parseInt(theAmount);
+//
+//                                            //for (f= 0; f < len; f++){
+//
+//                                            HashMap<String, Object> eachMap = new HashMap<>();
+//
+//                                            eachMap.put("mealid", mealplanID);
+//
+//                                            eachMap.put("amount", theAmount);
+//                                            eachMap.put("unit", theUnit);
+//
+//                                            eachMap.put("category", theCategory);
+//                                            eachMap.put("description", theDescription);
+//                                            eachMap.put("recipe_id", theRecipeID);
+//                                            eachMap.put("type", theType);
+////                                            eachMap.put("multiple","yes");
+////                                            eachMap.put("unit", String.valueOf(unitcst));
+//
+//                                            //eachMap.put("servingSiz", serving);
+//                                            eachMap.put("date", bbIS);
+//                                            eachMap.put("multiple", "yes");
+//
+//                                            wholerelationship.document().set(eachMap);
+//
+//
+//                                        }
+//                                    }
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error deleting document", e);
                                 }
                             });
 
@@ -226,6 +431,47 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
 
 
     }
+
+//    if (!(String.valueOf(snapshot.getString("mealID")).equals(idIS))){
+//        String theAmount = snapshot.getString("amount");
+//        String theCategory = snapshot.getString("category");
+//        String theDescription = snapshot.getString("description");
+//        String theRecipeID = snapshot.getString("recipe_id");
+//        String theType = snapshot.getString("type");
+//        String theUnit = snapshot.getString("unit");
+//        String serving = snapshot.getString("servingSize");
+//        String mealplanID = idIS;
+//
+//        Integer portion = 0;
+//        portion = Integer.parseInt(servingsMP) / Integer.parseInt(serving);
+//
+//        Integer unitcst = 0;
+//        unitcst = Integer.parseInt(theUnit) * portion;
+//
+//        Integer amountcst = 0;
+//        amountcst = Integer.parseInt(theAmount) * portion;
+//
+//        //Integer unitcst = Integer.parseInt(theUnit);
+//        //Integer amountcst = Integer.parseInt(theAmount);
+//
+//        //for (f= 0; f < len; f++){
+//
+//        HashMap<String, Object> eachMap = new HashMap<>();
+//
+//        eachMap.put("mealid", mealplanID);
+//        eachMap.put("amount", String.valueOf(amountcst));
+//        eachMap.put("category", theCategory);
+//        eachMap.put("description", theDescription);
+//        eachMap.put("recipe_id", theRecipeID);
+//        eachMap.put("type", theType);
+//        eachMap.put("multiple","yes");
+//        eachMap.put("unit", String.valueOf(unitcst));
+//        eachMap.put("servingSiz", serving);
+//        eachMap.put("date", bbIS);
+//
+//        wholerelationship.document().set(eachMap);
+//    }
+
 
     /**
      * getItemCount method

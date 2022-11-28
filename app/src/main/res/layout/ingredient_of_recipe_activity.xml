@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:id="@+id/IngredientLayout"
-        android:layout_width="411dp"
+        android:layout_width="wrap_content"
         android:layout_height="196dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,17 +18,18 @@
 
         <TextView
             android:id="@+id/recipe_tile"
-            android:layout_width="311dp"
-            android:layout_height="28dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
 
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
-            android:layout_marginStart="33dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="66dp"
-            android:layout_marginBottom="165dp"
+            android:layout_marginStart="39dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="62dp"
+            android:layout_marginBottom="163dp"
             android:fontFamily="@font/comfortaabold"
             android:hint="Ingredients"
             android:minHeight="20dp"
@@ -44,21 +45,21 @@
             android:layout_height="114dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="3dp"
-            android:layout_marginBottom="80dp"
-            android:src="@drawable/recipe"/>
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="54dp"
+            android:src="@drawable/recipe" />
 
         <TextView
             android:id="@+id/text2"
-            android:layout_width="154dp"
-            android:layout_height="wrap_content"
+            android:layout_width="109dp"
+            android:layout_height="34dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="11dp"
-            android:layout_marginEnd="245dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="287dp"
 
-            android:layout_marginBottom="129dp"
+            android:layout_marginBottom="119dp"
             android:fontFamily="@font/comfortaaregular"
             android:text="Preparation time recipe:"
             android:textColor="@color/black"
@@ -66,7 +67,7 @@
 
         <TextView
             android:id="@+id/text3"
-            android:layout_width="85dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
@@ -81,7 +82,7 @@
 
         <TextView
             android:id="@+id/text4"
-            android:layout_width="83dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
@@ -96,7 +97,7 @@
 
         <TextView
             android:id="@+id/text5"
-            android:layout_width="86dp"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
@@ -115,8 +116,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="183dp"
-            android:layout_marginBottom="129dp"
+            android:layout_marginEnd="221dp"
+            android:layout_marginBottom="132dp"
             android:fontFamily="@font/comfortaaregular"
             android:text="TextView"
             android:textColor="@color/black"
@@ -128,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="279dp"
+            android:layout_marginEnd="218dp"
             android:layout_marginBottom="93dp"
             android:fontFamily="@font/comfortaaregular"
             android:text="TextView"
@@ -141,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="276dp"
+            android:layout_marginEnd="217dp"
             android:layout_marginBottom="61dp"
             android:fontFamily="@font/comfortaaregular"
             android:text="TextView"
@@ -154,7 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="265dp"
+            android:layout_marginEnd="217dp"
             android:layout_marginBottom="21dp"
             android:fontFamily="@font/comfortaaregular"
             android:text="TextView"
@@ -166,7 +167,7 @@
 
     <LinearLayout
         android:id="@+id/addAndSortIngredients"
-        android:layout_width="405dp"
+        android:layout_width="match_parent"
         android:layout_height="44dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -181,7 +182,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="60dp"
-            android:backgroundTint="#5DDF9C"
+            android:backgroundTint="#009688"
             android:fontFamily="@font/comfortaabold"
             android:text="ADD Ingredients to recipe"
 
@@ -198,55 +199,31 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ingredientOnlyListRecyclerView"
         android:layout_width="409dp"
-        android:layout_height="413dp"
+        android:layout_height="400dp"
         android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/returnButtonIngredientStorage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addAndSortIngredients" />
 
-    <LinearLayout
-        android:id="@+id/deleteAndReturnIngredients"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/returnButtonIngredientStorage"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
+        android:layout_gravity="center"
+
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#018786"
+
+        android:fontFamily="@font/comfortaabold"
+        android:text="RETURN TO Recipes"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredientOnlyListRecyclerView"
-        app:layout_constraintVertical_bias="0.2">
-
-
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-
-        <Button
-            android:id="@+id/returnButtonIngredientStorage"
-            android:layout_width="412dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_marginTop="17dp"
-            android:layout_marginBottom="24dp"
-            android:backgroundTint="#018786"
-
-            android:fontFamily="@font/comfortaabold"
-            android:text="RETURN TO Recipes"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredientListRecyclerView"
-            app:layout_constraintVertical_bias="0.384" />
-
-    </LinearLayout>
+        app:layout_constraintVertical_bias="0.384" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

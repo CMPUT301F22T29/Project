@@ -45,18 +45,6 @@
             android:ems="10"
             android:hint="How many servings?" />
 
-        <EditText
-            android:id="@+id/inputDaysToMealPlan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-
-            android:textSize="12sp"
-            android:fontFamily="@font/comfortaaregular"
-            android:inputType="number"
-            android:ems="10"
-            android:hint="How many days?" />
-
 
     </LinearLayout>
 

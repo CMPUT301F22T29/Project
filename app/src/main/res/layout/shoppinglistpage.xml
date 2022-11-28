@@ -75,31 +75,11 @@
         app:layout_constraintTop_toBottomOf="@+id/IngredientTitleLayout">
 
 
-        <Button
-            android:id="@+id/AddButtonShoppingList"
-            android:layout_width="90dp"
-            android:layout_height="wrap_content"
-
-            android:layout_marginLeft="30dp"
-
-            android:backgroundTint="#04AF57"
-            android:fontFamily="@font/comfortaabold"
-            android:layout_gravity="center_vertical"
-
-            android:text="ADD" />
-
-
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1" />
 
-        <Spinner
-            android:id="@+id/spinnerShoppingList"
-            android:layout_marginRight="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

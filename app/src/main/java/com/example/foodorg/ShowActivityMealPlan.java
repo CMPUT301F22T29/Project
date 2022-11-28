@@ -38,15 +38,6 @@ public class ShowActivityMealPlan extends AppCompatActivity {
         FireAuth = FirebaseAuth.getInstance();
         userID = FireAuth.getCurrentUser().getUid();
 
-        TextView storageItemName,storageItemCategory,storageItemDescription,storageItemBB,storageItemLocation,storageItemAmount,storageItemUnit;
-
-        storageItemName = findViewById(R.id.nameMPIngredientTV);
-        storageItemCategory = findViewById(R.id.categoryMPIngredientTV);
-        storageItemBB = findViewById(R.id.BBdateMPIngredientTV);
-        storageItemLocation = findViewById(R.id.locationMPIngredientTV);
-        storageItemAmount = findViewById(R.id.amountMPIngredientTV);
-        storageItemUnit = findViewById(R.id.unitMPIngredientTV);
-
 
 
         returnMP = findViewById(R.id.returnButtonMP);
@@ -61,13 +52,15 @@ public class ShowActivityMealPlan extends AppCompatActivity {
 
         String validity= getIntent().getStringExtra("nameFind");
 
-        showData(validity);
+        String id = getIntent().getStringExtra("idmeal");
+
+        showData(id, validity);
 
 
 
     }
 
-    private void showData(String findName){
+    private void showData(String id, String validity){
 
         TextView storageItemName,storageItemCategory,storageItemDescription,storageItemBB,storageItemLocation,storageItemAmount,storageItemUnit;
 
@@ -79,8 +72,11 @@ public class ShowActivityMealPlan extends AppCompatActivity {
         storageItemUnit = findViewById(R.id.unitMPIngredientTV);
         // Access Firestore database to get the data based on userID from appropriate collectionPath
         CollectionReference collectionReference = Firestoredb.collection("users");
-        collectionReference.document(userID).collection("Ingredient_Storage")
-                .whereEqualTo("name",findName)
+
+
+
+        collectionReference.document(userID).collection("Relationship")
+                .whereEqualTo("mealID",id)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
@@ -95,12 +91,18 @@ public class ShowActivityMealPlan extends AppCompatActivity {
 
                         for (DocumentSnapshot snapshot : task.getResult()){
 
-                            storageItemName.setText(snapshot.getString("name"));
-                            storageItemCategory.setText(snapshot.getString("category"));
-                            storageItemBB.setText(snapshot.getString("bestBefore"));
-                            storageItemLocation.setText(snapshot.getString("location"));
-                            storageItemAmount.setText(String.valueOf(snapshot.getLong("amount")));
-                            storageItemUnit.setText(String.valueOf(snapshot.getLong("unit").intValue()));
+                            if (snapshot.getString("description").equals(validity)){
+
+                                storageItemName.setText(snapshot.getString("description"));
+                                storageItemCategory.setText(snapshot.getString("category"));
+                                storageItemBB.setText(snapshot.getString("bb"));
+                                storageItemLocation.setText(snapshot.getString("location"));
+                                storageItemAmount.setText(String.valueOf(snapshot.get("amount")));
+                                storageItemUnit.setText(String.valueOf(snapshot.get("unit")));
+
+                            }
+
+
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {

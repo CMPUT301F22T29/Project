@@ -23,11 +23,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -140,9 +145,18 @@ public class IngredientMealPlanAdapter extends RecyclerView.Adapter<IngredientMe
 
         final TextView titleRecipe = dialog.findViewById(R.id.nameRecipeMealPlan);
         final EditText servingsMPRecipe= dialog.findViewById(R.id.inputServingsMealPlan);
-        final EditText daysMPRecipe = dialog.findViewById(R.id.inputDaysToMealPlan);
+
+        servingsMPRecipe.setVisibility(View.INVISIBLE);
 
         titleRecipe.setText(ingredientStorageModelList.get(position).getName());
+
+        String theunit = ingredientStorageModelList.get(position).getUnit();
+        String theamount = ingredientStorageModelList.get(position).getAmount();
+        String thedescription = ingredientStorageModelList.get(position).getDescription();
+        String thebb = ingredientStorageModelList.get(position).getBestBefore();
+        String thelocation = ingredientStorageModelList.get(position).getLocation();
+        String thecategory = ingredientStorageModelList.get(position).getCategory();
+
         final DatePicker datePickerMPRecipeItem = dialog.findViewById(R.id.datePickerMPRecipe);
 
         final ImageView closeMealPlanAlert = dialog.findViewById(R.id.closeAlertMealPlan);
@@ -160,15 +174,24 @@ public class IngredientMealPlanAdapter extends RecyclerView.Adapter<IngredientMe
                 FireAuth = FirebaseAuth.getInstance();
                 Firestoredb = FirebaseFirestore.getInstance();
                 userID = FireAuth.getCurrentUser().getUid();
-                DocumentReference documentReferenceReference = Firestoredb.collection("users").document(userID).collection("MealPlan").document();
+                DocumentReference documentReferenceReference = Firestoredb.collection("users")
+                        .document(userID).collection("MealPlan").document();
 
                 String idIS = documentReferenceReference.getId();
 
-                String nameMP = ingredientStorageModelList.get(position).getName();
+                String descriptionMP = ingredientStorageModelList.get(position).getDescription();
+
+                String bestbefore = ingredientStorageModelList.get(position).getBestBefore();
+                String location = ingredientStorageModelList.get(position).getLocation();
 
                 String servingsMP = servingsMPRecipe.getText().toString();
-                String daysMP = daysMPRecipe.getText().toString();
                 String id = ingredientStorageModelList.get(position).getDocumentID();
+
+                DocumentReference relationship = Firestoredb.collection("users")
+                        .document(userID).collection("Relationship").document();
+
+                CollectionReference wholerelationship = Firestoredb.collection("users")
+                        .document(userID).collection("Relationship");
 
                 int day = datePickerMPRecipeItem.getDayOfMonth();
                 int month = datePickerMPRecipeItem.getMonth();
@@ -178,20 +201,22 @@ public class IngredientMealPlanAdapter extends RecyclerView.Adapter<IngredientMe
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 String bbIS = sdf.format(calendar.getTime());
 
-                if(TextUtils.isEmpty(nameMP) || TextUtils.isEmpty(servingsMP) || TextUtils.isEmpty(daysMP) ||
+                if(TextUtils.isEmpty(descriptionMP) || TextUtils.isEmpty(servingsMP) ||
                         TextUtils.isEmpty(bbIS) ) {
                     Toast.makeText(context, "Please enter all values", Toast.LENGTH_SHORT).show();
                 }
 
                 else{
-                    MealPlanModel mealPlanModel = new MealPlanModel(nameMP,bbIS,id,servingsMP,2);
+                    MealPlanModel mealPlanModel = new MealPlanModel(descriptionMP,bbIS,id,servingsMP,2, idIS);
                     mealPlanModelList.add(mealPlanModel);
 
                     HashMap<String, Object> map = new HashMap<>();
-                    map.put("name", nameMP);
+                    map.put("description", descriptionMP);
                     map.put("date", bbIS);
-                    map.put("servings", servingsMP);
-                    map.put("mealID", id);
+                    map.put("servings", "1");
+                    map.put("name", descriptionMP);
+                    map.put("mealID", idIS);
+                    map.put("recipeID", id);
                     map.put("whichStore",2);
                     documentReferenceReference.set(map)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -213,6 +238,106 @@ public class IngredientMealPlanAdapter extends RecyclerView.Adapter<IngredientMe
                                     Log.w(TAG, "Error writing document", e);
                                 }
                             });
+
+                    int num = 0;
+
+                    num = Integer.parseInt(servingsMP);
+                    int u;
+
+//                    for (u = 0; u<num; u++) {
+//
+//
+//
+//                        wholerelationship.document().set(mapS);
+//                    }
+
+                    HashMap<String, Object> mapS = new HashMap<>();
+                    mapS.put("description", thedescription);
+                    mapS.put("amount", theamount);
+                    mapS.put("unit", theunit);
+                    mapS.put("category", thecategory);
+
+                    mapS.put("date", bbIS);
+                    mapS.put("servings", "1");
+                    mapS.put("mealID", idIS);
+                    mapS.put("exist", "must");
+                    mapS.put("multiple", "no");
+                    mapS.put("type", "ingredient");
+                    mapS.put("id", id);
+                    mapS.put("bb", bestbefore);
+                    mapS.put("location", location);
+
+                    relationship.set(mapS);
+
+
+//                    wholerelationship
+//                            .get()
+//                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                                /**
+//                                 * onComplete method for the task
+//                                 * @param task which is the task for firestore
+//                                 */
+//                                @Override
+//                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//
+//
+//                                    for (DocumentSnapshot snapshot : task.getResult()){
+//                                        if ((String.valueOf(snapshot.getString("description")).equals(descriptionMP)) &
+//                                                (String.valueOf(snapshot.getString("exist")).equals("must")) &
+//                                                (String.valueOf(snapshot.getString("type")).equals("ingredient"))){
+//
+//                                            wholerelationship.document(snapshot.getId()).update("exist", "must");
+//
+//                                            String meal = id;
+//                                            String theAmount = snapshot.getString("amount");
+//                                            String theCategory = snapshot.getString("category");
+//                                            String theDescription = snapshot.getString("description");
+//                                            String theRecipeID = snapshot.getString("recipe_id");
+//                                            String theType = snapshot.getString("type");
+//                                            String theUnit = snapshot.getString("unit");
+//                                            String serving = snapshot.getString("servingSize");
+//                                            String mealplanID = id;
+//
+//                                            Float portion = Float.valueOf(0);
+//                                            portion = (float)Integer.parseInt(servingsMP) / Integer.parseInt(serving);
+//
+//                                            Float unitcst = Float.valueOf(0);
+//                                            unitcst = (float)Integer.parseInt(theUnit) * portion;
+//
+//                                            Float amountcst = Float.valueOf(0);
+//                                            amountcst = (float)Integer.parseInt(theAmount) * portion;
+//
+//                                            //Integer unitcst = Integer.parseInt(theUnit);
+//                                            //Integer amountcst = Integer.parseInt(theAmount);
+//
+//                                            //for (f= 0; f < len; f++){
+//
+//                                            HashMap<String, Object> eachMap = new HashMap<>();
+//
+//                                            eachMap.put("mealid", mealplanID);
+//                                            eachMap.put("amount", (double)amountcst);
+//                                            eachMap.put("category", theCategory);
+//                                            eachMap.put("description", theDescription);
+//                                            eachMap.put("recipe_id", theRecipeID);
+//                                            eachMap.put("type", theType);
+//                                            eachMap.put("multiple","yes");
+//                                            eachMap.put("unit", (double)unitcst);
+//                                            eachMap.put("servingSiz", serving);
+//
+//                                            wholerelationship.document().set(eachMap);
+//
+//                                            //}
+//
+//                                        }
+//                                    }
+//
+//                                }
+//                            }).addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//                                    Log.w(TAG, "Error deleting document", e);
+//                                }
+//                            });
 
                 }
 
