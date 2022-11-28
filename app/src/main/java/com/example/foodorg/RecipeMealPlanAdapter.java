@@ -41,9 +41,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- *  IngredientStorageAdapter is the adapter class for the ingredients inside
- *  Ingredient Storage recyclerview. It contains the constructor for this adapter class
- *  which is used in the Ingredient Storage Activity
+ *  RecipeMealPLan adapter is the adapter class for the ingredients inside
+ *  Ingredient for ecipe in mealplan recylclerview . It contains the constructor for this adapter class
  *
  * @author amman1
  * @author mohaimin
