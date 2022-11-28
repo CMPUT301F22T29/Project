@@ -34,6 +34,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * CameraActivity is the activity the user access to store pictures for recipe
+ * <ul>
+ *     <li>Camera button</li>
+ *     <li>Gallery button</li>
+ *     <li>Return to RecipeActivity Button</li>
+ *
+ * </ul>
+ * @author amman1
+ * @author mohaimin
+ */
+
 public class CameraActivity extends AppCompatActivity {
     public static final int CAMERA_PERM_CODE = 101;
     public static final int GALLERY_REQUEST_CODE = 105;
@@ -46,7 +58,10 @@ public class CameraActivity extends AppCompatActivity {
     //ImageView picture;
 
 
-
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +75,10 @@ public class CameraActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
 
         returnRecipeBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * returns to recipe
+             * @param view
+             */
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CameraActivity.this,RecipeActivity.class);
@@ -68,6 +87,10 @@ public class CameraActivity extends AppCompatActivity {
         });
 
         cameraBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * camera of phone open to take picture for recipe
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 askCameraPermissions();
@@ -76,6 +99,10 @@ public class CameraActivity extends AppCompatActivity {
         });
 
         galleryBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * gallery opens to select picture for recipe
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 Intent gallery = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -85,6 +112,13 @@ public class CameraActivity extends AppCompatActivity {
         showImage();
 
     }
+
+    /**
+     * what activity to perform on result
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -112,6 +146,10 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * what permission to ask user when granted
+     */
     private void askCameraPermissions() {
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
@@ -122,6 +160,12 @@ public class CameraActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Ask user for permission to use camera
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -135,6 +179,9 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * To show image on the activity if previous image exists of that recipe
+     */
     private void showImage() {
         recipeID= getIntent().getExtras().getString("recipe_id");
         //recipeImage = (ImageView)findViewById(R.id.ingredientRecipeImageView);
@@ -163,6 +210,11 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * handles the upload for camera picture
+     * @param bitmap
+     * @param name
+     */
     private void handleUpload(Bitmap bitmap,String name) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -187,7 +239,11 @@ public class CameraActivity extends AppCompatActivity {
                 });
     }
 
-
+    /**
+     * handles upload for gallery picture
+     * @param name
+     * @param contentUri
+     */
     private void uploadImageToFirebase(String name, Uri contentUri) {
         final StorageReference image = storageReference.child("recipe_images/" + name);
         image.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
