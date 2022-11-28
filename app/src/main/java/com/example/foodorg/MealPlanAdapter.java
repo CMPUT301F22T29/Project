@@ -19,24 +19,12 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-/**
- *  MealPlanAdapter is the adapter class for the mealplan inside
- *  MealPLanActivity recyclerview. It contains the constructor for this adapter class.
- *
- * @author amman1
- * @author mohaimin
- *
- */
+
 public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MyViewHolder> {
 
     private Context context;
     private List<MealPlanModel> mealPlanModelList;
 
-    /**
-     * Constructor for adapter
-     * @param context
-     * @param mealPlanModelList
-     */
 
     public MealPlanAdapter(Context context, List<MealPlanModel> mealPlanModelList) {
         // assign each variable
@@ -45,26 +33,13 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MyView
 
     }
 
-    /**
-     * create the view
-     * @param parent
-     * @param viewType
-     * @return
-     */
-
     @NonNull
     @Override
     public MealPlanAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.mealplan_item, parent, false);
         return new MealPlanAdapter.MyViewHolder(v);
     }
-    /**
-     * This method assigns the values to the view variables
-     * which were initialized in MyViewHolder
-     *
-     * @param holder which is the holder for the view
-     * @param position which is position of view clicked
-     */
+
     @Override
     public void onBindViewHolder(@NonNull MealPlanAdapter.MyViewHolder holder, int position) {
         holder.title.setText(mealPlanModelList.get(position).getMealName());
@@ -126,12 +101,6 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MyView
         });
 
     }
-
-    /**
-     * sort the list according to date
-     * @param array
-     * @return
-     */
     private List<MealPlanModel> sortlist(List<MealPlanModel> array){
 
 
@@ -157,29 +126,17 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MyView
 
 
 
-    /**
-     * getItemCount method
-     * @return the size of the ingredient of recipe list
-     */
+
 
     @Override
     public int getItemCount() {
         return mealPlanModelList.size();
     }
 
-    /**
-     * The MyViewHolder classes extends RecyclerView.ViewHolder to
-     * initialize the variables for it based on the id's
-     * in the layout
-     */
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title, servings, date;
         Button viewBtn;
         LinearLayout expandableLayout;
-        /**
-         * find the items in the view
-         * @param itemView which is the view
-         */
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title_mealplan_item);
