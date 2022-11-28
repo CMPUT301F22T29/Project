@@ -535,6 +535,90 @@ public class RecipeActivity extends AppCompatActivity implements RecipeAdapter.O
                                 Toast.makeText(RecipeActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+
+                DocumentReference relationship = db.collection("users")
+                        .document(userID).collection("Relationship").document();
+
+                CollectionReference wholerelationship = db.collection("users")
+                        .document(userID).collection("Relationship");
+
+                wholerelationship.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+
+                        for (DocumentSnapshot snapshot : task.getResult()){
+                            if (String.valueOf(snapshot.getString("idrecipe")).equals(findID)){
+
+                                String den = "";
+                                den = String.valueOf(snapshot.get("servings"));
+
+                                wholerelationship.document(snapshot.getId()).update("servings", servings);
+
+                            }
+
+                        }
+
+                        for (DocumentSnapshot snap1 : task.getResult()){
+                            if ((String.valueOf(snap1.getString("recipeID")).equals(findID)) &
+                                    (String.valueOf(snap1.getString("mealID")) != null)){
+
+
+                                wholerelationship.document(snap1.getId()).update("servings", servings);
+
+
+                            }
+                        }
+
+                        for (DocumentSnapshot snapshot1 : task.getResult()) {
+
+                            if (String.valueOf(snapshot1.getString("recipe_id")).equals(findID) &
+                                    (String.valueOf(snapshot1.get("type")).equals("ingredientrecipe")) ){
+
+                                if ((String.valueOf(snapshot1.get("mealID")) != null)){
+
+                                    Float initialserving = Float.valueOf(0);
+                                    Float initialamount = Float.valueOf(0);
+
+                                    initialserving =  Float.parseFloat(String.valueOf(snapshot1.get("servingSize")));
+                                    initialamount = Float.parseFloat(String.valueOf(snapshot1.get("amount")));
+
+                                    Float newamount = Float.valueOf(0);
+
+                                    newamount = newamount + ((initialamount)/(Float.parseFloat(servings)))*(initialserving);
+
+                                    wholerelationship.document(snapshot1.getId()).update("amount", newamount);
+                                    wholerelationship.document(snapshot1.getId()).update("servingSize", servings);
+
+                                }
+                                else{
+
+                                    String len = "";
+                                    len = String.valueOf(snapshot1.get("servings"));
+
+                                    wholerelationship.document(snapshot1.getId()).update("servings", servings);
+
+                                }
+
+                            }
+
+                        }
+
+                        for (DocumentSnapshot snap3 : task.getResult()){
+
+                            if ((String.valueOf(snap3.getString("servingSize")) != null) &
+                                    (String.valueOf(snap3.getString("recipe_id")).equals(findID))
+                            ){
+                                wholerelationship.document(snap3.getId()).update("servingSize", servings);
+                            }
+                        }
+
+                    }
+                });
+
+
+
             }
 
         });

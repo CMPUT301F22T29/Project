@@ -339,66 +339,6 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
                                     }
 
 
-
-//                                    for (DocumentSnapshot snapshot : task.getResult()){
-//
-//                                        if ( (String.valueOf(snapshot.getString("recipe_id")).equals(recipeID)) &
-//                                                (String.valueOf(snapshot.getString("type")).equals("ingredientrecipe")) &
-//                                                (!(String.valueOf(snapshot.getString("multiple")).equals("yes"))) ) {
-//
-//                                            wholerelationship.document(snapshot.getId()).update("exist", "must");
-//
-//                                            String theAmount = snapshot.getString("amount");
-//                                            String theCategory = snapshot.getString("category");
-//                                            String theDescription = snapshot.getString("description");
-//
-//                                            String theRecipeID = snapshot.getString("recipe_id");
-//                                            String theType = snapshot.getString("type");
-//
-//                                            String theUnit = snapshot.getString("unit");
-//                                            //String serving = snapshot.getString("servingSize");
-//
-//                                            String mealplanID = idIS;
-//
-//
-////                                            Integer portion = 0;
-////                                            portion = Integer.parseInt(servingsMP) / Integer.parseInt(serving);
-////
-////                                            Integer unitcst = 0;
-////                                            unitcst = Integer.parseInt(theUnit) * portion;
-////
-////                                            Integer amountcst = 0;
-////                                            amountcst = Integer.parseInt(theAmount) * portion;
-//
-//                                            //Integer unitcst = Integer.parseInt(theUnit);
-//                                            //Integer amountcst = Integer.parseInt(theAmount);
-//
-//                                            //for (f= 0; f < len; f++){
-//
-//                                            HashMap<String, Object> eachMap = new HashMap<>();
-//
-//                                            eachMap.put("mealid", mealplanID);
-//
-//                                            eachMap.put("amount", theAmount);
-//                                            eachMap.put("unit", theUnit);
-//
-//                                            eachMap.put("category", theCategory);
-//                                            eachMap.put("description", theDescription);
-//                                            eachMap.put("recipe_id", theRecipeID);
-//                                            eachMap.put("type", theType);
-////                                            eachMap.put("multiple","yes");
-////                                            eachMap.put("unit", String.valueOf(unitcst));
-//
-//                                            //eachMap.put("servingSiz", serving);
-//                                            eachMap.put("date", bbIS);
-//                                            eachMap.put("multiple", "yes");
-//
-//                                            wholerelationship.document().set(eachMap);
-//
-//
-//                                        }
-//                                    }
-
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -431,46 +371,6 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
 
 
     }
-
-//    if (!(String.valueOf(snapshot.getString("mealID")).equals(idIS))){
-//        String theAmount = snapshot.getString("amount");
-//        String theCategory = snapshot.getString("category");
-//        String theDescription = snapshot.getString("description");
-//        String theRecipeID = snapshot.getString("recipe_id");
-//        String theType = snapshot.getString("type");
-//        String theUnit = snapshot.getString("unit");
-//        String serving = snapshot.getString("servingSize");
-//        String mealplanID = idIS;
-//
-//        Integer portion = 0;
-//        portion = Integer.parseInt(servingsMP) / Integer.parseInt(serving);
-//
-//        Integer unitcst = 0;
-//        unitcst = Integer.parseInt(theUnit) * portion;
-//
-//        Integer amountcst = 0;
-//        amountcst = Integer.parseInt(theAmount) * portion;
-//
-//        //Integer unitcst = Integer.parseInt(theUnit);
-//        //Integer amountcst = Integer.parseInt(theAmount);
-//
-//        //for (f= 0; f < len; f++){
-//
-//        HashMap<String, Object> eachMap = new HashMap<>();
-//
-//        eachMap.put("mealid", mealplanID);
-//        eachMap.put("amount", String.valueOf(amountcst));
-//        eachMap.put("category", theCategory);
-//        eachMap.put("description", theDescription);
-//        eachMap.put("recipe_id", theRecipeID);
-//        eachMap.put("type", theType);
-//        eachMap.put("multiple","yes");
-//        eachMap.put("unit", String.valueOf(unitcst));
-//        eachMap.put("servingSiz", serving);
-//        eachMap.put("date", bbIS);
-//
-//        wholerelationship.document().set(eachMap);
-//    }
 
 
     /**
