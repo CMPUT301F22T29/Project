@@ -238,18 +238,6 @@ public class IngredientMealPlanAdapter extends RecyclerView.Adapter<IngredientMe
                                 }
                             });
 
-//                    int num = 0;
-//
-//                    num = Integer.parseInt(servingsMP);
-//                    int u;
-
-//                    for (u = 0; u<num; u++) {
-//
-//
-//
-//                        wholerelationship.document().set(mapS);
-//                    }
-
                     HashMap<String, Object> mapS = new HashMap<>();
                     mapS.put("description", thedescription);
                     mapS.put("amount", theamount);
@@ -267,76 +255,6 @@ public class IngredientMealPlanAdapter extends RecyclerView.Adapter<IngredientMe
                     mapS.put("location", location);
 
                     relationship.set(mapS);
-
-
-//                    wholerelationship
-//                            .get()
-//                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                                /**
-//                                 * onComplete method for the task
-//                                 * @param task which is the task for firestore
-//                                 */
-//                                @Override
-//                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//
-//
-//                                    for (DocumentSnapshot snapshot : task.getResult()){
-//                                        if ((String.valueOf(snapshot.getString("description")).equals(descriptionMP)) &
-//                                                (String.valueOf(snapshot.getString("exist")).equals("must")) &
-//                                                (String.valueOf(snapshot.getString("type")).equals("ingredient"))){
-//
-//                                            wholerelationship.document(snapshot.getId()).update("exist", "must");
-//
-//                                            String meal = id;
-//                                            String theAmount = snapshot.getString("amount");
-//                                            String theCategory = snapshot.getString("category");
-//                                            String theDescription = snapshot.getString("description");
-//                                            String theRecipeID = snapshot.getString("recipe_id");
-//                                            String theType = snapshot.getString("type");
-//                                            String theUnit = snapshot.getString("unit");
-//                                            String serving = snapshot.getString("servingSize");
-//                                            String mealplanID = id;
-//
-//                                            Float portion = Float.valueOf(0);
-//                                            portion = (float)Integer.parseInt(servingsMP) / Integer.parseInt(serving);
-//
-//                                            Float unitcst = Float.valueOf(0);
-//                                            unitcst = (float)Integer.parseInt(theUnit) * portion;
-//
-//                                            Float amountcst = Float.valueOf(0);
-//                                            amountcst = (float)Integer.parseInt(theAmount) * portion;
-//
-//                                            //Integer unitcst = Integer.parseInt(theUnit);
-//                                            //Integer amountcst = Integer.parseInt(theAmount);
-//
-//                                            //for (f= 0; f < len; f++){
-//
-//                                            HashMap<String, Object> eachMap = new HashMap<>();
-//
-//                                            eachMap.put("mealid", mealplanID);
-//                                            eachMap.put("amount", (double)amountcst);
-//                                            eachMap.put("category", theCategory);
-//                                            eachMap.put("description", theDescription);
-//                                            eachMap.put("recipe_id", theRecipeID);
-//                                            eachMap.put("type", theType);
-//                                            eachMap.put("multiple","yes");
-//                                            eachMap.put("unit", (double)unitcst);
-//                                            eachMap.put("servingSiz", serving);
-//
-//                                            wholerelationship.document().set(eachMap);
-//
-//                                            //}
-//
-//                                        }
-//                                    }
-//
-//                                }
-//                            }).addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//                                    Log.w(TAG, "Error deleting document", e);
-//                                }
-//                            });
 
                 }
 

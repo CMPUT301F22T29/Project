@@ -201,25 +201,11 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                             });
 
 
-
-//                    relationship.set(mapR)
-//                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                @Override
-//                                public void onSuccess(Void unused) {
-//                                    Log.d(TAG, "DocumentSnapshot successfully written!");
-//                                    //ingredientStorageAdapter.notifyDataSetChanged();
-//                                }
-//                            })
-//                            .addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//                                    Log.w(TAG, "Error writing document", e);
-//                                }
-//                            });
-
                     wholerelationship.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                            String jj = "";
 
                             for (DocumentSnapshot snapshot : task.getResult()){
 
@@ -227,6 +213,8 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                                         (String.valueOf(snapshot.getString("description")).equals(description)) &
                                         (String.valueOf(snapshot.getString("category")).equals(category)) &
                                 (String.valueOf(snapshot.getString("exist")).equals("yes")) ) {
+
+                                    jj = "yes";
 
                                     HashMap<String, Object> mapR = new HashMap<>();
 
@@ -257,6 +245,27 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
 
                                 }
 
+                            }
+
+                            if (jj.equals("")){
+                                HashMap<String, Object> mapk = new HashMap<>();
+
+                                mapk.put("name", description);
+                                mapk.put("description", description);
+                                mapk.put("bestBefore", bbIS);
+                                mapk.put("location", location);
+                                mapk.put("category", category);
+
+
+
+
+                                mapk.put("unit", Float.parseFloat(unit));
+                                mapk.put("amount", Float.parseFloat(amount));
+
+                                mapk.put("type", "ingredient");
+                                mapk.put("exist", "yes");
+
+                                wholerelationship.document().set(mapk);
                             }
 
                         }
