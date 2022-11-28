@@ -184,7 +184,7 @@ public class IngredientMealPlanAdapter extends RecyclerView.Adapter<IngredientMe
                 String bestbefore = ingredientStorageModelList.get(position).getBestBefore();
                 String location = ingredientStorageModelList.get(position).getLocation();
 
-                String servingsMP = servingsMPRecipe.getText().toString();
+                //String servingsMP = servingsMPRecipe.getText().toString();
                 String id = ingredientStorageModelList.get(position).getDocumentID();
 
                 DocumentReference relationship = Firestoredb.collection("users")
@@ -201,13 +201,12 @@ public class IngredientMealPlanAdapter extends RecyclerView.Adapter<IngredientMe
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 String bbIS = sdf.format(calendar.getTime());
 
-                if(TextUtils.isEmpty(descriptionMP) || TextUtils.isEmpty(servingsMP) ||
-                        TextUtils.isEmpty(bbIS) ) {
+                if(TextUtils.isEmpty(bbIS) ) {
                     Toast.makeText(context, "Please enter all values", Toast.LENGTH_SHORT).show();
                 }
 
                 else{
-                    MealPlanModel mealPlanModel = new MealPlanModel(descriptionMP,bbIS,id,servingsMP,2, idIS);
+                    MealPlanModel mealPlanModel = new MealPlanModel(descriptionMP,bbIS,id,"1",2, idIS);
                     mealPlanModelList.add(mealPlanModel);
 
                     HashMap<String, Object> map = new HashMap<>();
@@ -238,18 +237,6 @@ public class IngredientMealPlanAdapter extends RecyclerView.Adapter<IngredientMe
                                     Log.w(TAG, "Error writing document", e);
                                 }
                             });
-
-                    int num = 0;
-
-                    num = Integer.parseInt(servingsMP);
-                    int u;
-
-//                    for (u = 0; u<num; u++) {
-//
-//
-//
-//                        wholerelationship.document().set(mapS);
-//                    }
 
                     HashMap<String, Object> mapS = new HashMap<>();
                     mapS.put("description", thedescription);
