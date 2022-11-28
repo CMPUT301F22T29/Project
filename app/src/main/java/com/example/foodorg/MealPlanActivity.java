@@ -106,7 +106,6 @@ public class MealPlanActivity extends AppCompatActivity {
         // Access Firestore database to get the data based on userID from appropriate collectionPath
         CollectionReference collectionReference = Firestoredb.collection("users");
         collectionReference.document(userID).collection("MealPlan")
-                .orderBy("name")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
@@ -121,7 +120,7 @@ public class MealPlanActivity extends AppCompatActivity {
                         mealPlanModelList.clear();
                         for (DocumentSnapshot snapshot : task.getResult()){
                             MealPlanModel mealPlanModel = new MealPlanModel(snapshot.getString("name"), snapshot.getString("date"),
-                                    snapshot.getString("mealID"), snapshot.getString("servings"),snapshot.getLong("whichStore").intValue());
+                                    snapshot.getString("recipeID"), snapshot.getString("servings"),snapshot.getLong("whichStore").intValue(), snapshot.getString("mealID"));
                             mealPlanModelList.add(mealPlanModel);
                         }
                         // Final update to let Adapter know dataset changed

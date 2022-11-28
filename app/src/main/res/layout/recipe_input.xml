@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="#DBDBDB"
     android:layout_weight="1"
     android:layout_height="match_parent">
 
@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
+        android:fontFamily="@font/comfortaaregular"
         android:hint="Title"
         android:inputType="text"
         android:minHeight="48dp" />
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
         android:hint="Category"
+        android:fontFamily="@font/comfortaaregular"
         android:inputType="text"
         android:minHeight="48dp" />
     <EditText
@@ -36,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
         android:hint="Time(MINUTES)"
+        android:fontFamily="@font/comfortaaregular"
         android:inputType="number"
         android:minHeight="48dp" />
     <EditText
@@ -44,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
         android:hint="Servings"
+        android:fontFamily="@font/comfortaaregular"
         android:inputType="number"
         android:minHeight="48dp" />
 
@@ -53,21 +57,23 @@
         android:layout_height="100dp"
         android:layout_margin="10sp"
         android:hint="Comments"
-        android:inputType="textCapCharacters"
+        android:fontFamily="@font/comfortaaregular"
+        android:inputType="text"
         />
 
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRecipeEdit"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="10sp"
         android:backgroundTint="@color/black"
         android:layout_marginBottom="10dp"
+        android:fontFamily="@font/comfortaaregular"
         android:layout_weight="0"
-        android:text="Confirm and Add ingredients" />
+        android:text="Confirm Recipe" />
 
 
 

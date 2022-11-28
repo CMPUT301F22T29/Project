@@ -66,9 +66,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/addAndSortIngredients"
         android:layout_width="414dp"
-        android:layout_height="545dp"
+        android:layout_height="500dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/deleteAndReturnIngredients"
+        android:layout_marginBottom="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,12 +79,12 @@
             android:id="@+id/displayImageView"
             android:layout_width="286dp"
             android:layout_height="335dp"
-            android:layout_marginEnd="64dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.076"
 
+            app:layout_constraintVertical_bias="0.233"
             app:srcCompat="@drawable/recipe" />
 
         <Button
@@ -92,8 +92,9 @@
             android:layout_width="118dp"
             android:layout_height="47dp"
             android:layout_marginStart="76dp"
-            android:layout_marginBottom="128dp"
+            android:layout_marginBottom="40dp"
             android:text="Camera"
+            android:backgroundTint="#3F51B5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -102,7 +103,8 @@
             android:layout_width="116dp"
             android:layout_height="48dp"
             android:layout_marginEnd="84dp"
-            android:layout_marginBottom="128dp"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="#9C27B0"
             android:text="Gallery"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -110,36 +112,22 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/deleteAndReturnIngredients"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/returnButtonRecipe"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+
+        android:layout_gravity="center"
+        android:layout_weight="1"
+
+        android:backgroundTint="#018786"
+        android:fontFamily="@font/comfortaabold"
+
+        android:text="RETURN TO RECIPES"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-
-        app:layout_constraintStart_toStartOf="parent">
-
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/returnButtonRecipe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="20dp"
-
-            android:backgroundTint="#018786"
-            android:fontFamily="@font/comfortaabold"
-
-            android:text="RETURN TO RECIPES" />
-
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addAndSortIngredients" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

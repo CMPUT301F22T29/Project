@@ -14,11 +14,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -126,6 +131,8 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
                 db = FirebaseFirestore.getInstance();
                 mAuth = FirebaseAuth.getInstance();
 
+                String descrition = ingredientStorageModelList.get(position).getDescription();
+
                 // Also initialize the current user id
                 userID = mAuth.getCurrentUser().getUid();
 
@@ -147,6 +154,35 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
                                 Log.w(TAG, "Error deleting document", e);
                             }
                         });
+
+                CollectionReference relationship = db.collection("users")
+                        .document(userID).collection("Relationship");
+
+                relationship
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            /**
+                             * onComplete method for the task
+                             * @param task which is the task for firestore
+                             */
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                for (DocumentSnapshot snapshot : task.getResult()){
+                                    if ((String.valueOf(snapshot.getString("id")).equals(findID.toString())) &
+                                            (String.valueOf(snapshot.getString("exist")).equals("yes"))){
+                                        relationship.document(snapshot.getId()).delete();
+                                    }
+                                }
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+
             }
         });
     }

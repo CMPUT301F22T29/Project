@@ -64,7 +64,7 @@
 
             android:ems="10"
 
-            android:hint="Cost($)" />
+            android:hint="Amount" />
 
     </LinearLayout>
 
@@ -84,7 +84,7 @@
             android:fontFamily="@font/comfortaaregular"
 
             android:ems="10"
-            android:hint="Unit" />
+            android:hint="Unit $" />
 
         <EditText
             android:id="@+id/categoryInputAddIStorageItem"
@@ -95,6 +95,7 @@
             android:textSize="12sp"
             android:fontFamily="@font/comfortaaregular"
 
+            android:inputType="text"
             android:ems="10"
             android:hint="Category" />
 

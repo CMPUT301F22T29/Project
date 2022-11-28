@@ -27,7 +27,7 @@ public class ShoppingListIngredientModel {
      * @param unit unit
      * @param name  name
      */
-    public ShoppingListIngredientModel(String description, String category, String amount, String unit, String name) {
+    public ShoppingListIngredientModel(String description, String category, String unit, String amount , String name) {
         this.description = description;
         this.category = category;
         this.amount = amount;

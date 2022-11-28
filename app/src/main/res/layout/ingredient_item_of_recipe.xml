@@ -16,43 +16,41 @@
         android:background="@drawable/shadow">
 
         <LinearLayout
+            android:id="@+id/titleoflay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#EFF3F2"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:text="Ingredient Name:"
 
-                android:fontFamily="@font/comfortaabold"
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="15sp"
 
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
+                android:fontFamily="@font/comfortaaregular"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                android:textColor="#263238" />
 
 
             <TextView
                 android:id="@+id/name_ingredient"
-                android:layout_width="240dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/comfortaabold"
 
                 android:text="name"
 
-                android:textAlignment="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:textSize="15sp"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                android:fontFamily="@font/comfortaaregular"
+
+                android:textColor="#263238" />
 
         </LinearLayout>
 
@@ -69,37 +67,34 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Unit:"
+                android:text="Unit ($):"
+
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="15sp"
 
                 android:fontFamily="@font/comfortaaregular"
+                android:textColor="#263238" />
 
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
 
 
             <TextView
                 android:id="@+id/unit_ingredient"
-                android:layout_width="240dp"
+                android:text="time"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:textAlignment="center"
-                android:text="time"
+
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:textSize="15sp"
 
                 android:fontFamily="@font/comfortaaregular"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                android:textColor="#263238" />
 
         </LinearLayout>
 
@@ -111,37 +106,34 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:text="Amount:"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Amount:"
-
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
 
                 android:fontFamily="@font/comfortaaregular"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="15sp"
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                android:textColor="#263238"/>
+
 
 
             <TextView
                 android:id="@+id/amount_ingredient"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
 
-                android:textAlignment="center"
-                android:text="amount"
-
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
                 android:fontFamily="@font/comfortaaregular"
+                android:text="location"
 
                 android:textColor="#263238"
-                android:textSize="12sp" />
+
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -157,23 +149,17 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:text="Category:"
 
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
+                android:layout_width="150dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="15sp"
 
                 android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                android:textColor="#263238"/>
 
 
             <TextView
@@ -181,19 +167,22 @@
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
 
-                android:textAlignment="center"
                 android:text="category"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:textSize="15sp"
 
                 android:fontFamily="@font/comfortaaregular"
 
-                android:textColor="#263238"
-                android:textSize="12sp" />
+                android:textColor="#263238"/>
 
         </LinearLayout>
 
 
 
         <LinearLayout
+            android:id="@+id/deleteingrrecipe"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -207,7 +196,8 @@
                 android:textSize="10sp"
                 android:layout_marginLeft="30dp"
                 android:fontFamily="@font/comfortaaregular"
-                android:text="EDIT" />
+                android:text="EDIT"
+                android:backgroundTint="#018786"/>
 
             <View
                 android:layout_width="0dp"
@@ -220,6 +210,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="60dp"
+                android:backgroundTint="#FF0000"
                 android:fontFamily="@font/comfortaaregular"
                 android:textSize="10sp"
                 android:text="DELETE" />

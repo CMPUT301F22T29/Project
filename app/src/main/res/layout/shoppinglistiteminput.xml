@@ -12,74 +12,59 @@
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/btn_dialog" />
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/comfortaaregular"
+        android:textSize="15sp"
+        android:text="Complete details" />
+
     <EditText
-        android:id="@+id/nameInputShoppingList"
+        android:id="@+id/locationInputShoppingList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
 
         android:fontFamily="@font/comfortaaregular"
-        android:hint="Name"
-        android:inputType="textAutoCorrect"
+        android:hint="Location"
+        android:inputType="text"
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/inputDescriptionShoppingList"
+        android:id="@+id/amountInputShoppingList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
+        android:inputType="number"
 
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:fontFamily="@font/comfortaaregular"
 
-        android:hint="Description"/>
+        android:hint="Amount"/>
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/unitInputShoppingList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
-        android:orientation="horizontal">
+        android:inputType="number"
 
-        <EditText
-            android:id="@+id/inputUnitShoppingList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        android:textSize="15sp"
+        android:fontFamily="@font/comfortaaregular"
 
-            android:ems="10"
+        android:hint="Unit"
 
-            android:textSize="12sp"
-            android:fontFamily="@font/comfortaaregular"
+        />
 
-            android:hint="Unit" />
-
-        <EditText
-            android:id="@+id/inputAmountShoppingList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-
-            android:textSize="12sp"
-            android:fontFamily="@font/comfortaaregular"
-
-            android:ems="10"
-
-            android:hint="Amount" />
-
-        <EditText
-            android:id="@+id/inputCategoryShoppingList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-
-            android:textSize="12sp"
-            android:fontFamily="@font/comfortaaregular"
-
-            android:ems="10"
-
-            android:hint="Category" />
-
-    </LinearLayout>
+    <DatePicker
+        android:id="@+id/datePickerAddShoppingListItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:layout_gravity="center_horizontal"
+        android:datePickerMode="spinner" />
 
 
     <com.google.android.material.button.MaterialButton

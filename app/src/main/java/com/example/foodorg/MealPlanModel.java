@@ -9,14 +9,22 @@ public class MealPlanModel {
     String recipeID;
     Integer whichStore;
 
-    public MealPlanModel(String mealName, String date, String mealPlanID, String servings, Integer whichStore) {
+    public MealPlanModel(String mealName, String date, String recipeID, String servings, Integer whichStore, String mealPlanID) {
         this.mealName = mealName;
         this.date = date;
         this.mealPlanID = mealPlanID;
         this.servings = servings;
         this.whichStore = whichStore;
-        //this.recipeID = recipeID;
+        this.recipeID = recipeID;
 
+    }
+
+    public String getRecipeID() {
+        return recipeID;
+    }
+
+    public void setRecipeID(String recipeID) {
+        this.recipeID = recipeID;
     }
 
     public String getServingsMealPlan() {

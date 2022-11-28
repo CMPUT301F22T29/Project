@@ -112,7 +112,7 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
                 @Override
                 public void onClick(View v) {
                     showCustomDialog();
-                    Toast.makeText(IngredientStorageActivity.this, "Dialog shown", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(IngredientStorageActivity.this, "Dialog shown", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -276,7 +276,11 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
                 FireAuth = FirebaseAuth.getInstance();
                 Firestoredb = FirebaseFirestore.getInstance();
                 userID = FireAuth.getCurrentUser().getUid();
-                DocumentReference documentReferenceReference = Firestoredb.collection("users").document(userID).collection("Ingredient_Storage").document();
+                DocumentReference documentReferenceReference = Firestoredb.collection("users")
+                        .document(userID).collection("Ingredient_Storage").document();
+
+                DocumentReference relationship = Firestoredb.collection("users")
+                        .document(userID).collection("Relationship").document();
 
                 // first we get the id of this document so we can add as document id to our class
                 String idIS = documentReferenceReference.getId();
@@ -337,6 +341,35 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
                                     dialog.dismiss();
                                     Log.d(TAG, "DocumentSnapshot successfully written!");
                                     ingredientStorageAdapter.notifyDataSetChanged();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error writing document", e);
+                                }
+                            });
+
+                    // Map for relationship
+                    HashMap<String, Object> mapR = new HashMap<>();
+
+                    mapR.put("name", nameIS);
+                    mapR.put("description", descriptionIS);
+                    mapR.put("bestBefore", bbIS);
+                    mapR.put("location", locationIS);
+                    mapR.put("amount", amountIS);
+                    mapR.put("unit", unitIS);
+                    mapR.put("category", categoryIS);
+                    mapR.put("id", idIS);
+                    mapR.put("type", "ingredient");
+                    mapR.put("exist", "yes");
+
+                    relationship.set(mapR)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                                    //ingredientStorageAdapter.notifyDataSetChanged();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -584,6 +617,9 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
         // Initialize the collectionreference based on path user
         CollectionReference collectionReference = Firestoredb.collection("users");
 
+        CollectionReference relationship = Firestoredb.collection("users")
+                .document(userID).collection("Relationship");
+
         // settings for the alert dialog
         builderObj.setCancelable(false);
         builderObj.setView(view);
@@ -649,6 +685,47 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
                                 Toast.makeText(IngredientStorageActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+
+                // Map for relationship
+                HashMap<String, Object> mapR = new HashMap<>();
+
+                mapR.put("name", nameIngredient);
+                mapR.put("description", descriptionIngredient);
+                mapR.put("bestBefore", bestBeforeIngredient);
+                mapR.put("location", locationIngredient);
+                mapR.put("amount", amountIngredient);
+                mapR.put("unit", unitIngredient);
+                mapR.put("category", categoryIngredient);
+                mapR.put("type", "ingredient");
+
+                // Follow the same steps to add as in showCustomDialog
+                relationship
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            /**
+                             * onComplete method for the task
+                             * @param task which is the task for firestore
+                             */
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                for (DocumentSnapshot snapshot : task.getResult()){
+                                    if ((String.valueOf(snapshot.getString("id")).equals(ingredientID)) &
+                                            (!(String.valueOf(snapshot.getString("multiple")).equals("no"))) &
+                                            (String.valueOf(snapshot.getString("exist")).equals("yes"))){
+                                        relationship.document(snapshot.getId()).update(mapR);
+                                    }
+                                }
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(IngredientStorageActivity.this, "Oops, Something went wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
             }
         });
 

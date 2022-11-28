@@ -56,11 +56,11 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MyView
                 if (whichStore==1){
 
 
-                    Intent i = new Intent(context, IngredientOfRecipeActivity.class);
-
-                    i.putExtra("recipe_id", mealPlanModelList.get(position).getMealPlanID());
-                    i.putExtra("key","5");
-                    context.startActivity(i);
+//                    Intent i = new Intent(context, IngredientOfRecipeActivity.class);
+//
+//                    i.putExtra("recipe_id", mealPlanModelList.get(position).getMealPlanID());
+//                    i.putExtra("key","5");
+//                    context.startActivity(i);
                     //Toast.makeText(context, findID, Toast.LENGTH_SHORT).show();
 
 
@@ -68,6 +68,9 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MyView
                 else {
                     Intent i = new Intent(context, ShowActivityMealPlan.class);
                     i.putExtra("nameFind",mealPlanModelList.get(position).getMealName());
+
+                    i.putExtra("idmeal",mealPlanModelList.get(position).getMealPlanID());
+
                     context.startActivity(i);
                 }
 

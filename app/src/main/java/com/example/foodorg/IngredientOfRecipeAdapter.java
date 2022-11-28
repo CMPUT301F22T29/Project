@@ -13,11 +13,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -105,6 +110,8 @@ public class IngredientOfRecipeAdapter extends RecyclerView.Adapter<IngredientOf
                 // to match it with our FireStore database. In addition
                 // initialize user Authentication instances, also userID and recipeID
                 String findID = ingredientModelList.get(position).getDocumentID();
+                String description = ingredientModelList.get(position).getDescription();
+
                 String recipeID = ingredientModelList.get(position).getRecipeID();
                 db = FirebaseFirestore.getInstance();
                 mAuth = FirebaseAuth.getInstance();
@@ -123,6 +130,35 @@ public class IngredientOfRecipeAdapter extends RecyclerView.Adapter<IngredientOf
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+
+
+                CollectionReference relationship = db.collection("users")
+                        .document(userID).collection("Relationship");
+                relationship
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            /**
+                             * onComplete method for the task
+                             * @param task which is the task for firestore
+                             */
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                for (DocumentSnapshot snapshot : task.getResult()){
+                                    if ((String.valueOf(snapshot.getString("recipe_id")).equals(recipeID.toString())) &
+                                            (String.valueOf(snapshot.getString("description")).equals(description)) &
+                                            (String.valueOf(snapshot.getString("type")).equals("ingredientrecipe"))){
+                                        relationship.document(snapshot.getId()).delete();
+                                    }
+                                }
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.w(TAG, "Error deleting document", e);
