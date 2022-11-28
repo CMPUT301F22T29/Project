@@ -39,6 +39,16 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+
+/**
+ *  ShoppingListIngredientAdapter is the adapter class for the ingredients inside
+ *  Shopping List Ingredient recyclerview. It contains the constructor for this adapter class
+ *  which is used in the Shopping list Activity
+ *
+ * @author amman1
+ * @author mohaimin
+ *
+ */
 public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<ShoppingListIngredientAdapter.MyViewHolder>{
 
     private Context context;
@@ -82,17 +92,24 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
      */
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        // set The Strings description, location, amount, unit, category for the Model class respectively
+
+        // set The Strings description, amount, unit, category and name for the Model class respectively
         holder.name.setText(shoppingListIngredientModelList.get(position).getName());
         holder.description.setText(shoppingListIngredientModelList.get(position).getDescription());
         holder.category.setText(shoppingListIngredientModelList.get(position).getCategory());
         holder.unit.setText(shoppingListIngredientModelList.get(position).getUnit());
         holder.amount.setText(shoppingListIngredientModelList.get(position).getAmount());
 
+        // boolean to click on view and expand it if necessary
         boolean isExpanded = shoppingListIngredientModelList.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
+        // button that adds ingredient from shopping list to ingredien storage
         holder.addbutt.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view
+             */
             @Override
             public void onClick(View view) {
 
@@ -103,6 +120,10 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
 
     }
 
+    /**
+     * Custom dialog that adds ingredient from shopping list to ingredient storage
+     * @param position
+     */
     private void showCustomDialog(int position){
 
         // initialize the dialog, its settings and layout
@@ -111,51 +132,68 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.shoppinglistiteminput);
 
-
+        // EditTexts that take the remaining necessary parameters
         EditText locationedt = dialog.findViewById(R.id.locationInputShoppingList);
         EditText amountedt = dialog.findViewById(R.id.amountInputShoppingList);
         EditText unitedt = dialog.findViewById(R.id.unitInputShoppingList);
 
+        // Spinner for the date
         DatePicker datePickerShoppingList = dialog.findViewById(R.id.datePickerAddShoppingListItem);
 
+        // Get the description and category, which remain unchanged
         String description = shoppingListIngredientModelList.get(position).getDescription();
         String category = shoppingListIngredientModelList.get(position).getCategory();
 
-
-
+        // Close the dialog listener
         final ImageView closeMealPlanAlert = dialog.findViewById(R.id.closeAlertInputShoppingList);
         closeMealPlanAlert.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view
+             */
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
             }
         });
 
+        // Button that confirms adding the ingredient
         Button addButton = dialog.findViewById(R.id.btnAddShoppingList);
 
+        // Listener for confirm button
         addButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view
+             */
             @Override
             public void onClick(View view) {
 
+                // Initialize the firebase references
                 mAuth = FirebaseAuth.getInstance();
                 db = FirebaseFirestore.getInstance();
                 userID = mAuth.getCurrentUser().getUid();
 
+                // Document references needed to refer to ingredient storage
                 DocumentReference documentReferenceReference = db.collection("users")
                         .document(userID).collection("Ingredient_Storage").document();
 
                 DocumentReference relationship = db.collection("users")
                         .document(userID).collection("Relationship").document();
 
+                // Collection reference to refer to relationship collection with all the relationships
                 CollectionReference wholerelationship = db.collection("users")
                         .document(userID).collection("Relationship");
 
+                // get the id of the document
                 String idIS = documentReferenceReference.getId();
 
+                // get the String values of the location, amount & unit
                 String location = locationedt.getText().toString();
                 String amount = amountedt.getText().toString();
                 String unit = unitedt.getText().toString();
 
+                // date picker values
                 int day = datePickerShoppingList.getDayOfMonth();
                 int month = datePickerShoppingList.getMonth();
                 int year = datePickerShoppingList.getYear();
@@ -163,6 +201,7 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                 calendar.set(year, month, day);
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
+                // get the formatted date values
                 String bbIS = sdf.format(calendar.getTime());
 
                 //Error checking for missing fields on edit
@@ -170,6 +209,7 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                     Toast.makeText(context, "Please enter all values", Toast.LENGTH_SHORT).show();
                 } else{
 
+                    // create hashmap to store the values in the ingredient storage
                     HashMap<String, Object> map = new HashMap<>();
                     map.put("name", description);
                     map.put("description", description);
@@ -180,6 +220,7 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                     map.put("category", category);
                     map.put("id", idIS);
 
+                    // set a reference to the storage and add the ingredient as required
                     documentReferenceReference.set(map)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 /**
@@ -200,19 +241,26 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                                 }
                             });
 
-
+                    // also add the ingredient to relationship collection for reference
                     wholerelationship.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        /**
+                         *
+                         * @param task
+                         */
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
+                            // String jj checks if ingredient already exists
                             String jj = "";
 
                             for (DocumentSnapshot snapshot : task.getResult()){
 
+                                // if ingredient does exist, we then just update the ingredient accordingly
                                 if ((String.valueOf(snapshot.getString("type")).equals("ingredient")) &
                                         (String.valueOf(snapshot.getString("description")).equals(description)) &
                                         (String.valueOf(snapshot.getString("category")).equals(category)) &
                                 (String.valueOf(snapshot.getString("exist")).equals("yes")) ) {
+
 
                                     jj = "yes";
 
@@ -224,13 +272,12 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                                     mapR.put("location", location);
                                     mapR.put("category", category);
 
-
-
+                                    // Float values that get the value of the amount & units
                                     Float unitt = Float.valueOf(0);
                                     Float amountt = Float.valueOf(0);
 
-                                    unitt += Float.parseFloat(snapshot.getString("unit"));
-                                    amountt += Float.parseFloat(snapshot.getString("amount"));
+                                    unitt += Float.parseFloat(String.valueOf(snapshot.get("unit")));
+                                    amountt += Float.parseFloat(String.valueOf(snapshot.get("amount")));
 
                                     unitt += Float.parseFloat(unit);
                                     amountt += Float.parseFloat(amount);
@@ -247,6 +294,7 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
 
                             }
 
+                            // if ingredient does not exist, we then just add the ingredient accordingly
                             if (jj.equals("")){
                                 HashMap<String, Object> mapk = new HashMap<>();
 
@@ -255,8 +303,6 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                                 mapk.put("bestBefore", bbIS);
                                 mapk.put("location", location);
                                 mapk.put("category", category);
-
-
 
 
                                 mapk.put("unit", Float.parseFloat(unit));
@@ -325,6 +371,9 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
          */
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            // views for the name (description essentially), description,
+            // category, amount, unit and expandable layout
             name = itemView.findViewById(R.id.shoppingListItemViewName);
             description = itemView.findViewById(R.id.shoppingListItemViewDescription);
             category = itemView.findViewById(R.id.shoppingListItemViewCategory);
@@ -332,8 +381,10 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
             unit = itemView.findViewById(R.id.shoppingListItemViewUnit);
             expandableLayout = itemView.findViewById(R.id.shoppingListExpandableLayout);
 
+            // add button
             addbutt = itemView.findViewById(R.id.shoppingListItemViewAdd);
 
+            // description listener to expand the view
             name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
