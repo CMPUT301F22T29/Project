@@ -41,7 +41,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- *  RecipeMealPlan adapter is the adapter class for the ingredients inside
+ *  IngredientStorageAdapter is the adapter class for the ingredients inside
+ *  Ingredient Storage recyclerview. It contains the constructor for this adapter class
+ *  which is used in the Ingredient Storage Activity
  *
  * @author amman1
  * @author mohaimin
@@ -120,10 +122,6 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
 
     }
 
-    /**
-     * show Custom dialog to add ingredients
-     * @param position
-     */
     private void showCustomDialog(int position){
         // initialize the dialog, its settings and layout
         final Dialog dialog = new Dialog(context);
