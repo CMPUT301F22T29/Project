@@ -8,6 +8,7 @@ public class MealPlanModel {
     String mealPlanID;
     String recipeID;
     Integer whichStore;
+    private boolean expanded;
 
     public MealPlanModel(String mealName, String date, String recipeID, String servings, Integer whichStore, String mealPlanID) {
         this.mealName = mealName;
@@ -17,6 +18,14 @@ public class MealPlanModel {
         this.whichStore = whichStore;
         this.recipeID = recipeID;
 
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 
     public String getRecipeID() {

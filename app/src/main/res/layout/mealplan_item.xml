@@ -18,6 +18,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/mealPlanItemAdapter"
+            android:background="@drawable/shapee">
+
+
+
+            <TextView
+                android:id="@+id/dateMealPlanItem"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:fontFamily="@font/comfortaabold"
+
+                android:text="Date"
+
+                android:textAlignment="center"
+
+                android:textColor="#263238"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="#EFF3F2"
             android:orientation="horizontal">
 
@@ -106,50 +130,6 @@
         </LinearLayout>
 
 
-
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:text="Date:"
-
-                android:layout_marginLeft="40dp"
-                android:textAlignment="center"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-
-            <TextView
-                android:id="@+id/dateMealPlanItem"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-
-                android:textAlignment="center"
-                android:text="category"
-
-                android:fontFamily="@font/comfortaaregular"
-
-                android:textColor="#263238"
-                android:textSize="12sp" />
-
-        </LinearLayout>
 
 
 
