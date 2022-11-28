@@ -26,7 +26,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
+/**
+ * MealPlanActivity is the activity the user access to store mealplan from recipe or ingredient storage
+ * <ul>
+ *     <li>Add button Ingredient Storage</li>
+ *     <li>Add button Recipe</li>
+ *     <li>Return to HomePage Activity Button</li>
+ *     <li>Recyclerview for the mealplan</li>
+ * </ul>
+ * @author amman1
+ * @author mohaimin
+ */
 public class MealPlanActivity extends AppCompatActivity {
 
     Button returnHomeFromMeal;
@@ -147,7 +157,11 @@ public class MealPlanActivity extends AppCompatActivity {
                 });
 
     }
-
+    /**
+     * to sort according to date from meal plan
+     * @param array
+     * @return
+     */
     private List<MealPlanModel> sortlist(List<MealPlanModel> array){
 
 

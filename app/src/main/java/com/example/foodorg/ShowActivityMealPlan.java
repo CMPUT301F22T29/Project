@@ -18,7 +18,17 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-
+/**
+ * ShowActivityMealPLan to view Ingredients from meal plan
+ * <ul>
+ *     <li>Add button Ingredient Storage</li>
+ *     <li>Add button Recipe</li>
+ *     <li>Return to HomePage Activity Button</li>
+ *     <li>Recyclerview for the mealplan</li>
+ * </ul>
+ * @author amman1
+ * @author mohaimin
+ */
 public class ShowActivityMealPlan extends AppCompatActivity {
 
     private Button returnMP;
@@ -26,6 +36,10 @@ public class ShowActivityMealPlan extends AppCompatActivity {
     private FirebaseAuth FireAuth;
     private String userID;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +56,10 @@ public class ShowActivityMealPlan extends AppCompatActivity {
 
         returnMP = findViewById(R.id.returnButtonMP);
         returnMP.setOnClickListener(new View.OnClickListener() {
+            /**
+             * return to Meal Plan
+             * @param view
+             */
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(ShowActivityMealPlan.this, MealPlanActivity.class);
@@ -59,7 +77,11 @@ public class ShowActivityMealPlan extends AppCompatActivity {
 
 
     }
-
+    /**
+     * Show the data of the ingredient scaled
+     * @param id
+     * @param validity
+     */
     private void showData(String id, String validity){
 
         TextView storageItemName,storageItemCategory,storageItemDescription,storageItemBB,storageItemLocation,storageItemAmount,storageItemUnit;
