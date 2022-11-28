@@ -89,7 +89,7 @@ public class IngredientOfRecipeActivity extends AppCompatActivity implements Ing
 
         recipeID= getIntent().getExtras().getString("recipe_id");
 
-        servingSize = getIntent().getExtras().getString("serving");
+        //servingSize = getIntent().getExtras().getString("serving");
 
         //Toast.makeText(IngredientOfRecipeActivity.this, recipeID, Toast.LENGTH_SHORT).show();
 
@@ -107,6 +107,7 @@ public class IngredientOfRecipeActivity extends AppCompatActivity implements Ing
                 if (validity.equals("5")){
                     Intent i = new Intent(IngredientOfRecipeActivity.this, MealPlanActivity.class);
                     startActivity(i);
+                    IngredientOfRecipeActivity.this.finish();
                 }
                 else{
                     Intent i = new Intent(IngredientOfRecipeActivity.this, RecipeActivity.class);

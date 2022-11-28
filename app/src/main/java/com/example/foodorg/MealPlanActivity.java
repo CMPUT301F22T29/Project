@@ -20,7 +20,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MealPlanActivity extends AppCompatActivity {
@@ -123,6 +127,15 @@ public class MealPlanActivity extends AppCompatActivity {
                                     snapshot.getString("recipeID"), snapshot.getString("servings"),snapshot.getLong("whichStore").intValue(), snapshot.getString("mealID"));
                             mealPlanModelList.add(mealPlanModel);
                         }
+                        Collections.sort(mealPlanModelList, new Comparator<MealPlanModel>() {
+                            @Override
+                            public int compare(MealPlanModel mealPlanModel, MealPlanModel t1) {
+                                return 0;
+                            }
+                        });
+
+                        mealPlanModelList= sortlist(mealPlanModelList);
+
                         // Final update to let Adapter know dataset changed
                         mealPlanAdapter.notifyDataSetChanged();
                     }
@@ -133,6 +146,29 @@ public class MealPlanActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private List<MealPlanModel> sortlist(List<MealPlanModel> array){
+
+
+        Collections.sort(array, new Comparator<MealPlanModel>() {
+            @Override
+            public int compare(MealPlanModel t1, MealPlanModel t2) {
+
+                int comparison = 0;
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                try {
+                    comparison = sdf.parse(t1.getDate()).compareTo(sdf.parse(t2.getDate()));
+                    return comparison;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return comparison;
+            }
+        });
+
+
+        return array;
     }
 
 
