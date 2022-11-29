@@ -213,37 +213,72 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                     Toast.makeText(context, "Please enter all values", Toast.LENGTH_SHORT).show();
                 } else{
 
-                    // create hashmap to store the values in the ingredient storage
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("name", description);
-                    map.put("description", description);
-                    map.put("bestBefore", bbIS);
-                    map.put("location", location);
-                    map.put("amount", Integer.parseInt(amount));
-                    map.put("unit", Integer.parseInt(unit));
-                    map.put("category", category);
-                    map.put("id", idIS);
 
-                    // set a reference to the storage and add the ingredient as required
-                    documentReferenceReference.set(map)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                /**
-                                 * onSuccess will send appropriate Log Message
-                                 * @param aVoid an uninstantiable placeholder class to hold a reference
-                                 *              to the Class object representing the Java keyword void
-                                 */
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    dialog.dismiss();
-                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+
+                    ingredientCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            String uu = "";
+
+
+                            for (DocumentSnapshot snapshot : task.getResult()){
+
+                                if ((String.valueOf(snapshot.get("unit")).equals(unit)) &
+                                        (String.valueOf(snapshot.get("location")).equals(location)) &
+                                        (String.valueOf(snapshot.getString("description")).equals(description)) &
+                                        (String.valueOf(snapshot.getString("category")).equals(category))){
+
+                                    uu = "yes";
+
+                                    HashMap<String, Object> mapR = new HashMap<>();
+
+                                    mapR.put("name", description);
+                                    mapR.put("description", description);
+                                    mapR.put("bestBefore", bbIS);
+                                    mapR.put("category", category);
+
+                                    // Float values that get the value of the amount & units
+
+                                    Integer amountt = Integer.valueOf(0);
+
+                                    amountt += Integer.parseInt(String.valueOf(snapshot.get("amount")));
+
+                                    amountt += Integer.parseInt(amount);
+
+                                    mapR.put("amount", amountt);
+
+                                    ingredientCollection.document(snapshot.getId()).update(mapR);
+
                                 }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error writing document", e);
-                                }
-                            });
+
+                            }
+
+                            // if ingredient does not exist, we then just add the ingredient accordingly
+                            if (uu.equals("")){
+
+                                HashMap<String, Object> map = new HashMap<>();
+                                map.put("name", description);
+                                map.put("description", description);
+                                map.put("bestBefore", bbIS);
+                                map.put("location", location);
+                                map.put("amount", Integer.parseInt(amount));
+                                map.put("unit", Integer.parseInt(unit));
+                                map.put("category", category);
+                                map.put("id", idIS);
+
+
+                                ingredientCollection.document().set(map);
+                            }
+
+                            dialog.dismiss();
+                        }
+
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
 
 
                     // also add the ingredient to relationship collection for reference
@@ -262,6 +297,8 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
 
                                 // if ingredient does exist, we then just update the ingredient accordingly
                                 if ((String.valueOf(snapshot.getString("type")).equals("ingredient")) &
+                                        (String.valueOf(snapshot.get("unit")).equals(unit)) &
+                                        (String.valueOf(snapshot.get("location")).equals(location)) &
                                         (String.valueOf(snapshot.getString("description")).equals(description)) &
                                         (String.valueOf(snapshot.getString("category")).equals(category)) &
                                 (String.valueOf(snapshot.getString("exist")).equals("yes")) ) {
@@ -274,20 +311,19 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                                     mapR.put("name", description);
                                     mapR.put("description", description);
                                     mapR.put("bestBefore", bbIS);
-                                    mapR.put("location", location);
                                     mapR.put("category", category);
 
                                     // Float values that get the value of the amount & units
                                     Float unitt = Float.valueOf(0);
                                     Float amountt = Float.valueOf(0);
 
-                                    unitt += Float.parseFloat(String.valueOf(snapshot.get("unit")));
+                                    //unitt += Float.parseFloat(String.valueOf(snapshot.get("unit")));
                                     amountt += Float.parseFloat(String.valueOf(snapshot.get("amount")));
 
-                                    unitt += Float.parseFloat(unit);
+                                    //unitt += Float.parseFloat(unit);
                                     amountt += Float.parseFloat(amount);
 
-                                    mapR.put("unit", unitt);
+                                    //mapR.put("unit", unitt);
                                     mapR.put("amount", amountt);
 
                                     mapR.put("type", "ingredient");

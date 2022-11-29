@@ -251,7 +251,7 @@ public class IngredientMealPlanAdapter extends RecyclerView.Adapter<IngredientMe
                     mapS.put("multiple", "no");
                     mapS.put("type", "ingredient");
                     mapS.put("id", id);
-                    mapS.put("bb", bestbefore);
+                    mapS.put("uniqueIngIr", relationship.getId());
                     mapS.put("location", location);
 
                     relationship.set(mapS);
