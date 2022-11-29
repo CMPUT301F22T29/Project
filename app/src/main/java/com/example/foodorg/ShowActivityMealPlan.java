@@ -117,7 +117,7 @@ public class ShowActivityMealPlan extends AppCompatActivity {
 
                                 storageItemName.setText(snapshot.getString("description"));
                                 storageItemCategory.setText(snapshot.getString("category"));
-                                storageItemBB.setText(snapshot.getString("bestBefore"));
+                                storageItemBB.setText(snapshot.getString("bb"));
                                 storageItemLocation.setText(snapshot.getString("location"));
                                 storageItemAmount.setText(String.valueOf(snapshot.get("amount")));
                                 storageItemUnit.setText(String.valueOf(snapshot.get("unit")));

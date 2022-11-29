@@ -369,44 +369,36 @@ public class IngredientOfRecipeActivity extends AppCompatActivity implements Ing
                                             relationshipwhole.document().set(mapR);
 
                                             String yest = "";
-
-                                            List<String> meals = new ArrayList<String>();
-                                            List<String> serv = new ArrayList<String>();
-
+                                            String meals = "";
                                             for (DocumentSnapshot snapshot1 : task.getResult()){
                                                 if ( (String.valueOf(snapshot1.getString("recipeID")).equals(recipeID)) &
-                                                        (snapshot1.get("mealID") != null)){
+                                                        (String.valueOf(snapshot1.getString("exist")).equals("must"))){
 
                                                     yest = "teah";
-                                                    meals.add( String.valueOf(snapshot1.getString("mealID")));
-                                                    serv.add(String.valueOf(snapshot1.get("servings")));
+                                                    meals = String.valueOf(snapshot1.getString("mealID"));
 
                                                 }
                                             }
 
                                             if (yest.equals("teah")){
 
-                                                int r;
+                                                HashMap<String, Object> mapw = new HashMap<>();
 
-                                                for (r=0; r< meals.size(); r++){
-                                                    HashMap<String, Object> mapw = new HashMap<>();
+                                                mapw.put("description", name);
 
-                                                    mapw.put("description", name);
+                                                mapw.put("ingredientrecipeid", id);
+                                                mapw.put("mealid", meals);
 
-                                                    mapw.put("ingredientrecipeid", id);
-                                                    mapw.put("mealid", meals.get(r));
+                                                mapw.put("amount", amount);
+                                                mapw.put("unit", unit);
+                                                mapw.put("category", category);
+                                                mapw.put("recipe_id",recipeID);
+                                                mapw.put("multiple", "yes");
+                                                mapw.put("type", "ingredientrecipe");
+                                                mapw.put("servingSize", serving);
+                                                mapw.put("servings", serving);
 
-                                                    mapw.put("amount", amount);
-                                                    mapw.put("unit", unit);
-                                                    mapw.put("category", category);
-                                                    mapw.put("recipe_id",recipeID);
-                                                    mapw.put("multiple", "yes");
-                                                    mapw.put("type", "ingredientrecipe");
-                                                    mapw.put("servingSize", serv.get(r));
-                                                    mapw.put("servings", serv.get(r));
-
-                                                    relationshipwhole.document().set(mapw);
-                                                }
+                                                relationshipwhole.document().set(mapw);
 
                                             }
 
@@ -650,41 +642,18 @@ public class IngredientOfRecipeActivity extends AppCompatActivity implements Ing
 
                                 String serving = "";
 
-                                List<String> meals = new ArrayList<String>();
-                                List<String> serv = new ArrayList<String>();
-
                                 for (DocumentSnapshot snapshot : task.getResult()){
-                                    if ((String.valueOf(snapshot.getString("recipeID")).equals(recipeID))){
+                                    if ((String.valueOf(snapshot.getString("idrecipe")).equals(recipeID)) ){
                                         serving = snapshot.getString("servings");
-
-                                        if (snapshot.get("mealID") == null){
-                                            meals.add("none");
-                                        }
-                                        else{
-                                            meals.add( String.valueOf(snapshot.getString("mealID")));
-                                        }
-
-                                        serv.add(String.valueOf(snapshot.get("servings")));
-
                                     }
                                 }
 
-//                                String den = "";
-//                                for (DocumentSnapshot snapshot2 : task.getResult()){
-//                                    if (String.valueOf(snapshot2.getString("idrecipe")).equals(findID)){
-//
-//                                        den = String.valueOf(snapshot2.get("servings"));
-//
-//                                        den = String.valueOf(snapshot2.get("servings"));
-//
-//                                    }
-//
-//                                }
+
+
+
 
                                 for (DocumentSnapshot snapshot : task.getResult()){
                                         if ((String.valueOf(snapshot.getString("recipe_id")).equals(findrecipeID)) &
-                                                ((snapshot.get("multiple")) == null) &
-                                                ((snapshot.get("mealid")) == null) &
                                                 (String.valueOf(snapshot.getString("ingredientrecipeid")).equals(findID)) &
                                                 (String.valueOf(snapshot.getString("type")).equals("ingredientrecipe"))){
 
@@ -702,70 +671,6 @@ public class IngredientOfRecipeActivity extends AppCompatActivity implements Ing
                                             relationship.document(snapshot.getId()).update(mapR);
                                         }
                                     }
-
-                                int w;
-
-                                for (w=0; w<meals.size(); w++){
-
-                                    if (!meals.get(w).equals("none")){
-
-                                        String mealsid = "";
-                                        String servsforthisid = "";
-
-                                        mealsid =  meals.get(w);
-                                        servsforthisid =  serv.get(w);
-
-                                        for (DocumentSnapshot snapg : task.getResult()){
-
-                                            if ((String.valueOf(snapg.getString("recipe_id")).equals(findrecipeID)) &
-                                                    ((snapg.get("multiple")) == "yes") &
-                                                    ((snapg.get("mealid")) == mealsid) &
-                                                    (String.valueOf(snapg.getString("ingredientrecipeid")).equals(findID)) &
-                                                    (String.valueOf(snapg.getString("type")).equals("ingredientrecipe"))){
-
-
-                                                Float seringsz = Float.valueOf(0);
-                                                Float serin = Float.valueOf(0);
-
-                                                seringsz = Float.valueOf(String.valueOf(snapg.get("servingSize")));
-                                                //serin = Float.valueOf(String.valueOf(snapg.get("servings")));
-
-
-                                                Float portion = Float.valueOf(0);
-
-                                                portion = (Float) Float.valueOf(servsforthisid) / (seringsz);
-
-
-                                                Float amountcst = Float.valueOf(0);
-
-                                                amountcst = Float.parseFloat(amount) * portion;
-
-
-                                                HashMap<String, Object> mapy = new HashMap<>();
-
-                                                mapy.put("description", name);
-
-
-                                                mapy.put("unit", unit);
-                                                mapy.put("category", category);
-                                                mapy.put("recipe_id",findrecipeID);
-                                                mapy.put("type", "ingredientrecipe");
-
-                                                mapy.put("amount", String.valueOf(amountcst));
-
-                                                mapy.put("servingSize", serving);
-
-                                                relationship.document(snapg.getId()).update(mapy);
-
-                                            }
-
-
-                                        }
-
-                                    }
-
-                                }
-
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {

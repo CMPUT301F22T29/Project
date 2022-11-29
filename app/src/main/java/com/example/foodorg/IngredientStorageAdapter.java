@@ -131,64 +131,32 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
                 db = FirebaseFirestore.getInstance();
                 mAuth = FirebaseAuth.getInstance();
 
-                String description = ingredientStorageModelList.get(position).getDescription();
-                String amount = ingredientStorageModelList.get(position).getAmount();
-                String category = ingredientStorageModelList.get(position).getCategory();
-                String bestBefore = ingredientStorageModelList.get(position).getBestBefore();
-                String location = ingredientStorageModelList.get(position).getLocation();
-                String unit = ingredientStorageModelList.get(position).getUnit();
-                String name = ingredientStorageModelList.get(position).getName();
+                String descrition = ingredientStorageModelList.get(position).getDescription();
 
                 // Also initialize the current user id
                 userID = mAuth.getCurrentUser().getUid();
 
-//                // Firestore removes the ingredient and sends error accordingly
-//                DocumentReference collectionReference = db.collection("users").document(userID).collection("Ingredient_Storage").document(findID);
-//                collectionReference
-//                        .delete()
-//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void aVoid) {
-//                                ingredientStorageModelList.remove(position);
-//                                Log.d(TAG, " has been deleted successfully!");
-//                                notifyDataSetChanged();
-//                            }
-//                        })
-//                        .addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                Log.w(TAG, "Error deleting document", e);
-//                            }
-//                        });
-                // Collection references needed to refer to ingredient storage
-                CollectionReference ingredientCollection = db.collection("users")
-                        .document(userID).collection("Ingredient_Storage");
+                // Firestore removes the ingredient and sends error accordingly
+                DocumentReference collectionReference = db.collection("users").document(userID).collection("Ingredient_Storage").document(findID.toString());
+                collectionReference
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                ingredientStorageModelList.remove(position);
+                                Log.d(TAG, " has been deleted successfully!");
+                                notifyDataSetChanged();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
 
                 CollectionReference relationship = db.collection("users")
                         .document(userID).collection("Relationship");
-
-                ingredientCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        for (DocumentSnapshot snap: task.getResult()){
-
-                            if ( (String.valueOf(snap.get("amount")).equals(amount)) &
-                                    (String.valueOf(snap.get("unit")).equals(unit)) &
-                                    String.valueOf(snap.get("bestBefore")).equals(bestBefore) &
-                                    (String.valueOf(snap.get("category")).equals(category)) &
-                                    (String.valueOf(snap.get("description")).equals(description)) &
-                                    (String.valueOf(snap.get("location")).equals(location)) &
-                                    (String.valueOf(snap.get("name")).equals(name)) ){
-
-                                ingredientCollection.document(snap.getId()).delete();
-                                notifyDataSetChanged();
-
-                            }
-                        }
-
-                    }
-                });
 
                 relationship
                         .get()

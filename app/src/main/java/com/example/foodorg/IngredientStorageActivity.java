@@ -712,17 +712,9 @@ public class IngredientStorageActivity extends AppCompatActivity implements Ingr
 
                                 for (DocumentSnapshot snapshot : task.getResult()){
                                     if ((String.valueOf(snapshot.getString("id")).equals(ingredientID)) &
-                                            (snapshot.get("multiple") == null) &
+                                            (!(String.valueOf(snapshot.getString("multiple")).equals("no"))) &
                                             (String.valueOf(snapshot.getString("exist")).equals("yes"))){
                                         relationship.document(snapshot.getId()).update(mapR);
-                                    }
-                                }
-
-                                for (DocumentSnapshot snapshot1 : task.getResult()){
-                                    if ((String.valueOf(snapshot1.getString("id")).equals(ingredientID)) &
-                                            ((String.valueOf(snapshot1.getString("multiple")).equals("no"))) &
-                                            (String.valueOf(snapshot1.getString("exist")).equals("must"))){
-                                        relationship.document(snapshot1.getId()).update(mapR);
                                     }
                                 }
 
