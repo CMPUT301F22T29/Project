@@ -280,6 +280,8 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                         }
                     });
 
+                    notifyDataSetChanged();
+
 
                     // also add the ingredient to relationship collection for reference
                     wholerelationship.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
