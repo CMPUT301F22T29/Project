@@ -266,10 +266,12 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                                 map.put("category", category);
                                 map.put("id", idIS);
 
-
                                 ingredientCollection.document().set(map);
                             }
 
+                            shoppingListIngredientModelList.remove(position);
+                            Log.d(TAG, " has been deleted successfully!");
+                            notifyDataSetChanged();
                             dialog.dismiss();
                         }
 
@@ -280,7 +282,6 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                         }
                     });
 
-                    notifyDataSetChanged();
 
 
                     // also add the ingredient to relationship collection for reference
