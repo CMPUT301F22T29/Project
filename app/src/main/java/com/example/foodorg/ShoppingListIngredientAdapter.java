@@ -178,6 +178,10 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                 DocumentReference documentReferenceReference = db.collection("users")
                         .document(userID).collection("Ingredient_Storage").document();
 
+                // Collection references needed to refer to ingredient storage
+                CollectionReference ingredientCollection = db.collection("users")
+                        .document(userID).collection("Ingredient_Storage");
+
                 DocumentReference relationship = db.collection("users")
                         .document(userID).collection("Relationship").document();
 
@@ -240,6 +244,7 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                                     Log.w(TAG, "Error writing document", e);
                                 }
                             });
+
 
                     // also add the ingredient to relationship collection for reference
                     wholerelationship.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
