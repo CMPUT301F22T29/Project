@@ -312,18 +312,14 @@ public class RecipeMealPlanAdapter extends RecyclerView.Adapter<RecipeMealPlanAd
 
                                                 portion = (Float) Float.valueOf(servingsMP) / Integer.parseInt(snapshot.getString("servingSize"));
 
-                                                Float unitcst = Float.valueOf(0);
-                                                unitcst = Float.valueOf(snapshot.getString("amount")) * portion;
 
                                                 Float amountcst = Float.valueOf(0);
-                                                amountcst = Float.valueOf(snapshot.getString("unit")) * portion;
+                                                amountcst = Float.valueOf(String.valueOf(snapshot.get("amount"))) * portion;
 
                                                 eachMap.put("servingSize", snapshot.getString("servingSize"));
                                                 eachMap.put("date", bbIS);
                                                 eachMap.put("multiple", "yes");
 
-                                                eachMap.put("originalamount", snapshot.getString("amount"));
-                                                eachMap.put("originalunit", snapshot.getString("unit"));
 
                                                 eachMap.put("amount",String.valueOf(amountcst));
                                                 eachMap.put("unit", snapshot.getString("unit"));
