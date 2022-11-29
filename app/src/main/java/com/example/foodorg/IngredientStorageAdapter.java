@@ -182,38 +182,47 @@ public class IngredientStorageAdapter extends RecyclerView.Adapter<IngredientSto
                                     (String.valueOf(snap.get("name")).equals(name)) ){
 
                                 ingredientCollection.document(snap.getId()).delete();
+
+                                ingredientStorageModelList.remove(position);
+                                Log.d(TAG, " has been deleted successfully!");
                                 notifyDataSetChanged();
 
                             }
                         }
 
                     }
+                }).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                    }
                 });
 
-                relationship
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            /**
-                             * onComplete method for the task
-                             * @param task which is the task for firestore
-                             */
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                relationship.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                                for (DocumentSnapshot snapshot : task.getResult()){
-                                    if ((String.valueOf(snapshot.getString("id")).equals(findID.toString())) &
-                                            (String.valueOf(snapshot.getString("exist")).equals("yes"))){
-                                        relationship.document(snapshot.getId()).delete();
-                                    }
-                                }
+                        for (DocumentSnapshot snapshot : task.getResult()){
+                            if ( (String.valueOf(snapshot.get("amount")).equals(amount)) &
+                                    (String.valueOf(snapshot.get("unit")).equals(unit)) &
+                                    String.valueOf(snapshot.get("bestBefore")).equals(bestBefore) &
+                                    (String.valueOf(snapshot.get("category")).equals(category)) &
+                                    (String.valueOf(snapshot.get("description")).equals(description)) &
+                                    (String.valueOf(snapshot.get("exist")).equals("yes")) &
+                                    (String.valueOf(snapshot.get("type")).equals("ingredient")) &
+                                    (String.valueOf(snapshot.get("location")).equals(location)) ) {
 
+                                relationship.document(snapshot.getId()).delete();
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error deleting document", e);
-                            }
-                        });
+
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
 
             }
         });
